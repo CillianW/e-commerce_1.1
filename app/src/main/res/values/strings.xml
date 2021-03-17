@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">e-commerce_1.1</string>
+    <string name="startup_splash_page_line_1">Cillian Whelan</string>
+    <string name="startup_splash_page_line_2">L00162026</string>
+    <string name="startup_splash_page_line_3">BSc Hons Contemporary Software Development</string>
+
 </resources>
