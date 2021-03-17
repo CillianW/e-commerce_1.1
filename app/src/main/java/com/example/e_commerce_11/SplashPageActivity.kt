@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -24,12 +25,11 @@ class SplashPageActivity : AppCompatActivity() {
             )
         }
 
-        @Suppress("DEPRECATION")
-        Handler().postDelayed(Runnable {
-            val mainIntent = Intent(this@SplashPageActivity, MainActivity::class.java)
-            this@SplashPageActivity.startActivity(mainIntent)
-            this@SplashPageActivity.finish()
-                                       }, 3000)
-
-    }
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                startActivity(Intent(this@SplashPageActivity, MainActivity::class.java))
+                finish()
+            },
+            2500)
+        }
 }
