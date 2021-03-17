@@ -2,5 +2,7 @@
 <resources>
 
     <dimen name="splash_title_text_size">18sp</dimen>
+    <dimen name="splash_title_line_3_text_size">16sp</dimen>
+
 
 </resources>
