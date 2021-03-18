@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--this file sets the constraints for the MainActivity-->
+<!--this file sets the constraints and properties for the MainActivity-->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,7 +10,7 @@
     tools:context=".activities.MainActivity">
 
 <!--    constraints for the text on the MainActivity page-->
-    <com.example.e_commerce_11.utilities.MSPTextViewBold
+    <com.example.e_commerce_11.utilities.BoldTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"

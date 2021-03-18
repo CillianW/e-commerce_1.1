@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--this file sets the constraints for the SplashPage-->
+<!--this file sets the constraints and properties for the SplashPage-->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="false"
     android:background="#FFFFFF"
     tools:context=".activities.SplashPageActivity">
 
-<!--    tools:ignore="ExtraText"-->
+    <!--    tools:ignore="ExtraText"-->
 
-<!--    constraints for the lyit logo image on the splash page-->
+    <!--    constraints for the lyit logo image on the splash page-->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -29,9 +30,9 @@
         app:srcCompat="@drawable/lyit_logo" />
 
 
-<!--    constraints for the app name on the splash page - -->
-<!--    using the MSPTextViewBold class to set the font to Montserrat-Bold-->
-    <com.example.e_commerce_11.utilities.MSPTextViewBold
+    <!--    constraints for the app name on the splash page - -->
+    <!--    using the MSPTextViewBold class to set the font to Montserrat-Bold-->
+    <com.example.e_commerce_11.utilities.BoldTextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,13 +42,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textView2"
-        >
+        app:layout_constraintTop_toTopOf="@id/textView2">
 
-    </com.example.e_commerce_11.utilities.MSPTextViewBold>
+    </com.example.e_commerce_11.utilities.BoldTextView>
 
 
-<!--    constraints for some text on splash page-->
+    <!--    constraints for some text on splash page-->
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-<!--    more constraints for text on splash page-->
+    <!--    more constraints for text on splash page-->
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-<!--    more constraints for text on splash page-->
+    <!--    more constraints for text on splash page-->
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"

@@ -8,11 +8,13 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 
-class MSPTextViewBold(context: Context, attrs: AttributeSet) : AppCompatTextView(context, attrs) {
+class BoldTextView(context: Context, attrs: AttributeSet) : AppCompatTextView(context, attrs) {
+    //initialise the class
     init{
         applyFont()
     }
 
+//    set the Typeface to the Montserrat-Bold font which is stored in the assets folder
     private fun applyFont(){
         val typeface: Typeface = Typeface.createFromAsset(context.assets, "Montserrat-Bold.ttf")
         setTypeface(typeface)

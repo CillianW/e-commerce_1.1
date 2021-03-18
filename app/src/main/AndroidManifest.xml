@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!--every app must have an AndroidManifest.xml-->
-<!--this file is used to declare the app's package name,-->
-<!--components, permissions needed and hardware/software features required-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.e_commerce_11">
 
@@ -14,24 +10,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ecommerce_11">
 
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".activities.SplashPageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
-        <activity android:name=".activities.MainActivity">
-
-        </activity>
-
+        
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
