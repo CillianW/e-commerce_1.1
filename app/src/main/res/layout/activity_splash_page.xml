@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--this file sets the constraints for the SplashPage-->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    tools:context=".activities.SplashPageActivity">
 
+<!--    tools:ignore="ExtraText"-->
+
+<!--    constraints for the lyit logo image on the splash page-->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -21,6 +28,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/lyit_logo" />
 
+
+<!--    constraints for the app name on the splash page - -->
+<!--    using the MSPTextViewBold class to set the font to Montserrat-Bold-->
+    <com.example.e_commerce_11.utilities.MSPTextViewBold
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/splash_title_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textView2"
+        >
+
+    </com.example.e_commerce_11.utilities.MSPTextViewBold>
+
+
+<!--    constraints for some text on splash page-->
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -31,12 +58,14 @@
         android:layout_marginRight="160dp"
         android:layout_marginBottom="50dp"
         android:text="@string/startup_splash_page_line_3"
-        android:textColor="#000000"
-        android:textSize="@dimen/splash_title_text_size"
+        android:textColor="@color/black"
+        android:textSize="@dimen/splash_title_line_3_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+
+<!--    more constraints for text on splash page-->
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -53,6 +82,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
+<!--    more constraints for text on splash page-->
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
