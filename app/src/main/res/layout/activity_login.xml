@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/themeOrange"
+    android:background="@color/white"
     tools:context=".activities.LoginActivity">
 
 <!--    constraints and properties for the frame at the top of the screen-->
@@ -34,7 +34,7 @@
             android:layout_gravity="center"
             android:contentDescription="@string/app_name"
             android:scaleType="fitCenter"
-            android:src="@drawable/lyit_logo" />
+            android:src="@drawable/lyit_logo"/>
     </FrameLayout>
 
 
@@ -63,6 +63,9 @@
         android:layout_marginEnd="16dp"
         android:hint="@string/edit_email_id"
         android:textColorHint="@color/themeDarkPurple"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#000000"
+        app:boxStrokeWidth="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title">
@@ -71,13 +74,14 @@
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:width="1dp"
             android:inputType="text"
             android:padding="@dimen/et_padding"
             android:textColor="@color/themeDarkPurple"
             android:textSize="@dimen/et_textSize"
+            android:visibility="visible"
             tools:text="abc@gmail.com" />
     </com.google.android.material.textfield.TextInputLayout>
-
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -90,6 +94,7 @@
         android:layout_marginEnd="16dp"
         android:hint="@string/edit_password"
         android:textColorHint="@color/themeDarkPurple"
+        app:boxStrokeColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_email">
@@ -154,7 +159,7 @@
             android:id="@+id/tv_don_t_have_an_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="0dp"
             android:padding="@dimen/clickable_text_view_padding"
             android:text="@string/don_t_have_an_account"
             android:textColor="@color/themeDarkPurple"
@@ -164,7 +169,7 @@
             android:id="@+id/tv_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="0dp"
             android:foreground="?attr/selectableItemBackground"
             android:padding="@dimen/clickable_text_view_padding"
             android:text="@string/register"
