@@ -7,7 +7,7 @@
     <string name="startup_splash_page_line_3">BSc (Hons) Contemporary Software Development</string>
 
 
-<!--    Login -->
+<!--    Login page -->
     <string name="content_description">image</string>
     <string name="title_login">LOGIN</string>
     <string name="edit_email_id">Email ID</string>

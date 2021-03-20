@@ -7,6 +7,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import com.example.e_commerce_11.R
 
+
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
