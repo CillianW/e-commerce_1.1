@@ -34,7 +34,8 @@
             android:layout_gravity="center"
             android:contentDescription="@string/app_name"
             android:scaleType="fitCenter"
-            android:src="@drawable/lyit_logo"/>
+            android:src="@drawable/ic_lyit_logo_mod"
+            app:tint="@color/white" />
     </FrameLayout>
 
 

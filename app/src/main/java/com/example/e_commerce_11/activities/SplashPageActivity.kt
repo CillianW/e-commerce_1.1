@@ -36,6 +36,6 @@ class SplashPageActivity : AppCompatActivity() {
                     startActivity(Intent(this@SplashPageActivity, LoginActivity::class.java))
                     finish()
                 },
-                1000)
+                2500)
     }
 }
