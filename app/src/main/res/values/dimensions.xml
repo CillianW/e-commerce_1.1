@@ -12,7 +12,7 @@
     <dimen name="splash_title_line_3_text_size">16sp</dimen>
 
 
-<!--    login page-->
+<!--    login page / register page-->
     <dimen name="button_background_radius">10dp</dimen>
     <dimen name="auth_header_image_height">200dp</dimen>
     <dimen name="auth_logo_width_size">220dp</dimen>

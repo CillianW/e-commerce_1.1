@@ -6,12 +6,14 @@ package com.example.e_commerce_11.activities
  *Subject: Project
  */
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import com.example.e_commerce_11.R
+import kotlinx.android.synthetic.main.activity_login.*
 
 
 //login activity allows an existing member to sign in to the app and
@@ -29,6 +31,12 @@ class LoginActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
+        }
+
+        tv_register.setOnClickListener{
+
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 }

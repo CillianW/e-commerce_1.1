@@ -118,7 +118,7 @@
 
 
 <!--    properties of the forgot password button-->
-    <com.example.e_commerce_11.utilities.Button
+    <com.example.e_commerce_11.utilities.BoldTextView
         android:id="@+id/tv_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -128,11 +128,10 @@
         android:text="@string/label_forgot_password"
         android:textColor="@color/themeDarkPurple"
         android:textSize="@dimen/forgot_password_textSize"
+        android:textStyle="bold"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_password"
-        tools:targetApi="m"
-        app:boxStrokeColor="@android:color/transparent"/>
+        app:layout_constraintTop_toBottomOf="@id/til_password" />
 
 <!--    properties of the Login button at the bottom of the screen-->
     <com.example.e_commerce_11.utilities.Button
@@ -168,7 +167,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_login">
 
-        <com.example.e_commerce_11.utilities.BoldTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_don_t_have_an_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -187,7 +186,8 @@
             android:padding="@dimen/clickable_text_view_padding"
             android:text="@string/register"
             android:textColor="@color/themeDarkPurple"
-            android:textSize="@dimen/lbl_text_view_textSize" />
+            android:textSize="@dimen/lbl_text_view_textSize"
+            android:textStyle="bold" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
     <!--END-->
