@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Author: Cillian Whelan-->
+<!--Student Number: L00162026-->
+<!--Course: BSc (Hons) Contemporary Software Development-->
+<!--Subject: Project-->
+
 <resources>
 
+<!--    splash page-->
     <dimen name="splash_title_text_size">18sp</dimen>
     <dimen name="splash_title_line_3_text_size">16sp</dimen>
-    <dimen name="button_background_radius">10dp</dimen>
 
+
+<!--    login page-->
+    <dimen name="button_background_radius">10dp</dimen>
     <dimen name="auth_header_image_height">200dp</dimen>
     <dimen name="auth_logo_width_size">220dp</dimen>
     <dimen name="auth_logo_height_size">100dp</dimen>

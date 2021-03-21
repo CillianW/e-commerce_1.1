@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--Author: Cillian Whelan-->
+<!--Student Number: L00162026-->
+<!--Course: BSc (Hons) Contemporary Software Development-->
+<!--Subject: Project-->
+
 <!--Constraints for register activity-->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -205,6 +210,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til__confrim_password"/>
 
+<!--    contraints and properties of the text below register button-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

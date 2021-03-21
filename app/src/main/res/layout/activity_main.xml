@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--Author: Cillian Whelan-->
+<!--Student Number: L00162026-->
+<!--Course: BSc (Hons) Contemporary Software Development-->
+<!--Subject: Project-->
+
 <!--this file sets the constraints and properties for the MainActivity-->
 
 <androidx.constraintlayout.widget.ConstraintLayout

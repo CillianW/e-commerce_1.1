@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Author: Cillian Whelan-->
+<!--Student Number: L00162026-->
+<!--Course: BSc (Hons) Contemporary Software Development-->
+<!--Subject: Project-->
+
 <resources>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
@@ -10,6 +16,7 @@
     <color name="colorWhite">#FFFFFF</color>
 
 
+<!--    theme colours-->
     <color name="themeOrange">#F8B195</color>
     <color name="themePink">#F67280</color>
     <color name="themeLightPurple">#C06C84</color>

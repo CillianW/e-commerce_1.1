@@ -1,4 +1,10 @@
 package com.example.e_commerce_11.activities
+/**
+ *Author: Cillian Whelan
+ *Student Number: L00162026
+ *Course: BSc (Hons) Contemporary Software Development
+ *Subject: Project
+ */
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

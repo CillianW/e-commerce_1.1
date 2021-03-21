@@ -1,4 +1,10 @@
 package com.example.e_commerce_11.activities
+/**
+ *Author: Cillian Whelan
+ *Student Number: L00162026
+ *Course: BSc (Hons) Contemporary Software Development
+ *Subject: Project
+ */
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +14,8 @@ import android.view.WindowManager
 import com.example.e_commerce_11.R
 
 
+//login activity allows an existing member to sign in to the app and
+//allows new members to access the register activity
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

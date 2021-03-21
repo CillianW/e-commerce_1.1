@@ -1,5 +1,10 @@
 <resources>
 
+    <!--Author: Cillian Whelan-->
+    <!--Student Number: L00162026-->
+    <!--Course: BSc (Hons) Contemporary Software Development-->
+    <!--Subject: Project-->
+
 <!--    Splash page   -->
     <string name="app_name">Version 1</string>
     <string name="startup_splash_page_line_1">Cillian Whelan</string>
