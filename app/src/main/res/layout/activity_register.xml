@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="0dp"
+            android:layout_marginRight="70dp"
             android:text="@string/register_page_title"
             android:textColor="@color/themeDarkPurple"
             android:gravity="center"

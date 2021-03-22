@@ -8,6 +8,7 @@ package com.example.e_commerce_11.activities
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.e_commerce_11.R
 import kotlinx.android.synthetic.main.activity_login.*
@@ -19,12 +20,25 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        setupActionBar()
 
         login_already_registered.setOnClickListener{
-
             val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
             startActivity(intent)
         }
 
+    }
+
+    private fun setupActionBar(){
+        setSupportActionBar(toolbar_register_activity)
+
+        val actionBar = supportActionBar
+
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow)
+        }
+
+        toolbar_register_activity.setNavigationOnClickListener{ onBackPressed() }
     }
 }
