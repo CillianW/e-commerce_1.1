@@ -1,3 +1,53 @@
 <resources>
-    <string name="app_name">e-commerce_1.1</string>
+
+    <!--Author: Cillian Whelan-->
+    <!--Student Number: L00162026-->
+    <!--Course: BSc (Hons) Contemporary Software Development-->
+    <!--Subject: Project-->
+
+    <!--    Splash page   -->
+    <string name="app_name">Final Project</string>
+    <string name="startup_splash_page_line_1">Cillian Whelan</string>
+    <string name="startup_splash_page_line_2">L00162026</string>
+    <string name="startup_splash_page_line_3">BSc (Hons) Contemporary Software Development</string>
+
+
+    <!--    Login page -->
+    <string name="content_description">image</string>
+    <string name="title_login">LOGIN</string>
+    <string name="edit_email_id">Email ID</string>
+    <string name="edit_password">Password</string>
+    <string name="label_forgot_password">Forgot Password?</string>
+    <string name="button_label_login">Login</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="register">Register</string>
+
+
+    <!--    Register page-->
+    <string name="register_page_title">CREATE AN ACCOUNT</string>
+    <string name="enter_first_name">First Name</string>
+    <string name="enter_surname">Surname</string>
+    <string name="enter_email">Email ID</string>
+    <string name="enter_password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="button_register">Register</string>
+    <string name="already_a_member">Already a member?</string>
+    <string name="login_already_registered">Login</string>
+    <string name="accept_t_and_c">I accept terms and conditions</string>
+    
+    
+<!--    SnackBar messages-->
+    <string name="error_first_name">Please enter a first name</string>
+    <string name="error_surname">Please enter a surname</string>
+    <string name="error_email_address">Please enter an email address</string>
+    <string name="error_password">Please enter a password</string>
+    <string name="error_confirm_password">Please confirm password</string>
+    <string name="error_passwords_don_t_match">Passwords do not match</string>
+    <string name="error_t_and_c_not_checked">Please agree to terms and conditions</string>
+    <string name="success">Success!</string>
+
+
+
+
+
 </resources>

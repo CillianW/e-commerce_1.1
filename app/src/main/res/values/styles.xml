@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Author: Cillian Whelan-->
+<!--Student Number: L00162026-->
+<!--Course: BSc (Hons) Contemporary Software Development-->
+<!--Subject: Project-->
+
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents">
+
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/themeDarkPurple</item>
+        <item name="colorPrimaryDark">@color/themeDarkPurple</item>
+        <item name="colorAccent">@color/themePink</item>
+    </style>
+
+    <!--To be used on the startup splash page-->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+</resources>
