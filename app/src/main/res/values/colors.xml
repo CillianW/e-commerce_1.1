@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Author: Cillian Whelan-->
+<!--Student Number: L00162026-->
+<!--Course: BSc (Hons) Contemporary Software Development-->
+<!--Subject: Project-->
+
 <resources>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,4 +14,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorWhite">#FFFFFF</color>
+
+
+<!--    theme colours-->
+    <color name="themeOrange">#F8B195</color>
+    <color name="themePink">#F67280</color>
+    <color name="themeLightPurple">#C06C84</color>
+    <color name="themeDarkPurple">#6C5B7B</color>
+    <color name="themeBlue">#355C7D</color>
+
+<!--    snackbar colours-->
+    <color name="snackBar_colour_success">#4a6b46</color>
+    <color name="snackBar_colour_fail">#c34242</color>
+
 </resources>
