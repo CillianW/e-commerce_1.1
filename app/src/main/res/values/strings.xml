@@ -34,12 +34,13 @@
     <string name="already_a_member">Already a member?</string>
     <string name="login_already_registered">Login</string>
     <string name="accept_t_and_c">I accept terms and conditions</string>
-    
-    
-<!--    SnackBar messages-->
+
+
+    <!--    SnackBar messages-->
     <string name="error_first_name">Please enter a first name</string>
     <string name="error_surname">Please enter a surname</string>
     <string name="error_email_address">Please enter an email address</string>
+    <string name="error_invalid_email_address">Please enter a valid email address</string>
     <string name="error_password">Please enter a password</string>
     <string name="error_confirm_password">Please confirm password</string>
     <string name="error_passwords_don_t_match">Passwords do not match</string>
@@ -47,7 +48,14 @@
     <string name="success">Success!</string>
 
 
+    <!--    progress dialogue-->
+    <string name="please_wait">Please Wait</string>
 
+
+    <!--    <string name=""-->
+    <string name="title_forgot_password">Forgot Password</string>
+    <string name="text_forgot_password">Please enter your email address. You will receive a link to reset your password.</string>
+    <string name="btn_submit">Submit</string>
 
 
 </resources>

@@ -7,6 +7,7 @@ package com.example.e_commerce_11.activities
  *Subject: Project
  */
 
+import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -19,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_register.*
 //      -display an error/success message in other activities
 //      -validate a user entry
 open class BaseActivity : AppCompatActivity() {
+
+    private lateinit var mProgressDialog: Dialog
 
     //a snackBar is used to display pop up messages
     //this function sets the colour of the snackBar
@@ -33,6 +36,24 @@ open class BaseActivity : AppCompatActivity() {
             snackBarView.setBackgroundColor((ContextCompat.getColor(this@BaseActivity,R.color.snackBar_colour_success)))
         }
         snackBar.show()
+    }
+
+    //this function is used to show the progress dialogue box
+    fun displayProgressDialogue(text: String){
+        mProgressDialog = Dialog(this)
+
+        //set the content of the progress dialogue from a resource file
+        mProgressDialog.setContentView(R.layout.dialogue_progress)
+
+        mProgressDialog.setCancelable(false)
+        mProgressDialog.setCanceledOnTouchOutside(false)
+
+        //show the dialogue
+        mProgressDialog.show()
+    }
+
+    fun dismissProgressDialogue(){
+        mProgressDialog.dismiss()
     }
 
 }

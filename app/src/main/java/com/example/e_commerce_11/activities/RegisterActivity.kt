@@ -12,6 +12,10 @@ import android.text.TextUtils
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.e_commerce_11.R
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -25,16 +29,16 @@ class RegisterActivity : BaseActivity() {
         setupActionBar()
 
         login_already_registered.setOnClickListener{
-            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-            startActivity(intent)
+            onBackPressed()
         }
 
         btn_register.setOnClickListener{
-            verifyUserDetails()
+            registerUser()
         }
-
     }
 
+
+    //this function sets up the back button at the of the screen
     private fun setupActionBar(){
         setSupportActionBar(toolbar_register_activity)
 
@@ -42,7 +46,7 @@ class RegisterActivity : BaseActivity() {
 
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_purple)
         }
 
         toolbar_register_activity.setNavigationOnClickListener{
@@ -51,7 +55,7 @@ class RegisterActivity : BaseActivity() {
     }
 
     //this function sets the error message to be displayed if a user does not enter details in a field
-    fun verifyUserDetails() : Boolean{
+    private fun verifyUserDetails() : Boolean{
         return when{
             TextUtils.isEmpty(edit_first_name.text.toString().trim{it <= ' '}) -> {
                 displaySnackBar(resources.getString(R.string.error_first_name), true)
@@ -82,9 +86,49 @@ class RegisterActivity : BaseActivity() {
                 false
             }
             else -> {
-                displaySnackBar(resources.getString(R.string.success), false)
                 true
             }
         }
     }
+
+    //registers a new user on Firebase
+    private fun registerUser() {
+
+        // Check with validate function if the entries are valid or not.
+        if (verifyUserDetails()) {
+
+            displayProgressDialogue(resources.getString(R.string.please_wait))
+
+            val email: String = edit_email.text.toString().trim { it <= ' ' }
+            val password: String = edit_password.text.toString().trim { it <= ' ' }
+
+            // Create an instance and register a user with email and password.
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(
+                    OnCompleteListener<AuthResult> { task ->
+
+                        dismissProgressDialogue()
+
+                        // If the registration is successfully done
+                        if (task.isSuccessful) {
+
+                            // Firebase registered user
+                            val firebaseUser: FirebaseUser = task.result!!.user!!
+
+                            displaySnackBar(
+                                "You are registered successfully. Your user id is ${firebaseUser.uid}",
+                                false
+                            )
+
+                            FirebaseAuth.getInstance().signOut()
+                            finish()
+
+                        } else {
+                            // If the registering is not successful then show error message.
+                            displaySnackBar(task.exception!!.message.toString(), true)
+                        }
+                    })
+        }
+    }
+
 }
