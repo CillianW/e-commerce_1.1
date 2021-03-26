@@ -39,7 +39,6 @@ class RegisterActivity : BaseActivity() {
 
 
     //this function sets up the back button at the of the screen
-    //used in certain activities
     private fun setupActionBar(){
         setSupportActionBar(toolbar_register_activity)
 
@@ -47,7 +46,7 @@ class RegisterActivity : BaseActivity() {
 
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_purple)
         }
 
         toolbar_register_activity.setNavigationOnClickListener{

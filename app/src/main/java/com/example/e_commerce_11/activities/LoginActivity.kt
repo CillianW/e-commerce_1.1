@@ -38,7 +38,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         }
 
         tv_register.setOnClickListener(this)
-        tv_register.setOnClickListener(this)
+        tv_forgot_password.setOnClickListener(this)
         btn_login.setOnClickListener(this)
 
     }
@@ -49,7 +49,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             when(view.id){
 
                 R.id.tv_forgot_password -> {
-
+                    val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
+                    startActivity(intent)
                 }
 
                 R.id.tv_register -> {
