@@ -8,10 +8,15 @@ package com.example.e_commerce_11.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.e_commerce_11.R
+import com.example.e_commerce_11.firestore.FireStoreClass
+import com.example.e_commerce_11.models.User
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -107,28 +112,45 @@ class RegisterActivity : BaseActivity() {
                 .addOnCompleteListener(
                     OnCompleteListener<AuthResult> { task ->
 
-                        dismissProgressDialogue()
-
                         // If the registration is successfully done
                         if (task.isSuccessful) {
 
                             // Firebase registered user
                             val firebaseUser: FirebaseUser = task.result!!.user!!
 
-                            displaySnackBar(
-                                "You are registered successfully. Your user id is ${firebaseUser.uid}",
-                                false
+                            //create a new user object
+                            val user = User(
+                                firebaseUser.uid,
+                                edit_first_name.text.toString().trim{ it <= ' '},
+                                edit_surname.text.toString().trim{ it <= ' '},
+                                edit_email.text.toString().trim{ it <= ' '},
                             )
 
-                            FirebaseAuth.getInstance().signOut()
-                            finish()
+                            //pass the new user object to the FireStore
+                            FireStoreClass().registerUser(this@RegisterActivity, user)
 
+                            Handler(Looper.getMainLooper()).postDelayed(
+                                {
+                                    finish()
+                                },
+                                1000)
                         } else {
+                            dismissProgressDialogue()
+
                             // If the registering is not successful then show error message.
                             displaySnackBar(task.exception!!.message.toString(), true)
                         }
                     })
         }
+    }
+
+    fun userRegisteredSuccessfully(){
+
+        dismissProgressDialogue()
+
+        Toast.makeText(this@RegisterActivity,
+            resources.getString(R.string.user_registered_successfully),
+            Toast.LENGTH_SHORT).show()
     }
 
 }
