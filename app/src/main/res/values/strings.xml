@@ -69,6 +69,11 @@
     <string name="hint_surname">Surname</string>
     <string name="hint_email_id">Email ID</string>
     <string name="hint_mobile">Mobile Number</string>
+    <string name="btn_save_details">Save Details</string>
+
+    <!--    Gender Selector-->
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
 
 
 

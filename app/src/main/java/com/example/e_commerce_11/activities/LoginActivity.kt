@@ -124,8 +124,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         Log.i("Email", user.email)
 
 
-        //move to the main activity
-        startActivity(Intent(this@LoginActivity, UserProfileActivity::class.java))
+        //if the user's profile is not fully completed, send them to the profile activity
+        //else, send them to the main activity
+        if(user.profileComplete == 0) {
+            startActivity(Intent(this@LoginActivity, UserProfileActivity::class.java))
+        }
+        else{
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        }
+
         //finish the login activity so the user can't use the back button to return to login
         //once they have successfully logged in
         finish()

@@ -67,7 +67,7 @@
                     android:layout_height="match_parent"
                     android:adjustViewBounds="false"
                     android:padding="@dimen/btn_padding"
-                    android:src="@drawable/empty_profile_pic"
+                    android:src="@drawable/empty_profile_pic_male_foreground"
                     android:layout_gravity="center_horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -205,6 +205,52 @@
                 tools:text="@string/edit_mobile" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <RadioGroup
+            android:id="@+id/rg_gender"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/btn_register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_change_mobile">
+
+
+            <RadioButton
+                android:id="@+id/rb_male"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/gender_selector"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="@string/gender_male"
+                android:textColor="@drawable/gender_selector_text_colour"
+                android:textStyle="bold"
+                android:layout_marginRight="20dp" />
+
+            <RadioButton
+                android:id="@+id/rb_female"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/gender_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/gender_female"
+                android:textColor="@drawable/gender_selector_text_colour"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp" />
+        </RadioGroup>
+
+
+
 
         <com.example.e_commerce_11.utilities.Button
             android:id="@+id/btn_register"
@@ -219,12 +265,12 @@
             android:gravity="center"
             android:paddingTop="@dimen/btn_padding"
             android:paddingBottom="@dimen/btn_padding"
-            android:text="@string/button_register"
+            android:text="@string/btn_save_details"
             android:textColor="@android:color/white"
             android:textSize="@dimen/btn_textSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_change_mobile"/>
+            app:layout_constraintTop_toBottomOf="@id/rg_gender"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,5 +14,6 @@ class User (
     val email: String = "",
     val gender: String = "",
     val imageURL: String = "",
-    val phoneNumber: Long = 0
+    val phoneNumber: Long = 0,
+    val profileComplete: Int = 0
 )
