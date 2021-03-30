@@ -11,4 +11,5 @@ object Constants {
     const val USERS: String = "users"
     const val APP_PREFERENCES = "AppPreferences"
     const val LOGGED_IN_USERNAME = "LoggedInUserName"
+    const val EXTRA_USER_DETAILS = "ExtraUserDetails"
 }

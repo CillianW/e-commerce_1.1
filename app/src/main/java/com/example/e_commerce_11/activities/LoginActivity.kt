@@ -18,6 +18,7 @@ import android.view.WindowManager
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.User
+import com.example.e_commerce_11.utilities.Constants
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
@@ -127,7 +128,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         //if the user's profile is not fully completed, send them to the profile activity
         //else, send them to the main activity
         if(user.profileComplete == 0) {
-            startActivity(Intent(this@LoginActivity, UserProfileActivity::class.java))
+            val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
+
+            //we can send parcelized objects to the next activity using the putExtra() function
+            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+            startActivity(intent)
         }
         else{
             startActivity(Intent(this@LoginActivity, MainActivity::class.java))

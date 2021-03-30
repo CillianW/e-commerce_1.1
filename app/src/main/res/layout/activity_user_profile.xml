@@ -253,7 +253,7 @@
 
 
         <com.example.e_commerce_11.utilities.Button
-            android:id="@+id/btn_register"
+            android:id="@+id/btn_save_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
