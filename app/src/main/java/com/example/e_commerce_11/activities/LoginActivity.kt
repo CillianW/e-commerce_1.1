@@ -11,10 +11,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import com.example.e_commerce_11.R
+import com.example.e_commerce_11.firestore.FireStoreClass
+import com.example.e_commerce_11.models.User
+import com.example.e_commerce_11.utilities.Constants
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
@@ -94,22 +98,48 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             val password: String = et_password.text.toString().trim { it <= ' ' }
 
 
+            //logging in using FireBase authentication
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(){task ->
 
-                    dismissProgressDialogue()
-
                     if(task.isSuccessful) {
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        displaySnackBar("You have logged in successfully", false)
+                        FireStoreClass().getUserDetails(this@LoginActivity)
                     }
                     else{
+                        dismissProgressDialogue()
                         displaySnackBar(task.exception!!.message.toString(), true)
                     }
 
                 }
 
         }
+    }
+
+    fun userLoggedInSuccess(user: User){
+
+        dismissProgressDialogue()
+
+        //log the user info
+        Log.i("First Name", user.firstName)
+        Log.i("Surname", user.surname)
+        Log.i("Email", user.email)
+
+
+        //if the user's profile is not fully completed, send them to the profile activity
+        //else, send them to the main activity
+        if(user.profileComplete == 0) {
+            val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
+
+            //we can send parcelized objects to the next activity using the putExtra() function
+            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+            startActivity(intent)
+        }
+        else{
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        }
+
+        //finish the login activity so the user can't use the back button to return to login
+        //once they have successfully logged in
+        finish()
     }
 }

@@ -17,6 +17,7 @@
 
 <!--    constraints for the text on the MainActivity page-->
     <com.example.e_commerce_11.utilities.BoldTextView
+        android:id="@+id/tv_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
