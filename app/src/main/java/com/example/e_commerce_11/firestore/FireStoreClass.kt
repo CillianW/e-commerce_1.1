@@ -9,10 +9,14 @@ package com.example.e_commerce_11.firestore
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.example.e_commerce_11.activities.LoginActivity
+import com.example.e_commerce_11.activities.MainActivity
 import com.example.e_commerce_11.activities.RegisterActivity
+import com.example.e_commerce_11.activities.UserProfileActivity
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -20,14 +24,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 
 class FireStoreClass {
-    private val mFireStore = FirebaseFirestore.getInstance()
+    private val myFireStore = FirebaseFirestore.getInstance()
 
 
     //register the users details on firestore
     fun registerUser(activity: RegisterActivity, user: User) {
 
         //create a collection called users if it doesn't already exist
-        mFireStore.collection(Constants.USERS)
+        myFireStore.collection(Constants.USERS)
                 //user details will be separated into documents, sorted by user IDs
             .document(user.id)
                 //add the user details to the document
@@ -69,7 +73,7 @@ class FireStoreClass {
     fun getUserDetails(activity: Activity) {
 
         //make a get request to the FireStore users collection
-        mFireStore.collection(Constants.USERS)
+        myFireStore.collection(Constants.USERS)
                 //find the document by user ID
             .document(getCurrentUserID())
                 //get request used to retrieve info
@@ -121,6 +125,34 @@ class FireStoreClass {
                     "Error while getting user details.",
                     e)
 
+            }
+    }
+
+    //update the user details on fireStore
+    fun updateUserProfile(activity: Activity, userHashMap: HashMap<String, Any>){
+
+        //send an update request to update user details
+        myFireStore.collection(Constants.USERS)
+            .document(getCurrentUserID())
+            .update(userHashMap)
+                //if successful, call the userInfoUpdatedSuccessfully function
+            .addOnSuccessListener {
+                when(activity){
+                    is UserProfileActivity -> {
+                        activity.userInfoUpdatedSuccessfully()
+                    }
+                }
+            }
+                //dismiss the progress dialogue and show the user a message if an error occurs
+            .addOnFailureListener{ e ->
+                when(activity){
+                    is UserProfileActivity -> {
+                        activity.dismissProgressDialogue()
+                    }
+                }
+                Log.e(activity.javaClass.simpleName,
+                "Error updating the user details ",
+                e)
             }
     }
 }

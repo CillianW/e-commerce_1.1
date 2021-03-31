@@ -197,7 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:width="1dp"
-                android:inputType="text"
+                android:inputType="phone"
                 android:padding="@dimen/et_padding"
                 android:textColor="@color/themeDarkPurple"
                 android:textSize="@dimen/et_textSize"

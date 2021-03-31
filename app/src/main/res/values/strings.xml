@@ -70,6 +70,8 @@
     <string name="hint_email_id">Email ID</string>
     <string name="hint_mobile">Mobile Number</string>
     <string name="btn_save_details">Save Details</string>
+    <string name="enter_mobile">Please enter a mobile number</string>
+
 
     <!--    Gender Selector-->
     <string name="gender_male">Male</string>

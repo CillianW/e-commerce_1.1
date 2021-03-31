@@ -13,15 +13,21 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.e_commerce_11.R
+import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import java.io.IOException
+
+
+private lateinit var userDetails : User
 
 class UserProfileActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +35,6 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_user_profile)
 
         //create a new User object and assign any parcelized user objects from the intent to it
-        var userDetails = User()
         if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)) {
             userDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
         }
@@ -44,7 +49,9 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         et_change_emailID.isEnabled = false
         et_change_emailID.setText(userDetails.email)
 
+        //setOnClickListeners for the relevant buttons / items
         img_profile_pic.setOnClickListener(this)
+        btn_save_details.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -71,10 +78,37 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                         )
                     }
                 }
+
+                R.id.btn_save_details -> {
+                    if(verifyUserProfileIsComplete()){
+
+                        //hashMap used for storing key:value pairs
+                        val userHashMap = HashMap<String, Any>()
+
+                        val mobileNumber = et_change_mobile.text.toString().trim{ it <= ' '}
+
+                        val gender = if(rb_male.isChecked){
+                            Constants.MALE
+                            }
+                            else{
+                                Constants.FEMALE
+                            }
+
+                        //pass the mobile number and gender in the appropriate format to the hashMap
+                        userHashMap[Constants.PHONE_NUMBER] = mobileNumber.toLong()
+                        userHashMap[Constants.GENDER] = gender
+
+                        displayProgressDialogue(resources.getString(R.string.please_wait))
+
+                        //update the profile
+                        FireStoreClass().updateUserProfile(this, userHashMap)
+                    }
+                }
             }
         }
     }
 
+    //process the result of the permission request
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -82,6 +116,9 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
+        //if the returned request code matches our own request code and the user has granted the permission,
+        //run the phone's image selector function
+        //else, display an error message
         if (requestCode == Constants.GALLERY_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Constants.imageSelector(this)
@@ -96,6 +133,8 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
     }
 
+    //checks that the selected image from the Constants.imageSelector function has been selected successfully,
+    //if so, assign it to img_profile_pic
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -114,5 +153,28 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    //ensure the user has filled out their profile
+    // we don't need to check first name, surname or email as we have already set the text in the onCreate method
+    private fun verifyUserProfileIsComplete() : Boolean{
+        return when{
+            TextUtils.isEmpty(et_change_mobile.text.toString().trim{it <= ' '}) -> {
+                displaySnackBar(resources.getString(R.string.enter_mobile), true)
+                false
+            }
+            else -> {
+                true
+            }
+        }
+    }
+
+    //displays a success message to the user upon successful update of user details
+    //also launches the main activity and finishes the UserProfileActivity
+    fun userInfoUpdatedSuccessfully(){
+        dismissProgressDialogue()
+        Toast.makeText(this, "Details updated successfully", Toast.LENGTH_SHORT)
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }

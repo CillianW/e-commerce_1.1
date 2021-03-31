@@ -144,6 +144,7 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
+    //displays a success message to the user upon successful registration
     fun userRegisteredSuccessfully(){
 
         dismissProgressDialogue()
