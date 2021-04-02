@@ -100,7 +100,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
             //logging in using FireBase authentication
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(){task ->
+                .addOnCompleteListener{task ->
 
                     if(task.isSuccessful) {
                         FireStoreClass().getUserDetails(this@LoginActivity)

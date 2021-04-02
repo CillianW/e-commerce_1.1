@@ -14,20 +14,26 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import java.io.IOException
 
 
 private lateinit var userDetails : User
+private var profilePictureURI : Uri? = null
 
 class UserProfileActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,6 +100,31 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                                 Constants.FEMALE
                             }
 
+                        //if a profile picture has been selected, upload it to the fireStore database
+                        if(profilePictureURI != null){
+                            val fileType  = MimeTypeMap.getSingleton()
+                                .getExtensionFromMimeType(contentResolver.getType(profilePictureURI!!))
+
+                            val fireStoreReference : StorageReference = FirebaseStorage.getInstance()
+                                .reference.child(userDetails.id + "profilePic"
+                                        + System.currentTimeMillis() + "." + fileType)
+
+                            fireStoreReference.putFile(profilePictureURI!!)
+                                .addOnSuccessListener { taskSnapshot ->
+                                    taskSnapshot.metadata!!.reference!!.downloadUrl
+                                }
+                                .addOnSuccessListener { url ->
+                                    uploadProfilePicURL(url.toString())
+                                }
+                                .addOnFailureListener{ e ->
+                                    Log.e(
+                                        javaClass.simpleName,
+                                        "Error uploading photo",
+                                        e
+                                    )
+                                }
+                        }
+
                         //pass the mobile number and gender in the appropriate format to the hashMap
                         userHashMap[Constants.PHONE_NUMBER] = mobileNumber.toLong()
                         userHashMap[Constants.GENDER] = gender
@@ -142,9 +173,14 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             if(requestCode == Constants.IMAGE_REQUEST_CODE){
                 if(data != null){
                     try{
-                        val selectedImageURI = data.data!!
+                        profilePictureURI = data.data!!
 
-                        img_profile_pic.setImageURI(Uri.parse(selectedImageURI.toString()))
+                        //load the image into the img_profile_pic using the URI
+                        //img_profile_pic.setImageURI(Uri.parse(profilePictureURI.toString()))
+
+                        //alternatively, we can use the Glide class to perform this action
+                        //The Glide class is useful because it accepts various file types as an argument
+                        Glide.with(this).load(profilePictureURI).into(img_profile_pic)
                     }
                     catch (e : IOException){
                         e.printStackTrace()
@@ -177,4 +213,12 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
+
+    private fun uploadProfilePicURL(url : String){
+        var userHashMap = HashMap<String, Any>()
+
+        userHashMap[Constants.IMAGE_URL] = url
+        FireStoreClass().updateUserProfile(this, userHashMap)
+    }
+
 }
