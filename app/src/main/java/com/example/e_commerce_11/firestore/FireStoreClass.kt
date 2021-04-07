@@ -155,4 +155,23 @@ class FireStoreClass {
                 e)
             }
     }
+
+    fun updateUserProfilePicture(activity: Activity, userHashMap: HashMap<String, Any>){
+
+        //send an update request to update user details
+        myFireStore.collection(Constants.USERS)
+            .document(getCurrentUserID())
+            .update(userHashMap)
+            //dismiss the progress dialogue and show the user a message if an error occurs
+            .addOnFailureListener{ e ->
+                when(activity){
+                    is UserProfileActivity -> {
+                        activity.dismissProgressDialogue()
+                    }
+                }
+                Log.e(activity.javaClass.simpleName,
+                    "Error updating the user details ",
+                    e)
+            }
+    }
 }

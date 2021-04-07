@@ -24,6 +24,7 @@ object Constants {
     const val GENDER : String = "gender"
     const val PHONE_NUMBER : String = "phoneNumber"
     const val IMAGE_URL : String = "imageURL"
+    const val PROFILE_COMPLETE = "profileComplete"
 
 
     //run the phone's image selector function

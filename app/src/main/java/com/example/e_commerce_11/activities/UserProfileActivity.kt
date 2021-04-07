@@ -11,8 +11,9 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -27,7 +28,6 @@ import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import java.io.IOException
 
@@ -100,6 +100,10 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                                 Constants.FEMALE
                             }
 
+                        //pass the mobile number and gender in the appropriate format to the hashMap
+                        userHashMap[Constants.PHONE_NUMBER] = mobileNumber.toLong()
+                        userHashMap[Constants.GENDER] = gender
+
                         //if a profile picture has been selected, upload it to the fireStore database
                         if(profilePictureURI != null){
                             val fileType  = MimeTypeMap.getSingleton()
@@ -114,7 +118,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                                     taskSnapshot.metadata!!.reference!!.downloadUrl
                                 }
                                 .addOnSuccessListener { url ->
-                                    uploadProfilePicURL(url.toString())
+                                    createProfilePicKeyValuePair(url.toString())
                                 }
                                 .addOnFailureListener{ e ->
                                     Log.e(
@@ -124,10 +128,6 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                                     )
                                 }
                         }
-
-                        //pass the mobile number and gender in the appropriate format to the hashMap
-                        userHashMap[Constants.PHONE_NUMBER] = mobileNumber.toLong()
-                        userHashMap[Constants.GENDER] = gender
 
                         displayProgressDialogue(resources.getString(R.string.please_wait))
 
@@ -180,7 +180,8 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
                         //alternatively, we can use the Glide class to perform this action
                         //The Glide class is useful because it accepts various file types as an argument
-                        Glide.with(this).load(profilePictureURI).into(img_profile_pic)
+                        Glide.with(this).load(profilePictureURI)
+                            .placeholder(R.drawable.empty_profile_pic).into(img_profile_pic)
                     }
                     catch (e : IOException){
                         e.printStackTrace()
@@ -210,15 +211,23 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
     fun userInfoUpdatedSuccessfully(){
         dismissProgressDialogue()
         Toast.makeText(this, "Details updated successfully", Toast.LENGTH_SHORT)
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+
+        //run next activity after a 2.5 second delay
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            },
+            500)
     }
 
-    private fun uploadProfilePicURL(url : String){
+    private fun createProfilePicKeyValuePair(url : String){
         var userHashMap = HashMap<String, Any>()
 
         userHashMap[Constants.IMAGE_URL] = url
-        FireStoreClass().updateUserProfile(this, userHashMap)
+        userHashMap[Constants.PROFILE_COMPLETE] = 1
+
+        FireStoreClass().updateUserProfilePicture(this, userHashMap)
     }
 
 }
