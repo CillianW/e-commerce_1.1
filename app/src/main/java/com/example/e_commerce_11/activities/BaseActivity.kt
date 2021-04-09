@@ -8,9 +8,13 @@ package com.example.e_commerce_11.activities
  */
 
 import android.app.Dialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.e_commerce_11.R
 import com.google.android.material.snackbar.Snackbar
@@ -21,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_register.*
 //      -validate a user entry
 open class BaseActivity : AppCompatActivity() {
 
+    private var backPressedOnce = false
     private lateinit var mProgressDialog: Dialog
 
     //a snackBar is used to display pop up messages
@@ -54,6 +59,24 @@ open class BaseActivity : AppCompatActivity() {
 
     fun dismissProgressDialogue(){
         mProgressDialog.dismiss()
+    }
+
+    fun doubleBackPressToExit(){
+
+        if (this.backPressedOnce){
+            super.onBackPressed()
+            return
+        }
+
+        this.backPressedOnce = true
+
+        Toast.makeText(this, R.string.press_back_again_to_exit.toString(), Toast.LENGTH_SHORT).show()
+
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                backPressedOnce = false
+            },
+            1500)
     }
 
 }

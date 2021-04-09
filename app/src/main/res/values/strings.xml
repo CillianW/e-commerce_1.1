@@ -78,5 +78,12 @@
     <string name="gender_female">Female</string>
 
 
+    <!--    Dashboard-->
+    <string name="title_activity_dashboard">Project</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="press_back_again_to_exit">Press back again to exit</string>
+
 
 </resources>
