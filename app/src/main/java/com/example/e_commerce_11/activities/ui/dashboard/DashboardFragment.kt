@@ -22,7 +22,7 @@ class DashboardFragment : Fragment() {
         //dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
         val textView: TextView = root.findViewById(R.id.text_dashboard)
-        textView.text = R.string.title_dashboard.toString()
+        textView.text =  resources.getString(R.string.title_dashboard)
         return root
     }
 }

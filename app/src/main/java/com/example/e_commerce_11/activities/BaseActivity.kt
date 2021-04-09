@@ -70,7 +70,7 @@ open class BaseActivity : AppCompatActivity() {
 
         this.backPressedOnce = true
 
-        Toast.makeText(this, R.string.press_back_again_to_exit.toString(), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, resources.getString(R.string.press_back_again_to_exit), Toast.LENGTH_SHORT).show()
 
         Handler(Looper.getMainLooper()).postDelayed(
             {
