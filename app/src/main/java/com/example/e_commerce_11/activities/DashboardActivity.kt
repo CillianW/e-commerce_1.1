@@ -7,9 +7,13 @@ package com.example.e_commerce_11.activities
  *Subject: Project
  */
 
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsets
+import androidx.annotation.RequiresApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -18,9 +22,17 @@ import com.example.e_commerce_11.R
 
 class DashboardActivity : BaseActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        supportActionBar!!.setBackgroundDrawable(
+            ContextCompat.getDrawable(this@DashboardActivity,
+            R.drawable.theme_portrait)
+        )
+
+
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)

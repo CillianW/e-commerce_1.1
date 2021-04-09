@@ -79,4 +79,5 @@ open class BaseActivity : AppCompatActivity() {
             1500)
     }
 
+
 }

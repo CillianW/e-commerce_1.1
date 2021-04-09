@@ -42,9 +42,8 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
-
     //this function sets up the back button at the of the screen
-    private fun setupActionBar(){
+    fun setupActionBar(){
         setSupportActionBar(toolbar_register_activity)
 
         val actionBar = supportActionBar

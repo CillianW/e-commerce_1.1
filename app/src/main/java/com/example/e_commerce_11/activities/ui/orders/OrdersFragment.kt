@@ -1,5 +1,12 @@
 package com.example.e_commerce_11.activities.ui.orders
 
+/**
+ *Author: Cillian Whelan
+ *Student Number: L00162026
+ *Course: BSc (Hons) Contemporary Software Development
+ *Subject: Project
+ */
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
