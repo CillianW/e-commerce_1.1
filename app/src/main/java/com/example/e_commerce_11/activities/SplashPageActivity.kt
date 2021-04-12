@@ -26,7 +26,7 @@ class SplashPageActivity : AppCompatActivity() {
         //run next activity after a 2.5 second delay
         Handler(Looper.getMainLooper()).postDelayed(
                 {
-                    startActivity(Intent(this@SplashPageActivity, DashboardActivity::class.java))
+                    startActivity(Intent(this@SplashPageActivity, LoginActivity::class.java))
                     finish()
                 },
                 1000)

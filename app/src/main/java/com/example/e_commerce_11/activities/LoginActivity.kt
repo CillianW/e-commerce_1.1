@@ -127,7 +127,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
         //if the user's profile is not fully completed, send them to the profile activity
         //else, send them to the main activity
-        if(user.profileComplete == 0) {
+        if(user.profileComplete == 1) {
             val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
 
             //we can send parcelized objects to the next activity using the putExtra() function

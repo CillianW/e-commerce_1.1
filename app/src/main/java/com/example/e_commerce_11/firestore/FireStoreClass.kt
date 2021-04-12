@@ -13,10 +13,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.e_commerce_11.activities.LoginActivity
-import com.example.e_commerce_11.activities.MainActivity
-import com.example.e_commerce_11.activities.RegisterActivity
-import com.example.e_commerce_11.activities.UserProfileActivity
+import com.example.e_commerce_11.activities.*
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -109,6 +106,11 @@ class FireStoreClass {
                             activity.userLoggedInSuccess(user)
                         }
                     }
+                    is SettingsActivity -> {
+                        if (user != null) {
+                            activity.userDetailsSuccess(user)
+                        }
+                    }
 
                 }
             }
@@ -117,6 +119,9 @@ class FireStoreClass {
 
                 when (activity) {
                     is LoginActivity -> {
+                        activity.dismissProgressDialogue()
+                    }
+                    is SettingsActivity ->{
                         activity.dismissProgressDialogue()
                     }
                 }

@@ -26,6 +26,7 @@ import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
+import com.example.e_commerce_11.utilities.GlideLoader
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_user_profile.*
@@ -54,6 +55,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
         et_change_emailID.isEnabled = false
         et_change_emailID.setText(userDetails.email)
+
 
         //setOnClickListeners for the relevant buttons / items
         img_profile_pic.setOnClickListener(this)
@@ -116,9 +118,9 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                             fireStoreReference.putFile(profilePictureURI!!)
                                 .addOnSuccessListener { taskSnapshot ->
                                     taskSnapshot.metadata!!.reference!!.downloadUrl
-                                }
-                                .addOnSuccessListener { url ->
-                                    createProfilePicKeyValuePair(url.toString())
+                                        .addOnSuccessListener { url ->
+                                            createProfilePicKeyValuePair(url.toString())
+                                        }
                                 }
                                 .addOnFailureListener{ e ->
                                     Log.e(
@@ -215,7 +217,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         //run next activity after a 2.5 second delay
         Handler(Looper.getMainLooper()).postDelayed(
             {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, DashboardActivity::class.java))
                 finish()
             },
             500)

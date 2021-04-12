@@ -68,12 +68,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <com.example.e_commerce_11.utilities.BoldTextView
+        android:id="@+id/settings_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/settings_profile_pic"
+        android:layout_marginTop="25dp"
+        android:gravity="center"/>
+
+    <com.example.e_commerce_11.utilities.BoldTextView
+        android:id="@+id/settings_user_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/settings_user_name"
+        android:layout_marginTop="25dp"
+        android:gravity="center"/>
+
+    <com.example.e_commerce_11.utilities.BoldTextView
+        android:id="@+id/settings_user_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/settings_user_email"
+        android:layout_marginTop="25dp"
+        android:gravity="center"/>
+
+    <com.example.e_commerce_11.utilities.BoldTextView
+        android:id="@+id/settings_user_gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/settings_user_phone_number"
+        android:layout_marginTop="25dp"
+        android:gravity="center"/>
+
+
     <com.example.e_commerce_11.utilities.Button
         android:id="@+id/btn_edit_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="100dp"
+        android:layout_marginTop="25dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:text="@string/btn_edit_details"
@@ -84,7 +117,7 @@
         android:gravity="center"
         android:textSize="@dimen/btn_textSize"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/btn_addresses"
+        app:layout_constraintTop_toBottomOf="@id/settings_user_gender"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.example.e_commerce_11.utilities.Button
@@ -92,7 +125,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="100dp"
+        android:layout_marginTop="25dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:text="@string/btn_addresses_string"
@@ -102,9 +135,8 @@
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
         android:textSize="@dimen/btn_textSize"
-
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/btn_logout"
+        app:layout_constraintTop_toBottomOf="@id/btn_edit_details"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.example.e_commerce_11.utilities.Button
@@ -112,7 +144,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="100dp"
+        android:layout_marginTop="25dp"
         android:layout_marginLeft="@dimen/btn_padding"
         android:layout_marginRight="@dimen/btn_padding"
         android:text="@string/btn_logout_string"
@@ -123,7 +155,7 @@
         android:gravity="center"
         android:textSize="@dimen/btn_textSize"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_addresses"
         app:layout_constraintEnd_toEndOf="parent"/>
 
 
