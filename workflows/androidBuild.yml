@@ -1,0 +1,8 @@
+name: android-build
+
+on: [push, commit, pull-request]
+
+  - name: "Build Android project"
+    uses: vgaidarji/android-github-actions-build@v1.0.1
+    with:
+      args: "./gradlew assembleDebug"
