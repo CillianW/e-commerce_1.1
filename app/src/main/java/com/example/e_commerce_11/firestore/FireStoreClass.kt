@@ -99,7 +99,6 @@ class FireStoreClass {
                 editor.apply()
 
 
-                //display a message to show user has logged in successfully
                 when (activity) {
                     is LoginActivity -> {
                         if (user != null) {
@@ -131,6 +130,7 @@ class FireStoreClass {
                     e)
 
             }
+
     }
 
     //update the user details on fireStore

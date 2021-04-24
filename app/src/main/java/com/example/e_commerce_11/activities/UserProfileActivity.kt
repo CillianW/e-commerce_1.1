@@ -44,17 +44,18 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         //create a new User object and assign any parcelized user objects from the intent to it
         if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)) {
             userDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
+
+
+            //disable editing and assign the appropriate user details to the relevant fields
+            et_change_first_name.isEnabled = false
+            et_change_first_name.setText(userDetails.firstName)
+
+            et_change_surname.isEnabled = false
+            et_change_surname.setText(userDetails.surname)
+
+            et_change_emailID.isEnabled = false
+            et_change_emailID.setText(userDetails.email)
         }
-
-        //disable editing and assign the appropriate user details to the relevant fields
-        et_change_first_name.isEnabled = false
-        et_change_first_name.setText(userDetails.firstName)
-
-        et_change_surname.isEnabled = false
-        et_change_surname.setText(userDetails.surname)
-
-        et_change_emailID.isEnabled = false
-        et_change_emailID.setText(userDetails.email)
 
 
         //setOnClickListeners for the relevant buttons / items
