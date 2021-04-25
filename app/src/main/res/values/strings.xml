@@ -95,6 +95,15 @@
 
 <!--    Product-->
     <string name="product_details">Product Details</string>
+    <string name="hint_product_name">Product Name</string>
+    <string name="edit_product_name">Product Name</string>
+    <string name="hint_product_description">Product Description</string>
+    <string name="edit_product_description">Product Description</string>
+    <string name="hint_price">Price</string>
+    <string name="edit_price">Price</string>
+    <string name="btn_save_product">Save Product</string>
+    <string name="edit_quantity">Quantity</string>
+    <string name="hint_quantity">Quantity</string>
 
 
 </resources>

@@ -15,4 +15,6 @@ class Products (
     val productName: String = "",
     val productDescription: String = "",
     val imageURL: String = "",
+    val price: Float,
+    val quantity: Int
 ) : Parcelable

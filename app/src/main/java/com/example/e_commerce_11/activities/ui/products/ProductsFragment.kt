@@ -61,7 +61,7 @@ class ProductsFragment : Fragment() {
         when(id) {
 
             R.id.action_add -> {
-                startActivity(Intent(activity, SplashPageActivity::class.java))
+                startActivity(Intent(activity, AddProductActivity::class.java))
 
                 return true
             }
