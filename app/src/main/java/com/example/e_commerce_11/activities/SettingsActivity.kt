@@ -26,6 +26,9 @@ import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.activity_user_profile.*
 
+
+private lateinit var userDetails: User
+
 class SettingsActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +63,9 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
     }
 
     fun userDetailsSuccess(user: User){
+
+        userDetails = user
+
         dismissProgressDialogue()
 
 
@@ -85,9 +91,9 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                 R.id.btn_edit_details -> {
                     val intent = Intent(this@SettingsActivity, UserProfileActivity::class.java)
 
-                    //we can send parcelized objects to the next activity using the putExtra() function
-                    //intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
-                    startActivity(intent)                }
+                    intent.putExtra(Constants.EXTRA_USER_DETAILS, userDetails)
+                    startActivity(intent)
+                }
 
                 R.id.btn_addresses -> {
 

@@ -29,6 +29,7 @@ import com.example.e_commerce_11.utilities.Constants
 import com.example.e_commerce_11.utilities.GlideLoader
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import java.io.IOException
 
@@ -55,6 +56,13 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
             et_change_emailID.isEnabled = false
             et_change_emailID.setText(userDetails.email)
+
+            if(userDetails.profileComplete != 0){
+                Glide.with(this).load("${userDetails.imageURL}")
+                    .placeholder(R.drawable.empty_profile_pic).into(img_profile_pic)
+
+                et_change_mobile.setText(userDetails.phoneNumber.toString())
+            }
         }
 
 
