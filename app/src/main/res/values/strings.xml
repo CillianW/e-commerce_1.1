@@ -71,6 +71,7 @@
     <string name="hint_mobile">Mobile Number</string>
     <string name="btn_save_details">Save Details</string>
     <string name="enter_mobile">Please enter a mobile number</string>
+    <string name="cant_change_email">You cannot change the email address associated with your account</string>
 
 
     <!--    Gender Selector-->

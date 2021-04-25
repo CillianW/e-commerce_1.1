@@ -21,6 +21,8 @@ import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
 import com.example.e_commerce_11.utilities.GlideLoader
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -39,6 +41,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         //getUserDetails()
         btn_edit_details.setOnClickListener(this)
         btn_addresses.setOnClickListener(this)
+        btn_logout.setOnClickListener(this)
     }
 
     //this function sets up the back button at the of the screen
@@ -95,7 +98,13 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                     startActivity(intent)
                 }
 
-                R.id.btn_addresses -> {
+                R.id.btn_logout -> {
+                    FirebaseAuth.getInstance().signOut()
+
+                    val intent = Intent(this@SettingsActivity, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
 
                 }
             }

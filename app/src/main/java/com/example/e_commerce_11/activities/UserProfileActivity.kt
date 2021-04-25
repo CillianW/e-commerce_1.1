@@ -48,14 +48,15 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
 
             //disable editing and assign the appropriate user details to the relevant fields
-            et_change_first_name.isEnabled = false
+            //et_change_first_name.isEnabled = false
             et_change_first_name.setText(userDetails.firstName)
 
-            et_change_surname.isEnabled = false
+            //et_change_surname.isEnabled = false
             et_change_surname.setText(userDetails.surname)
 
             et_change_emailID.isEnabled = false
             et_change_emailID.setText(userDetails.email)
+            et_change_emailID.setTextColor(resources.getColor(R.color.grey))
 
             if(userDetails.profileComplete != 0){
                 Glide.with(this).load("${userDetails.imageURL}")
@@ -146,6 +147,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                         FireStoreClass().updateUserProfile(this, userHashMap)
                     }
                 }
+
             }
         }
     }
