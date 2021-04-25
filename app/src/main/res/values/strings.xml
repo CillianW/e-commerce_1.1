@@ -71,12 +71,26 @@
     <string name="hint_mobile">Mobile Number</string>
     <string name="btn_save_details">Save Details</string>
     <string name="enter_mobile">Please enter a mobile number</string>
+    <string name="cant_change_email">You cannot change the email address associated with your account</string>
 
 
     <!--    Gender Selector-->
     <string name="gender_male">Male</string>
     <string name="gender_female">Female</string>
 
+
+    <!--    Dashboard-->
+    <string name="title_activity_dashboard">Project</string>
+    <string name="title_products">Products</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_orders">Orders</string>
+    <string name="press_back_again_to_exit">Press back again to exit</string>
+    <string name="title_settings">Settings</string>
+
+    <!--    Settings Activity-->
+    <string name="btn_logout_string">Logout</string>
+    <string name="btn_addresses_string">Addresses</string>
+    <string name="btn_edit_details">Edit user details</string>
 
 
 </resources>

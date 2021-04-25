@@ -26,6 +26,7 @@
 
 
         <com.example.e_commerce_11.utilities.BoldTextView
+            android:id="@+id/user_profile_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -67,6 +68,7 @@
                     android:layout_height="match_parent"
                     android:adjustViewBounds="false"
                     android:padding="@dimen/btn_padding"
+                    android:scaleType="fitXY"
                     android:src="@drawable/empty_profile_pic_male_foreground"
                     android:layout_gravity="center_horizontal"
                     app:layout_constraintEnd_toEndOf="parent"

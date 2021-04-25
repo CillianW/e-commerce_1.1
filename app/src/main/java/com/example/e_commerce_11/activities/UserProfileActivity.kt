@@ -11,23 +11,31 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
-import kotlinx.android.synthetic.main.activity_register.*
+import com.example.e_commerce_11.utilities.GlideLoader
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import java.io.IOException
 
 
 private lateinit var userDetails : User
+private var profilePictureURI : Uri? = null
 
 class UserProfileActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,17 +45,27 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         //create a new User object and assign any parcelized user objects from the intent to it
         if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)) {
             userDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
+
+
+            //disable editing and assign the appropriate user details to the relevant fields
+            //et_change_first_name.isEnabled = false
+            et_change_first_name.setText(userDetails.firstName)
+
+            //et_change_surname.isEnabled = false
+            et_change_surname.setText(userDetails.surname)
+
+            et_change_emailID.isEnabled = false
+            et_change_emailID.setText(userDetails.email)
+            et_change_emailID.setTextColor(resources.getColor(R.color.grey))
+
+            if(userDetails.profileComplete != 0){
+                Glide.with(this).load("${userDetails.imageURL}")
+                    .placeholder(R.drawable.empty_profile_pic).into(img_profile_pic)
+
+                et_change_mobile.setText(userDetails.phoneNumber.toString())
+            }
         }
 
-        //disable editing and assign the appropriate user details to the relevant fields
-        et_change_first_name.isEnabled = false
-        et_change_first_name.setText(userDetails.firstName)
-
-        et_change_surname.isEnabled = false
-        et_change_surname.setText(userDetails.surname)
-
-        et_change_emailID.isEnabled = false
-        et_change_emailID.setText(userDetails.email)
 
         //setOnClickListeners for the relevant buttons / items
         img_profile_pic.setOnClickListener(this)
@@ -98,12 +116,38 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                         userHashMap[Constants.PHONE_NUMBER] = mobileNumber.toLong()
                         userHashMap[Constants.GENDER] = gender
 
+                        //if a profile picture has been selected, upload it to the fireStore database
+                        if(profilePictureURI != null){
+                            val fileType  = MimeTypeMap.getSingleton()
+                                .getExtensionFromMimeType(contentResolver.getType(profilePictureURI!!))
+
+                            val fireStoreReference : StorageReference = FirebaseStorage.getInstance()
+                                .reference.child(userDetails.id + "profilePic"
+                                        + System.currentTimeMillis() + "." + fileType)
+
+                            fireStoreReference.putFile(profilePictureURI!!)
+                                .addOnSuccessListener { taskSnapshot ->
+                                    taskSnapshot.metadata!!.reference!!.downloadUrl
+                                        .addOnSuccessListener { url ->
+                                            createProfilePicKeyValuePair(url.toString())
+                                        }
+                                }
+                                .addOnFailureListener{ e ->
+                                    Log.e(
+                                        javaClass.simpleName,
+                                        "Error uploading photo",
+                                        e
+                                    )
+                                }
+                        }
+
                         displayProgressDialogue(resources.getString(R.string.please_wait))
 
                         //update the profile
                         FireStoreClass().updateUserProfile(this, userHashMap)
                     }
                 }
+
             }
         }
     }
@@ -142,9 +186,15 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             if(requestCode == Constants.IMAGE_REQUEST_CODE){
                 if(data != null){
                     try{
-                        val selectedImageURI = data.data!!
+                        profilePictureURI = data.data!!
 
-                        img_profile_pic.setImageURI(Uri.parse(selectedImageURI.toString()))
+                        //load the image into the img_profile_pic using the URI
+                        //img_profile_pic.setImageURI(Uri.parse(profilePictureURI.toString()))
+
+                        //alternatively, we can use the Glide class to perform this action
+                        //The Glide class is useful because it accepts various file types as an argument
+                        Glide.with(this).load(profilePictureURI)
+                            .placeholder(R.drawable.empty_profile_pic).into(img_profile_pic)
                     }
                     catch (e : IOException){
                         e.printStackTrace()
@@ -174,7 +224,23 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
     fun userInfoUpdatedSuccessfully(){
         dismissProgressDialogue()
         Toast.makeText(this, "Details updated successfully", Toast.LENGTH_SHORT)
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+
+        //run next activity after a 2.5 second delay
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                startActivity(Intent(this, DashboardActivity::class.java))
+                finish()
+            },
+            500)
     }
+
+    private fun createProfilePicKeyValuePair(url : String){
+        var userHashMap = HashMap<String, Any>()
+
+        userHashMap[Constants.IMAGE_URL] = url
+        userHashMap[Constants.PROFILE_COMPLETE] = 1
+
+        FireStoreClass().updateUserProfilePicture(this, userHashMap)
+    }
+
 }
