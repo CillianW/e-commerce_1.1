@@ -9,17 +9,10 @@ import kotlinx.android.parcel.Parcelize
  *Course: BSc (Hons) Contemporary Software Development
  *Subject: Project
  */
-
-//@Parcelize is used to allow us to pass a User object between activities
 @Parcelize
-class User (
+class Products (
     val id: String = "",
-    val firstName: String = "",
-    val surname: String = "",
-    val email: String = "",
-    val gender: String = "",
+    val productName: String = "",
+    val productDescription: String = "",
     val imageURL: String = "",
-    val phoneNumber: Long = 0,
-    val profileComplete: Int = 0,
-    val admin : Int = 0
 ) : Parcelable

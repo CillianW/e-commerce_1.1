@@ -19,6 +19,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.e_commerce_11.R
+import com.example.e_commerce_11.firestore.FireStoreClass
+import com.example.e_commerce_11.models.User
 
 class DashboardActivity : BaseActivity() {
 
@@ -32,7 +34,6 @@ class DashboardActivity : BaseActivity() {
             R.drawable.theme_portrait)
         )
 
-
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -45,9 +46,11 @@ class DashboardActivity : BaseActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
     }
 
     override fun onBackPressed() {
         doubleBackPressToExit()
     }
+
 }

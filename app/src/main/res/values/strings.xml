@@ -86,11 +86,15 @@
     <string name="title_orders">Orders</string>
     <string name="press_back_again_to_exit">Press back again to exit</string>
     <string name="title_settings">Settings</string>
+    <string name="add_products">Add Products</string>
 
     <!--    Settings Activity-->
     <string name="btn_logout_string">Logout</string>
     <string name="btn_addresses_string">Addresses</string>
     <string name="btn_edit_details">Edit user details</string>
+
+<!--    Product-->
+    <string name="product_details">Product Details</string>
 
 
 </resources>
