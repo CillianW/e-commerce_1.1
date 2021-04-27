@@ -14,7 +14,7 @@ class Product (
     //var id: String = "",
     var productName: String = "",
     var productDescription: String = "",
-    var imageURL: String = "",
+    var productImgURI: String = "",
     var price: String,
     var quantity: String
 ) : Parcelable

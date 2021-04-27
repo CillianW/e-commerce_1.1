@@ -209,4 +209,25 @@ class FireStoreClass {
                 )
             }
     }
+
+    fun updateProductPicture(activity: Activity, userHashMap: HashMap<String, Any>, productName: String) {
+
+        //send an update request to update user details
+        myFireStore.collection(Constants.PRODUCTS)
+            .document(productName)
+            .update(userHashMap)
+            //dismiss the progress dialogue and show the user a message if an error occurs
+            .addOnFailureListener { e ->
+                when (activity) {
+                    is AddProductActivity -> {
+                        activity.dismissProgressDialogue()
+                    }
+                }
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error updating the user details ",
+                    e
+                )
+            }
+    }
 }

@@ -15,7 +15,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -24,6 +27,8 @@ import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.Product
 import com.example.e_commerce_11.utilities.Constants
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_add_product.*
 import kotlinx.android.synthetic.main.activity_register.*
 import java.io.IOException
@@ -63,27 +68,55 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                         )
                     }
 
-
                 }
                 R.id.btn_save_product -> {
 
-                    displayProgressDialogue(resources.getString(R.string.please_wait))
+                    if (verifyProductDetails()) {
 
-                    val id = et_change_product_name.text.toString() + System.currentTimeMillis()
+                        displayProgressDialogue(resources.getString(R.string.please_wait))
 
-                    productDetails = Product(et_change_product_name.text.toString(), et_change_product_description.text.toString(),
-                        "image url",
-                        et_price.text.toString(), et_change_quantity.text.toString())
+                        val fileType  = MimeTypeMap.getSingleton()
+                            .getExtensionFromMimeType(contentResolver.getType(productImgURI!!))
 
-                    //pass the new user object to the FireStore
-                    FireStoreClass().createProduct(this@AddProductActivity, productDetails!!)
+                        val fireStoreReference : StorageReference = FirebaseStorage.getInstance()
+                            .reference.child(
+                                et_change_product_name.text.toString() + "productImage"
+                                        + System.currentTimeMillis() + "." + fileType)
 
-                    Handler(Looper.getMainLooper()).postDelayed(
-                        {
-                            finish()
-                        },
-                        1000
-                    )
+                        productDetails = Product(
+                            et_change_product_name.text.toString(),
+                            et_change_product_description.text.toString(),
+                            fireStoreReference.toString(),
+                            et_price.text.toString(),
+                            et_change_quantity.text.toString()
+                        )
+
+                        //pass the new user object to the FireStore
+                        FireStoreClass().createProduct(this@AddProductActivity, productDetails!!)
+
+                        fireStoreReference.putFile(productImgURI!!)
+                            .addOnSuccessListener { taskSnapshot ->
+                                taskSnapshot.metadata!!.reference!!.downloadUrl
+                                    .addOnSuccessListener { url ->
+                                        createProfilePicKeyValuePair(url.toString(), et_change_product_name.text.toString())
+                                    }
+                            }
+                            .addOnFailureListener{ e ->
+                                Log.e(
+                                    javaClass.simpleName,
+                                    "Error uploading photo",
+                                    e
+                                )
+                            }
+
+                        Handler(Looper.getMainLooper()).postDelayed(
+                            {
+                                //finish()
+                            },
+                            1000
+                        )
+                    }
+
                 }
                 }
             }
@@ -152,6 +185,44 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
             Toast.LENGTH_SHORT).show()
     }
 
+
+    private fun verifyProductDetails() : Boolean{
+        return when{
+            TextUtils.isEmpty(et_change_product_name.text.toString().trim{it <= ' '}) -> {
+                displaySnackBar(resources.getString(R.string.enter_product_name), true)
+                false
+            }
+            TextUtils.isEmpty(et_change_product_description.text.toString().trim{it <= ' '}) -> {
+                displaySnackBar(resources.getString(R.string.enter_product_description), true)
+                false
+            }
+            TextUtils.isEmpty(et_price.text.toString().trim{it <= ' '}) -> {
+                displaySnackBar(resources.getString(R.string.enter_price), true)
+                false
+            }
+            TextUtils.isEmpty(et_change_quantity.text.toString().trim{it <= ' '}) -> {
+                displaySnackBar(resources.getString(R.string.enter_quantity), true)
+                false
+            }
+            productImgURI == null -> {
+                displaySnackBar(resources.getString(R.string.select_picture), true)
+                false
+            }
+            else -> {
+                true
+            }
+        }
+    }
+
+    private fun createProfilePicKeyValuePair(url : String, productName: String){
+        var userHashMap = HashMap<String, Any>()
+        userHashMap[Constants.PRODUCT_IMG_URI] = url
+
+        Log.i("Image URL", url)
+        Log.i("productName", et_change_product_name.toString())
+
+        FireStoreClass().updateProductPicture(this, userHashMap, productName)
+    }
 
 
 }
