@@ -104,6 +104,7 @@
     <string name="btn_save_product">Save Product</string>
     <string name="edit_quantity">Quantity</string>
     <string name="hint_quantity">Quantity</string>
+    <string name="product_added_successfully">Product added successfully</string>
 
 
 </resources>
