@@ -157,6 +157,9 @@ class FireStoreClass {
                     is UserProfileActivity -> {
                         activity.dismissProgressDialogue()
                     }
+                    is AddressActivity -> {
+                        activity.dismissProgressDialogue()
+                    }
                 }
                 Log.e(
                     activity.javaClass.simpleName,

@@ -7,6 +7,7 @@ package com.example.e_commerce_11.activities
  *Subject: Project
  */
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ import androidx.core.content.ContextCompat
 import com.example.e_commerce_11.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_settings.*
 
 //this activity provides the functionality to:
 //      -display an error/success message in other activities

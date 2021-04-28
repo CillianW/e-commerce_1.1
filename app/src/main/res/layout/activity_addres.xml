@@ -11,12 +11,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".activities.UserProfileActivity">
+    tools:context=".activities.UserProfileActivity"
+    android:background="@color/white">
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_add_product_activity"
+        android:id="@+id/toolbar_address_activity"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/theme_landscape"
@@ -26,83 +26,55 @@
 
 
         <com.example.e_commerce_11.utilities.BoldTextView
-            android:id="@+id/product_title"
+            android:id="@+id/address_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginRight="75dp"
-            android:background="@android:color/transparent"
             android:gravity="center_horizontal"
-            android:text="@string/product_details"
-            android:textColor="@color/white"
+            android:layout_gravity="center_vertical"
+            android:text="@string/title_address"
             android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textColor="@color/white"
+            android:background="@android:color/transparent"
+            android:textStyle="bold"/>
 
     </androidx.appcompat.widget.Toolbar>
 
 
     <ScrollView
+        android:id="@+id/sv_address"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/toolbar_add_product_activity"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_add_product_activity">
+        app:layout_constraintStart_toEndOf="@id/toolbar_address_activity"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_address_activity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <FrameLayout
-                android:id="@+id/fl_product_pic"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="20dp"
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_change_address_line_1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/hint_address_line_1"
+                android:textColorHint="@color/themeDarkPurple"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="#000000"
+                app:boxStrokeWidth="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/product_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:adjustViewBounds="false"
-                    android:padding="@dimen/btn_padding"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/empty_product"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar_add_product_activity" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/profile_pic_border" />
-
-            </FrameLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_change_product_name"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/hint_product_name"
-                android:textColorHint="@color/themeDarkPurple"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="#000000"
-                app:boxStrokeWidth="1dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fl_product_pic">
-
                 <com.example.e_commerce_11.utilities.EditText
-                    android:id="@+id/et_change_product_name"
+                    android:id="@+id/et_change_address_line_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:width="1dp"
@@ -111,29 +83,29 @@
                     android:textColor="@color/themeDarkPurple"
                     android:textSize="@dimen/et_textSize"
                     android:visibility="visible"
-                    tools:text="@string/edit_product_name" />
+                    tools:text="@string/et_address_line_1" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_change_product_description"
+                android:id="@+id/til_change_address_line_2"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/hint_product_description"
+                android:hint="@string/hint_address_line_2"
                 android:textColorHint="@color/themeDarkPurple"
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="#000000"
                 app:boxStrokeWidth="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_change_product_name">
+                app:layout_constraintTop_toBottomOf="@id/til_change_address_line_1">
 
                 <com.example.e_commerce_11.utilities.EditText
-                    android:id="@+id/et_change_product_description"
+                    android:id="@+id/et_change_address_line_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:width="1dp"
@@ -142,75 +114,74 @@
                     android:textColor="@color/themeDarkPurple"
                     android:textSize="@dimen/et_textSize"
                     android:visibility="visible"
-                    tools:text="@string/edit_product_description" />
+                    tools:text="@string/et_address_line_2" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_change_price"
+                android:id="@+id/til_change_address_line_3"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/hint_price"
+                android:hint="@string/hint_address_line_3"
                 android:textColorHint="@color/themeDarkPurple"
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="#000000"
                 app:boxStrokeWidth="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_change_product_description">
+                app:layout_constraintTop_toBottomOf="@id/til_change_address_line_2">
 
                 <com.example.e_commerce_11.utilities.EditText
-                    android:id="@+id/et_price"
+                    android:id="@+id/et_change_address_line_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:width="1dp"
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     android:padding="@dimen/et_padding"
                     android:textColor="@color/themeDarkPurple"
                     android:textSize="@dimen/et_textSize"
                     android:visibility="visible"
-                    tools:text="@string/edit_price" />
-
+                    tools:text="@string/et_address_line_3" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_change_quantity"
+                android:id="@+id/til_change_address_line_4"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/hint_quantity"
+                android:hint="@string/hint_address_line_4"
                 android:textColorHint="@color/themeDarkPurple"
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="#000000"
                 app:boxStrokeWidth="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_change_price">
+                app:layout_constraintTop_toBottomOf="@id/til_change_address_line_3">
 
                 <com.example.e_commerce_11.utilities.EditText
-                    android:id="@+id/et_change_quantity"
+                    android:id="@+id/et_change_address_line_4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:width="1dp"
-                    android:inputType="number"
                     android:padding="@dimen/et_padding"
                     android:textColor="@color/themeDarkPurple"
                     android:textSize="@dimen/et_textSize"
                     android:visibility="visible"
-                    tools:text="@string/edit_quantity" />
+                    tools:text="@string/et_address_line_4" />
             </com.google.android.material.textfield.TextInputLayout>
+
 
 
             <com.example.e_commerce_11.utilities.Button
-                android:id="@+id/btn_save_product"
+                android:id="@+id/btn_save_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -222,12 +193,12 @@
                 android:gravity="center"
                 android:paddingTop="@dimen/btn_padding"
                 android:paddingBottom="@dimen/btn_padding"
-                android:text="@string/btn_save_product"
+                android:text="@string/btn_save_details"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/btn_textSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_change_quantity" />
+                app:layout_constraintTop_toBottomOf="@id/til_change_address_line_4"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

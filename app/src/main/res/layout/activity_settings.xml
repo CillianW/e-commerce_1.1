@@ -131,7 +131,7 @@
         android:layout_marginTop="25dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:text="@string/btn_addresses_string"
+        android:text="@string/btn_address_string"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:background="@drawable/button_background_grey"

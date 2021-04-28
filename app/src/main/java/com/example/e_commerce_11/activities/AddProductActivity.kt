@@ -30,6 +30,7 @@ import com.example.e_commerce_11.utilities.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_add_product.*
+import kotlinx.android.synthetic.main.activity_addres.*
 import kotlinx.android.synthetic.main.activity_register.*
 import java.io.IOException
 
@@ -41,6 +42,8 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_product)
+
+        setupActionBar()
 
         product_img.setOnClickListener(this)
         btn_save_product.setOnClickListener(this)
@@ -222,6 +225,22 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         Log.i("productName", et_change_product_name.toString())
 
         FireStoreClass().updateProductPicture(this, userHashMap, productName)
+    }
+
+    //this function sets up the back button at the of the screen
+    private fun setupActionBar(){
+        setSupportActionBar(toolbar_add_product_activity)
+
+        val actionBar = supportActionBar
+
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_white)
+        }
+
+        toolbar_add_product_activity.setNavigationOnClickListener{
+            onBackPressed()
+            finish()}
     }
 
 

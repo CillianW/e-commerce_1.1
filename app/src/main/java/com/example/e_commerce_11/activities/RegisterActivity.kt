@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_settings.*
 
 
 //register activity allows new members to create an account
@@ -42,21 +43,6 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
-    //this function sets up the back button at the of the screen
-    fun setupActionBar(){
-        setSupportActionBar(toolbar_register_activity)
-
-        val actionBar = supportActionBar
-
-        if(actionBar != null){
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_purple)
-        }
-
-        toolbar_register_activity.setNavigationOnClickListener{
-            onBackPressed()
-            finish()}
-    }
 
     //this function sets the error message to be displayed if a user does not enter details in a field
     private fun verifyUserDetails() : Boolean{
@@ -122,7 +108,7 @@ class RegisterActivity : BaseActivity() {
                                 firebaseUser.uid,
                                 edit_first_name.text.toString().trim{ it <= ' '},
                                 edit_surname.text.toString().trim{ it <= ' '},
-                                edit_email.text.toString().trim{ it <= ' '},
+                                edit_email.text.toString().trim{ it <= ' '}
                             )
 
                             //pass the new user object to the FireStore
@@ -151,6 +137,22 @@ class RegisterActivity : BaseActivity() {
         Toast.makeText(this@RegisterActivity,
             resources.getString(R.string.user_registered_successfully),
             Toast.LENGTH_SHORT).show()
+    }
+
+    //this function sets up the back button at the of the screen
+    private fun setupActionBar(){
+        setSupportActionBar(toolbar_settings_activity)
+
+        val actionBar = supportActionBar
+
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_white)
+        }
+
+        toolbar_settings_activity.setNavigationOnClickListener{
+            onBackPressed()
+            finish()}
     }
 
 }
