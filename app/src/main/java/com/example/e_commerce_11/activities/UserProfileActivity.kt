@@ -42,6 +42,8 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile)
 
+        setupActionBar()
+
         //create a new User object and assign any parcelized user objects from the intent to it
         if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)) {
             userDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
@@ -241,6 +243,22 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         userHashMap[Constants.PROFILE_COMPLETE] = 1
 
         FireStoreClass().updateUserProfilePicture(this, userHashMap)
+    }
+
+    //this function sets up the back button at the of the screen
+    private fun setupActionBar(){
+        setSupportActionBar(toolbar_user_profile_activity)
+
+        val actionBar = supportActionBar
+
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_white)
+        }
+
+        toolbar_user_profile_activity.setNavigationOnClickListener{
+            onBackPressed()
+            finish()}
     }
 
 }
