@@ -60,6 +60,13 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             et_change_emailID.setText(userDetails.email)
             et_change_emailID.setTextColor(resources.getColor(R.color.grey))
 
+            if(userDetails.gender == Constants.MALE){
+                rb_male.isChecked = true
+            }
+            else{
+                rb_female.isChecked = true
+            }
+
             if(userDetails.profileComplete != 0){
                 Glide.with(this).load("${userDetails.imageURL}")
                     .placeholder(R.drawable.empty_profile_pic).into(img_profile_pic)

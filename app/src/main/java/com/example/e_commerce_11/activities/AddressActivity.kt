@@ -21,7 +21,14 @@ class AddressActivity : BaseActivity(), View.OnClickListener {
 
         if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)) {
             userDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
+
+            et_change_address_line_1.setText(userDetails.address1)
+            et_change_address_line_2.setText(userDetails.address2)
+            et_change_address_line_3.setText(userDetails.address3)
+            et_change_address_line_4.setText(userDetails.address4)
         }
+
+
 
         btn_save_address.setOnClickListener(this)
     }
