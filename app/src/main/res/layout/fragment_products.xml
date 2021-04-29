@@ -21,25 +21,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".MainActivity"
-        tools:showIn="@layout/activity_main">
+        tools:context=".activities.DashboardActivity"
+        tools:showIn="@layout/fragment_products">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvItemsList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
-<!--<Button-->
-<!--android:id="@+id/btn_get_products"-->
-<!--android:layout_width="50dp"-->
-<!--android:layout_height="50dp"-->
-<!--android:gravity="center_vertical"-->
-<!--app:layout_constraintStart_toStartOf="parent"-->
-<!--app:layout_constraintEnd_toEndOf="parent"-->
-<!--app:layout_constraintTop_toTopOf="parent"-->
-<!--app:layout_constraintBottom_toBottomOf="parent"-->
-<!--    />-->

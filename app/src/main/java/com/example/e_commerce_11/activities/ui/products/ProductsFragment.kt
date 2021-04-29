@@ -7,35 +7,47 @@ package com.example.e_commerce_11.activities.ui.products
  *Subject: Project
  */
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.*
-import android.widget.TextView
-import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.activities.*
 import com.example.e_commerce_11.activities.ui.base_fragment.BaseFragment
-import com.example.e_commerce_11.firestore.FireStoreClass
+import com.example.e_commerce_11.models.Product
 import com.example.e_commerce_11.models.User
-import com.example.e_commerce_11.utilities.Button
 import com.example.e_commerce_11.utilities.Constants
+import com.example.e_commerce_11.utilities.ItemAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_products.*
 
-class ProductsFragment : BaseFragment(), View.OnClickListener {
+class ProductsFragment : BaseFragment() {
 
-    private lateinit var userDetails : User
-    //private lateinit var productsViewModel: ProductsViewModel
+    private lateinit var userDetails: User
+    private lateinit var productArray: ArrayList<Product>
+    private var check: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        displayProgressDialogue(R.string.please_wait.toString())
+
         getUserDetails()
+        productArray = getProducts()
+
+
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                listView()
+            },
+            750
+        )
 
     }
 
@@ -44,13 +56,7 @@ class ProductsFragment : BaseFragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_products, container, false)
-
-        //test button for retrieving products from database and logging them
-//        val button: android.widget.Button = root.findViewById(R.id.btn_get_products)
-//        button.setOnClickListener(this)
-        return root
+        return inflater.inflate(R.layout.fragment_products, container, false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -62,7 +68,7 @@ class ProductsFragment : BaseFragment(), View.OnClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId) {
+        when (item.itemId) {
 
             R.id.action_add -> {
                 startActivity(Intent(activity, AddProductActivity::class.java))
@@ -73,6 +79,7 @@ class ProductsFragment : BaseFragment(), View.OnClickListener {
 
         return super.onOptionsItemSelected(item)
     }
+
     private fun getCurrentUserID(): String {
 
         //get user details from Firebase
@@ -88,7 +95,8 @@ class ProductsFragment : BaseFragment(), View.OnClickListener {
         //return the user ID
         return currentUserID
     }
-    private fun getUserDetails(){
+
+    private fun getUserDetails() {
 
         FirebaseFirestore.getInstance().collection(Constants.USERS)
             //find the document by user ID
@@ -101,43 +109,69 @@ class ProductsFragment : BaseFragment(), View.OnClickListener {
                 //create a User object using the details we just retrieved
                 userDetails = document.toObject(User::class.java)!!
 
-                if(userDetails.admin != 0){
+                if (userDetails.admin != 0) {
                     setHasOptionsMenu(true)
                 }
             }
             //display a message if an error occurs
             .addOnFailureListener { e ->
-                Log.e("Error",
+                Log.e(
+                    "Error",
                     "Error while getting user details.",
-                    e)
+                    e
+                )
             }
     }
 
-    private fun getProducts(){
+    private fun getProducts(): ArrayList<Product> {
+
+        var products: ArrayList<Product> = ArrayList()
+
         FirebaseFirestore.getInstance().collection(Constants.PRODUCTS)
             //get request used to retrieve info
             .get()
-            //if successful, store user details to the device
             .addOnSuccessListener { result ->
 
-                for (x in result) {
-                    Log.i("Products", x.toString())
-                }
+//                test += test
 
+//                Log.i("in Lambda: ", test.toString())
+
+                for (x in result) {
+                    val item = Product("", "", "", "", "")
+
+                    item.productName = x.getString(Constants.PRODUCT_NAME).toString()
+                    item.productDescription = x.getString(Constants.PRODUCT_DESCRIPTION).toString()
+                    item.price = x.getString(Constants.PRODUCT_PRICE).toString()
+                    item.quantity = x.getString(Constants.PRODUCT_QUANTITY).toString()
+                    item.productImgURI = x.getString(Constants.PRODUCT_IMG_URI).toString()
+
+                    products.add(item)
                 }
             }
+            .addOnFailureListener { e ->
+                Log.e(e.toString(), "Error loading products")
+            }
 
-    override fun onClick(v: View?) {
-
-            if(v != null){
-
-//                when (v.id){
-//
-//                    R.id.btn_get_products -> {
-//                        getProducts()
-//                }
-//            }
-        }
+        return products
     }
+
+    private fun listView() {
+
+        // Set the LayoutManager that this RecyclerView will use.
+        rvItemsList.layoutManager = LinearLayoutManager(context)
+        // Adapter class is initialized and list is passed in the param.
+        val itemAdapter = context?.let { ItemAdapter(it, productArray) }
+        // adapter instance is set to the recyclerview to inflate the items.
+        rvItemsList.adapter = itemAdapter
+
+        dismissProgressDialogue()
+    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//
+//        listView()
+//    }
+
 
 }
