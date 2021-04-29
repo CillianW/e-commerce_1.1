@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
+import android.view.View
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
@@ -150,7 +151,7 @@ class RegisterActivity : BaseActivity() {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_white)
         }
 
-        toolbar_settings_activity.setNavigationOnClickListener{
+        toolbar_register_activity.setNavigationOnClickListener{
             onBackPressed()
             finish()}
     }

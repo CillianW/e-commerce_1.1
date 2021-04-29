@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/img_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:src="@drawable/empty_product"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.example.e_commerce_11.utilities.BoldTextView
+            android:id="@+id/text_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="Item Name"
+            android:textStyle="bold"/>
+
+        <com.example.e_commerce_11.utilities.BoldTextView
+            android:id="@+id/text_item_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="Item Description"/>
+
+        <com.example.e_commerce_11.utilities.BoldTextView
+            android:id="@+id/text_item_price"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="Item Price"/>
+
+        <com.example.e_commerce_11.utilities.BoldTextView
+            android:id="@+id/text_item_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="Item Quantity"/>
+
+        <com.example.e_commerce_11.utilities.Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/btn_padding"
+            android:layout_marginBottom="@dimen/btn_padding"
+            android:layout_marginLeft="@dimen/btn_padding"
+            android:layout_marginRight="@dimen/btn_padding"
+            android:text="Add to Cart"
+            android:textSize="18dp"
+            android:background="@color/grey"/>
+
+    </LinearLayout>
+
+
+    </LinearLayout>

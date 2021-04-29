@@ -17,15 +17,18 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.activities.*
+import com.example.e_commerce_11.activities.ui.base_fragment.BaseFragment
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.User
+import com.example.e_commerce_11.utilities.Button
 import com.example.e_commerce_11.utilities.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_products.*
 
-class ProductsFragment : Fragment() {
+class ProductsFragment : BaseFragment(), View.OnClickListener {
 
     private lateinit var userDetails : User
     //private lateinit var productsViewModel: ProductsViewModel
@@ -43,8 +46,10 @@ class ProductsFragment : Fragment() {
     ): View? {
         //homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_products, container, false)
-        val textView: TextView = root.findViewById(R.id.text_products)
-        textView.text = resources.getString(R.string.title_products)
+
+        //test button for retrieving products from database and logging them
+//        val button: android.widget.Button = root.findViewById(R.id.btn_get_products)
+//        button.setOnClickListener(this)
         return root
     }
 
@@ -56,9 +61,8 @@ class ProductsFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
 
-        when(id) {
+        when(item.itemId) {
 
             R.id.action_add -> {
                 startActivity(Intent(activity, AddProductActivity::class.java))
@@ -69,7 +73,6 @@ class ProductsFragment : Fragment() {
 
         return super.onOptionsItemSelected(item)
     }
-
     private fun getCurrentUserID(): String {
 
         //get user details from Firebase
@@ -110,5 +113,31 @@ class ProductsFragment : Fragment() {
             }
     }
 
+    private fun getProducts(){
+        FirebaseFirestore.getInstance().collection(Constants.PRODUCTS)
+            //get request used to retrieve info
+            .get()
+            //if successful, store user details to the device
+            .addOnSuccessListener { result ->
+
+                for (x in result) {
+                    Log.i("Products", x.toString())
+                }
+
+                }
+            }
+
+    override fun onClick(v: View?) {
+
+            if(v != null){
+
+//                when (v.id){
+//
+//                    R.id.btn_get_products -> {
+//                        getProducts()
+//                }
+//            }
+        }
+    }
 
 }
