@@ -20,7 +20,9 @@ import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.SetOptions
+import kotlinx.coroutines.tasks.await
 
 class FireStoreClass {
     private val myFireStore = FirebaseFirestore.getInstance()
@@ -232,5 +234,36 @@ class FireStoreClass {
                     e
                 )
             }
+    }
+
+    suspend fun getDataFromFireStore(products : String)
+            : QuerySnapshot?{
+        return try{
+            val data = FirebaseFirestore.getInstance().collection(Constants.PRODUCTS)
+                .get()
+                .await()
+            data
+        }catch (e : Exception){
+            null
+        }
+    }
+
+    fun createProductArray(querySnapshot: QuerySnapshot) : ArrayList<Product>{
+
+        var products: ArrayList<Product> = ArrayList()
+
+        for (x in querySnapshot) {
+            val item = Product("", "", "", "", "")
+
+            item.productName = x.getString(Constants.PRODUCT_NAME).toString()
+            item.productDescription = x.getString(Constants.PRODUCT_DESCRIPTION).toString()
+            item.price = x.getString(Constants.PRODUCT_PRICE).toString()
+            item.quantity = x.getString(Constants.PRODUCT_QUANTITY).toString()
+            item.productImgURI = x.getString(Constants.PRODUCT_IMG_URI).toString()
+
+            products.add(item)
+        }
+
+        return products
     }
 }

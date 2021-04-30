@@ -17,21 +17,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.activities.*
 import com.example.e_commerce_11.activities.ui.base_fragment.BaseFragment
+import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.Product
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
 import com.example.e_commerce_11.utilities.ItemAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_products.*
+import kotlinx.coroutines.tasks.await
 
 class ProductsFragment : BaseFragment() {
 
     private lateinit var userDetails: User
-    private lateinit var productArray: ArrayList<Product>
-    private var check: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,15 +41,7 @@ class ProductsFragment : BaseFragment() {
         displayProgressDialogue(R.string.please_wait.toString())
 
         getUserDetails()
-        productArray = getProducts()
-
-
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-                listView()
-            },
-            750
-        )
+        getProducts()
 
     }
 
@@ -123,18 +117,14 @@ class ProductsFragment : BaseFragment() {
             }
     }
 
-    private fun getProducts(): ArrayList<Product> {
+    private fun getProducts() {
 
-        var products: ArrayList<Product> = ArrayList()
+        val products: ArrayList<Product> = ArrayList()
 
         FirebaseFirestore.getInstance().collection(Constants.PRODUCTS)
             //get request used to retrieve info
             .get()
             .addOnSuccessListener { result ->
-
-//                test += test
-
-//                Log.i("in Lambda: ", test.toString())
 
                 for (x in result) {
                     val item = Product("", "", "", "", "")
@@ -146,32 +136,22 @@ class ProductsFragment : BaseFragment() {
                     item.productImgURI = x.getString(Constants.PRODUCT_IMG_URI).toString()
 
                     products.add(item)
+
+                    // Set the LayoutManager that this RecyclerView will use.
+                    rvItemsList.layoutManager = LinearLayoutManager(context)
+                    // Adapter class is initialized and list is passed in the param.
+                    val itemAdapter = context?.let { ItemAdapter(it, products) }
+                    // adapter instance is set to the recyclerview to inflate the items.
+                    rvItemsList.adapter = itemAdapter
+
+                    dismissProgressDialogue()
                 }
             }
             .addOnFailureListener { e ->
                 Log.e(e.toString(), "Error loading products")
+                dismissProgressDialogue()
             }
-
-        return products
+//        return products
     }
-
-    private fun listView() {
-
-        // Set the LayoutManager that this RecyclerView will use.
-        rvItemsList.layoutManager = LinearLayoutManager(context)
-        // Adapter class is initialized and list is passed in the param.
-        val itemAdapter = context?.let { ItemAdapter(it, productArray) }
-        // adapter instance is set to the recyclerview to inflate the items.
-        rvItemsList.adapter = itemAdapter
-
-        dismissProgressDialogue()
-    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//
-//        listView()
-//    }
-
 
 }
