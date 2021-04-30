@@ -22,6 +22,7 @@ import com.example.e_commerce_11.utilities.ItemAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_products.*
+import kotlinx.android.synthetic.main.items_layout.*
 
 class ProductsFragment : BaseFragment() {
 
@@ -35,6 +36,8 @@ class ProductsFragment : BaseFragment() {
         getUserDetails()
         getProducts()
 
+        btn_add_to_cart.setOnClickListener(view?.findViewById(R.id.btn_add_to_cart))
+
     }
 
     override fun onCreateView(
@@ -42,7 +45,9 @@ class ProductsFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_products, container, false)
+        val view = inflater.inflate(R.layout.fragment_products, container, false)
+
+        return view
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
