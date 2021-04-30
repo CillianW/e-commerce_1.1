@@ -46,7 +46,7 @@ class ItemAdapter(val context: Context, val items: ArrayList<Product>) :
         holder.LinearLayoutItem.text_item_name.setText(item.productName)
         holder.LinearLayoutItem.text_item_description.setText(item.productDescription)
         holder.LinearLayoutItem.text_item_price.setText("€"+item.price)
-        holder.LinearLayoutItem.text_item_quantity.setText(item.quantity)
+        holder.LinearLayoutItem.text_item_quantity.setText("Available: " + item.quantity)
         GlideLoader(context).loadUserProfile(item.productImgURI, holder.LinearLayoutItem.img_item)
 //        holder.LinearLayoutItem.img_item.setImageURI(item.productImgURI)
     }

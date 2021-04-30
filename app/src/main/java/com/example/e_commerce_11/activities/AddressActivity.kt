@@ -1,7 +1,10 @@
 package com.example.e_commerce_11.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
@@ -48,6 +51,13 @@ class AddressActivity : BaseActivity(), View.OnClickListener {
                     userHashMap[Constants.ADDRESS_4] = et_change_address_line_4.text.toString()
 
                     FireStoreClass().updateUserProfile(this, userHashMap)
+
+                    Handler(Looper.getMainLooper()).postDelayed(
+                        {
+                            startActivity(Intent(this, SettingsActivity::class.java))
+                            finish()
+                        },
+                        500)
                 }
             }
         }

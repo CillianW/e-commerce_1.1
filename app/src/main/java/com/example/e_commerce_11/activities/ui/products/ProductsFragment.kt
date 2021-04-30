@@ -9,27 +9,19 @@ package com.example.e_commerce_11.activities.ui.products
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.activities.*
 import com.example.e_commerce_11.activities.ui.base_fragment.BaseFragment
-import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.Product
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
 import com.example.e_commerce_11.utilities.ItemAdapter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_products.*
-import kotlinx.coroutines.tasks.await
 
 class ProductsFragment : BaseFragment() {
 
@@ -138,11 +130,11 @@ class ProductsFragment : BaseFragment() {
                     products.add(item)
 
                     // Set the LayoutManager that this RecyclerView will use.
-                    rvItemsList.layoutManager = LinearLayoutManager(context)
+                    rv_Items_List_products.layoutManager = LinearLayoutManager(context)
                     // Adapter class is initialized and list is passed in the param.
                     val itemAdapter = context?.let { ItemAdapter(it, products) }
                     // adapter instance is set to the recyclerview to inflate the items.
-                    rvItemsList.adapter = itemAdapter
+                    rv_Items_List_products.adapter = itemAdapter
 
                     dismissProgressDialogue()
                 }

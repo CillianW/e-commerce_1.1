@@ -50,16 +50,21 @@
             android:text="Item Quantity"/>
 
         <com.example.e_commerce_11.utilities.Button
+            android:id="@+id/btn_add_to_cart"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="@dimen/btn_padding"
             android:layout_marginTop="@dimen/btn_padding"
-            android:layout_marginBottom="@dimen/btn_padding"
-            android:layout_marginLeft="@dimen/btn_padding"
-            android:layout_marginRight="@dimen/btn_padding"
+            android:layout_marginEnd="@dimen/btn_padding"
+            android:background="@drawable/button_background"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:paddingTop="@dimen/btn_padding"
+            android:paddingBottom="@dimen/btn_padding"
             android:text="Add to Cart"
-            android:textSize="18dp"
-            android:background="@color/grey"/>
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/btn_textSize"/>
 
     </LinearLayout>
 

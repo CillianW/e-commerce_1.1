@@ -14,16 +14,16 @@
     tools:context=".activities.ui.products.ProductsFragment">
 
     <LinearLayout
-        android:id="@+id/ll_recycler_view_products"
+        android:id="@+id/ll_recycler_view_cart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".activities.DashboardActivity"
-        tools:showIn="@layout/fragment_products">
+        tools:showIn="@layout/activity_cart">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_Items_List_products"
+            android:id="@+id/rv_Items_List_cart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
