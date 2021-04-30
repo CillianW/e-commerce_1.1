@@ -14,11 +14,15 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.e_commerce_11.activities.*
+import com.example.e_commerce_11.activities.ui.dashboard.DashboardFragment
+import com.example.e_commerce_11.models.Product
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.SetOptions
+import kotlinx.coroutines.tasks.await
 
 class FireStoreClass {
     private val myFireStore = FirebaseFirestore.getInstance()
@@ -29,15 +33,15 @@ class FireStoreClass {
 
         //create a collection called users if it doesn't already exist
         myFireStore.collection(Constants.USERS)
-                //user details will be separated into documents, sorted by user IDs
+            //user details will be separated into documents, sorted by user IDs
             .document(user.id)
-                //add the user details to the document
+            //add the user details to the document
             .set(user, SetOptions.merge())
-                //if user is registered successfully, call the userRegisteredSuccessfully() method
+            //if user is registered successfully, call the userRegisteredSuccessfully() method
             .addOnSuccessListener {
                 activity.userRegisteredSuccessfully()
             }
-                //if an error occurs, log it and display a message
+            //if an error occurs, log it and display a message
             .addOnFailureListener { e ->
                 activity.dismissProgressDialogue()
                 Log.e(
@@ -71,11 +75,11 @@ class FireStoreClass {
 
         //make a get request to the FireStore users collection
         myFireStore.collection(Constants.USERS)
-                //find the document by user ID
+            //find the document by user ID
             .document(getCurrentUserID())
-                //get request used to retrieve info
+            //get request used to retrieve info
             .get()
-                //if successful, store user details to the device
+            //if successful, store user details to the device
             .addOnSuccessListener { document ->
 
                 //log thr user details
@@ -91,7 +95,7 @@ class FireStoreClass {
                 )
 
                 //use a SharedPreferences object to add a key:value pair (logged_in_username:first name & last name)
-                val editor : SharedPreferences.Editor = sharedPreferences.edit()
+                val editor: SharedPreferences.Editor = sharedPreferences.edit()
                 editor.putString(
                     Constants.LOGGED_IN_USERNAME,
                     "${user!!.firstName} ${user!!.surname}"
@@ -110,73 +114,156 @@ class FireStoreClass {
                             activity.userDetailsSuccess(user)
                         }
                     }
-
                 }
             }
-                //display a message if an error occurs
+            //display a message if an error occurs
             .addOnFailureListener { e ->
 
                 when (activity) {
                     is LoginActivity -> {
                         activity.dismissProgressDialogue()
                     }
-                    is SettingsActivity ->{
+                    is SettingsActivity -> {
                         activity.dismissProgressDialogue()
                     }
                 }
 
-                Log.e(activity.javaClass.simpleName,
+                Log.e(
+                    activity.javaClass.simpleName,
                     "Error while getting user details.",
-                    e)
+                    e
+                )
 
             }
 
     }
 
     //update the user details on fireStore
-    fun updateUserProfile(activity: Activity, userHashMap: HashMap<String, Any>){
+    fun updateUserProfile(activity: Activity, userHashMap: HashMap<String, Any>) {
 
         //send an update request to update user details
         myFireStore.collection(Constants.USERS)
             .document(getCurrentUserID())
             .update(userHashMap)
-                //if successful, call the userInfoUpdatedSuccessfully function
+            //if successful, call the userInfoUpdatedSuccessfully function
             .addOnSuccessListener {
-                when(activity){
+                when (activity) {
                     is UserProfileActivity -> {
                         activity.userInfoUpdatedSuccessfully()
                     }
                 }
             }
-                //dismiss the progress dialogue and show the user a message if an error occurs
-            .addOnFailureListener{ e ->
-                when(activity){
+            //dismiss the progress dialogue and show the user a message if an error occurs
+            .addOnFailureListener { e ->
+                when (activity) {
                     is UserProfileActivity -> {
                         activity.dismissProgressDialogue()
                     }
+                    is AddressActivity -> {
+                        activity.dismissProgressDialogue()
+                    }
                 }
-                Log.e(activity.javaClass.simpleName,
-                "Error updating the user details ",
-                e)
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error updating the user details ",
+                    e
+                )
             }
     }
 
-    fun updateUserProfilePicture(activity: Activity, userHashMap: HashMap<String, Any>){
+    fun updateUserProfilePicture(activity: Activity, userHashMap: HashMap<String, Any>) {
 
         //send an update request to update user details
         myFireStore.collection(Constants.USERS)
             .document(getCurrentUserID())
             .update(userHashMap)
             //dismiss the progress dialogue and show the user a message if an error occurs
-            .addOnFailureListener{ e ->
-                when(activity){
+            .addOnFailureListener { e ->
+                when (activity) {
                     is UserProfileActivity -> {
                         activity.dismissProgressDialogue()
                     }
                 }
-                Log.e(activity.javaClass.simpleName,
+                Log.e(
+                    activity.javaClass.simpleName,
                     "Error updating the user details ",
-                    e)
+                    e
+                )
             }
+    }
+
+    fun createProduct(activity: AddProductActivity, product: Product) {
+
+        //create a collection called users if it doesn't already exist
+        myFireStore.collection(Constants.PRODUCTS)
+            //user details will be separated into documents, sorted by user IDs
+            .document(product.productName)
+            //add the user details to the document
+            .set(product, SetOptions.merge())
+            //if user is registered successfully, call the userRegisteredSuccessfully() method
+            .addOnSuccessListener {
+                activity.productRegisteredSuccessfully()
+            }
+            //if an error occurs, log it and display a message
+            .addOnFailureListener { e ->
+                activity.dismissProgressDialogue()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Product registration failed",
+                    e
+                )
+            }
+    }
+
+    fun updateProductPicture(activity: Activity, userHashMap: HashMap<String, Any>, productName: String) {
+
+        //send an update request to update user details
+        myFireStore.collection(Constants.PRODUCTS)
+            .document(productName)
+            .update(userHashMap)
+            //dismiss the progress dialogue and show the user a message if an error occurs
+            .addOnFailureListener { e ->
+                when (activity) {
+                    is AddProductActivity -> {
+                        activity.dismissProgressDialogue()
+                    }
+                }
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error updating the user details ",
+                    e
+                )
+            }
+    }
+
+    suspend fun getDataFromFireStore(products : String)
+            : QuerySnapshot?{
+        return try{
+            val data = FirebaseFirestore.getInstance().collection(Constants.PRODUCTS)
+                .get()
+                .await()
+            data
+        }catch (e : Exception){
+            null
+        }
+    }
+
+    fun createProductArray(querySnapshot: QuerySnapshot) : ArrayList<Product>{
+
+        var products: ArrayList<Product> = ArrayList()
+
+        for (x in querySnapshot) {
+            val item = Product("", "", "", "", "")
+
+            item.productName = x.getString(Constants.PRODUCT_NAME).toString()
+            item.productDescription = x.getString(Constants.PRODUCT_DESCRIPTION).toString()
+            item.price = x.getString(Constants.PRODUCT_PRICE).toString()
+            item.quantity = x.getString(Constants.PRODUCT_QUANTITY).toString()
+            item.productImgURI = x.getString(Constants.PRODUCT_IMG_URI).toString()
+
+            products.add(item)
+        }
+
+        return products
     }
 }

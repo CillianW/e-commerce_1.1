@@ -44,22 +44,6 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         btn_logout.setOnClickListener(this)
     }
 
-    //this function sets up the back button at the of the screen
-    private fun setupActionBar(){
-        setSupportActionBar(toolbar_settings_activity)
-
-        val actionBar = supportActionBar
-
-        if(actionBar != null){
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_white)
-        }
-
-        toolbar_settings_activity.setNavigationOnClickListener{
-            onBackPressed()
-            finish()}
-    }
-
     private fun getUserDetails(){
         displayProgressDialogue(resources.getString(R.string.please_wait))
         FireStoreClass().getUserDetails(this)
@@ -98,6 +82,14 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                     startActivity(intent)
                 }
 
+
+                R.id.btn_addresses -> {
+                    val intent = Intent(this@SettingsActivity, AddressActivity::class.java)
+
+                    intent.putExtra(Constants.EXTRA_USER_DETAILS, userDetails)
+                    startActivity(intent)
+                }
+
                 R.id.btn_logout -> {
                     FirebaseAuth.getInstance().signOut()
 
@@ -109,5 +101,21 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    //this function sets up the back button at the of the screen
+    private fun setupActionBar(){
+        setSupportActionBar(toolbar_settings_activity)
+
+        val actionBar = supportActionBar
+
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_white)
+        }
+
+        toolbar_settings_activity.setNavigationOnClickListener{
+            onBackPressed()
+            finish()}
     }
 }

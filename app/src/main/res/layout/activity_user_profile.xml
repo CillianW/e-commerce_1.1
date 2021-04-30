@@ -16,7 +16,7 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_profile"
+        android:id="@+id/toolbar_user_profile_activity"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/theme_landscape"
@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="75dp"
             android:text="@string/title_profile"
             android:textSize="20dp"
             android:textColor="@color/white"
@@ -46,8 +47,8 @@
         android:fillViewport="true"
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/toolbar_profile"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_profile">
+        app:layout_constraintStart_toEndOf="@id/toolbar_user_profile_activity"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_user_profile_activity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -73,7 +74,7 @@
                     android:layout_gravity="center_horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar_profile" />
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar_add_product_activity" />
 
                 <View
                     android:layout_width="match_parent"

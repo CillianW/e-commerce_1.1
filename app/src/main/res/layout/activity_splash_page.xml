@@ -16,7 +16,6 @@
     android:background="#FFFFFF"
     tools:context=".activities.SplashPageActivity">
 
-    <!--    tools:ignore="ExtraText"-->
 
     <!--    constraints for the lyit logo image on the splash page-->
     <ImageView

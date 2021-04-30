@@ -43,151 +43,169 @@
     </FrameLayout>
 
 
-<!--    properties of the page title "LOGIN" located just below the upper frame-->
-    <com.example.e_commerce_11.utilities.BoldTextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:text="@string/title_login"
-        android:textColor="@color/themeDarkPurple"
-        android:textSize="@dimen/title_textSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fl_header_image" />
-
-
-<!--    properties of the email address input field-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/edit_email_id"
-        android:textColorHint="@color/themeDarkPurple"
-        app:boxBackgroundMode="outline"
-        app:boxStrokeColor="#000000"
-        app:boxStrokeWidth="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title">
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.example.e_commerce_11.utilities.EditText
-            android:id="@+id/et_email"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:width="1dp"
-            android:inputType="text"
-            android:padding="@dimen/et_padding"
-            android:textColor="@color/themeDarkPurple"
-            android:textSize="@dimen/et_textSize"
-            android:visibility="visible"
-            tools:text="abc@gmail.com" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+    <!--    properties of the page title "LOGIN" located just below the upper frame-->
+            <com.example.e_commerce_11.utilities.BoldTextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:text="@string/title_login"
+                android:textColor="@color/themeDarkPurple"
+                android:textSize="@dimen/title_textSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!--    properties of the password input field-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_password"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/edit_password"
-        android:textColorHint="@color/themeDarkPurple"
-        app:boxStrokeColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_email">
+        <!--    properties of the email address input field-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/edit_email_id"
+                android:textColorHint="@color/themeDarkPurple"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="#000000"
+                app:boxStrokeWidth="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title">
 
-        <com.example.e_commerce_11.utilities.EditText
-            android:id="@+id/et_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:padding="@dimen/et_padding"
-            android:textColor="@color/themeDarkPurple"
-            android:textSize="@dimen/et_textSize"
-            tools:text="123456" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-<!--    properties of the forgot password button-->
-    <com.example.e_commerce_11.utilities.BoldTextView
-        android:id="@+id/tv_forgot_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:foreground="?attr/selectableItemBackground"
-        android:padding="@dimen/clickable_text_view_padding"
-        android:text="@string/label_forgot_password"
-        android:textColor="@color/themeDarkPurple"
-        android:textSize="@dimen/forgot_password_textSize"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_password" />
-
-<!--    properties of the Login button at the bottom of the screen-->
-    <com.example.e_commerce_11.utilities.Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/button_background"
-        android:foreground="?attr/selectableItemBackground"
-        android:gravity="center"
-        android:paddingTop="@dimen/btn_padding"
-        android:paddingBottom="@dimen/btn_padding"
-        android:text="@string/button_label_login"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/btn_textSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_forgot_password" />
+                <com.example.e_commerce_11.utilities.EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:width="1dp"
+                    android:inputType="text"
+                    android:padding="@dimen/et_padding"
+                    android:textColor="@color/themeDarkPurple"
+                    android:textSize="@dimen/et_textSize"
+                    android:visibility="visible"
+                    tools:text="abc@gmail.com" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-<!--    linear layout is used for the text below the login button-->
-<!--    Don't have an account is text while Register is a button-->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_login">
+            <!--    properties of the password input field-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_password"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/edit_password"
+                android:textColorHint="@color/themeDarkPurple"
+                app:boxStrokeColor="#000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_email">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_don_t_have_an_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:padding="@dimen/clickable_text_view_padding"
-            android:text="@string/don_t_have_an_account"
-            android:textColor="@color/themeDarkPurple"
-            android:textSize="@dimen/lbl_text_view_textSize" />
+                <com.example.e_commerce_11.utilities.EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:padding="@dimen/et_padding"
+                    android:textColor="@color/themeDarkPurple"
+                    android:textSize="@dimen/et_textSize"
+                    tools:text="123456" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.example.e_commerce_11.utilities.BoldTextView
-            android:id="@+id/tv_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:foreground="?attr/selectableItemBackground"
-            android:padding="@dimen/clickable_text_view_padding"
-            android:text="@string/register"
-            android:textColor="@color/themeDarkPurple"
-            android:textSize="@dimen/lbl_text_view_textSize"
-            android:textStyle="bold" />
-    </LinearLayout>
+
+        <!--    properties of the forgot password button-->
+            <com.example.e_commerce_11.utilities.BoldTextView
+                android:id="@+id/tv_forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="@dimen/clickable_text_view_padding"
+                android:text="@string/label_forgot_password"
+                android:textColor="@color/themeDarkPurple"
+                android:textSize="@dimen/forgot_password_textSize"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_password" />
+
+        <!--    properties of the Login button at the bottom of the screen-->
+            <com.example.e_commerce_11.utilities.Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/button_background"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:paddingTop="@dimen/btn_padding"
+                android:paddingBottom="@dimen/btn_padding"
+                android:text="@string/button_label_login"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/btn_textSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_forgot_password" />
+
+
+        <!--    linear layout is used for the text below the login button-->
+        <!--    Don't have an account is text while Register is a button-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_login">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_don_t_have_an_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:padding="@dimen/clickable_text_view_padding"
+                    android:text="@string/don_t_have_an_account"
+                    android:textColor="@color/themeDarkPurple"
+                    android:textSize="@dimen/lbl_text_view_textSize" />
+
+                <com.example.e_commerce_11.utilities.BoldTextView
+                    android:id="@+id/tv_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="@dimen/clickable_text_view_padding"
+                    android:text="@string/register"
+                    android:textColor="@color/themeDarkPurple"
+                    android:textSize="@dimen/lbl_text_view_textSize"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
     <!--END-->

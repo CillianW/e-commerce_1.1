@@ -15,6 +15,9 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.e_commerce_11.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_splash_page.*
 
 //this is the first page displayed when the app is started
@@ -26,8 +29,19 @@ class SplashPageActivity : AppCompatActivity() {
         //run next activity after a 2.5 second delay
         Handler(Looper.getMainLooper()).postDelayed(
                 {
-                    startActivity(Intent(this@SplashPageActivity, LoginActivity::class.java))
-                    finish()
+                    //check for current user
+                    val user  = Firebase.auth.currentUser
+
+                    //if the current user is null, they are not logged in so we launch the login activity
+                    //if the are logged in, we can go straight to the dashboard activity
+                    if(user != null){
+                        startActivity(Intent(this@SplashPageActivity, DashboardActivity::class.java))
+                        finish()
+                    }
+                    else{
+                        startActivity(Intent(this@SplashPageActivity, LoginActivity::class.java))
+                        finish()
+                    }
                 },
                 1000)
     }
