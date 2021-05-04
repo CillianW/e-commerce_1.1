@@ -26,4 +26,15 @@ class GlideLoader(val context: Context) {
         }
     }
 
+    fun loadItem(image: String, imageView: ImageView){
+        try{
+            Glide.with(context).load(image).centerCrop()
+                .placeholder(R.drawable.empty_product)
+                .into(imageView)
+        }
+        catch(e: IOException){
+            e.printStackTrace()
+        }
+    }
+
 }

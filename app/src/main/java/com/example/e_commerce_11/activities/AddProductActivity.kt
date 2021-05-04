@@ -120,6 +120,10 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                         )
                     }
 
+                    val intent = Intent(this@AddProductActivity, DashboardActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
                 }
                 }
             }

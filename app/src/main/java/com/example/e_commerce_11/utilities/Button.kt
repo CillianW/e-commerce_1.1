@@ -9,7 +9,10 @@ package com.example.e_commerce_11.utilities
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
+import android.util.Log
+import android.view.View
 import androidx.appcompat.widget.AppCompatButton
+import com.example.e_commerce_11.R
 
 //this class allows us the add the Montserrat-Bold font to the buttons in the app
 class Button(context: Context, attrs: AttributeSet) : AppCompatButton(context, attrs) {

@@ -215,7 +215,11 @@ class FireStoreClass {
             }
     }
 
-    fun updateProductPicture(activity: Activity, userHashMap: HashMap<String, Any>, productName: String) {
+    fun updateProductPicture(
+        activity: Activity,
+        userHashMap: HashMap<String, Any>,
+        productName: String
+    ) {
 
         //send an update request to update user details
         myFireStore.collection(Constants.PRODUCTS)
@@ -236,34 +240,53 @@ class FireStoreClass {
             }
     }
 
-    suspend fun getDataFromFireStore(products : String)
-            : QuerySnapshot?{
-        return try{
-            val data = FirebaseFirestore.getInstance().collection(Constants.PRODUCTS)
-                .get()
-                .await()
-            data
-        }catch (e : Exception){
-            null
-        }
+
+    fun addProductToCart(product: Product) {
+
+        val currentUserID = getCurrentUserID()
+        val productNameHashMap: HashMap<String, Any> = HashMap()
+
+        productNameHashMap["1"] = product.productName
+
+        Log.i("Current User ID: ", currentUserID)
+
+        getNumberOfFieldsInDocument(Constants.CART, getCurrentUserID())
+
+        //create a collection called users if it doesn't already exist
+        myFireStore.collection(Constants.CART)
+            //user details will be separated into documents, sorted by user IDs
+            .document(currentUserID)
+            .set(productNameHashMap, SetOptions.merge())
+            //if user is registered successfully, call the userRegisteredSuccessfully() method
+            .addOnSuccessListener {
+                Log.i("Success", "Product added to cart")
+            }
+            //if an error occurs, log it and display a message
+            .addOnFailureListener { e ->
+                Log.e(
+                    "Error",
+                    "Product registration failed",
+                    e
+                )
+            }
     }
 
-    fun createProductArray(querySnapshot: QuerySnapshot) : ArrayList<Product>{
+    fun getNumberOfFieldsInDocument(collection: String, document: String)
+            : Int {
+        FirebaseFirestore.getInstance().collection(collection)
+            .document(document)
+            .get()
+            .addOnSuccessListener { document ->
 
-        var products: ArrayList<Product> = ArrayList()
+            }
 
-        for (x in querySnapshot) {
-            val item = Product("", "", "", "", "")
 
-            item.productName = x.getString(Constants.PRODUCT_NAME).toString()
-            item.productDescription = x.getString(Constants.PRODUCT_DESCRIPTION).toString()
-            item.price = x.getString(Constants.PRODUCT_PRICE).toString()
-            item.quantity = x.getString(Constants.PRODUCT_QUANTITY).toString()
-            item.productImgURI = x.getString(Constants.PRODUCT_IMG_URI).toString()
 
-            products.add(item)
-        }
 
-        return products
+
+
+
+
+        return 0
     }
 }

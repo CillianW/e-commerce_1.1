@@ -36,7 +36,6 @@ class ProductsFragment : BaseFragment() {
         getUserDetails()
         getProducts()
 
-        btn_add_to_cart.setOnClickListener(view?.findViewById(R.id.btn_add_to_cart))
 
     }
 

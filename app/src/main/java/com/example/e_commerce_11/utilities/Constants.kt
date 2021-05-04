@@ -35,6 +35,7 @@ object Constants {
     const val ADDRESS_2 = "address2"
     const val ADDRESS_3 = "address3"
     const val ADDRESS_4 = "address4"
+    const val CART = "carts"
 
 
     //run the phone's image selector function
