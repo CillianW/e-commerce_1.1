@@ -123,8 +123,9 @@ class ProductsFragment : BaseFragment() {
             .addOnSuccessListener { result ->
 
                 for (x in result) {
-                    val item = Product("", "", "", "", "")
+                    val item = Product("", "", "", "", "", "")
 
+                    item.productID = x.getString(Constants.PRODUCT_ID).toString()
                     item.productName = x.getString(Constants.PRODUCT_NAME).toString()
                     item.productDescription = x.getString(Constants.PRODUCT_DESCRIPTION).toString()
                     item.price = x.getString(Constants.PRODUCT_PRICE).toString()
@@ -147,7 +148,6 @@ class ProductsFragment : BaseFragment() {
                 Log.e(e.toString(), "Error loading products")
                 dismissProgressDialogue()
             }
-//        return products
     }
 
 }

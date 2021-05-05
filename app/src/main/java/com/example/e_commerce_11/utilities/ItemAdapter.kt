@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
+import com.example.e_commerce_11.models.CartItem
 import com.example.e_commerce_11.models.Product
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.items_layout.view.*
 import kotlin.coroutines.coroutineContext
 
@@ -19,10 +21,10 @@ import kotlin.coroutines.coroutineContext
  *Subject: Project
  */
 
+private lateinit var cartItem: CartItem
+
 class ItemAdapter (val context: Context, val items: ArrayList<Product>) :
     RecyclerView.Adapter<ItemAdapter.ViewHolder>(), View.OnClickListener {
-
-    private lateinit var product: Product
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view : View = LayoutInflater.from(context).inflate(
@@ -47,7 +49,15 @@ class ItemAdapter (val context: Context, val items: ArrayList<Product>) :
 
         holder.linearLayoutItem.setOnClickListener(this)
 
-        product = item
+        cartItem = CartItem()
+
+        cartItem.cartItemID = item.productID
+        cartItem.userID = FireStoreClass().getCurrentUserID()
+        cartItem.cartItemName = item.productName
+        cartItem.cartItemDescription = item.productDescription
+        cartItem.cartItemImgURI = item.productImgURI
+        cartItem.cartItemPrice = item.price
+
     }
 
     override fun getItemCount(): Int {
@@ -68,10 +78,17 @@ class ItemAdapter (val context: Context, val items: ArrayList<Product>) :
 
                 R.id.btn_add_to_cart -> {
 
-                    FireStoreClass().addProductToCart(product)
+                    if(cartItem.cartItemQuantity == ""){
+                        cartItem.cartItemQuantity = "1"
+                    }
+                    else{
+                        cartItem.cartItemQuantity = (cartItem.cartItemQuantity.toInt() + 1).toString()
+                    }
+                    FireStoreClass().addProductToCart(cartItem)
 
                 }
             }
         }
     }
 }
+

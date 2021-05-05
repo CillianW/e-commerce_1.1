@@ -9,20 +9,16 @@ package com.example.e_commerce_11.firestore
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import com.example.e_commerce_11.activities.*
-import com.example.e_commerce_11.activities.ui.dashboard.DashboardFragment
+import com.example.e_commerce_11.models.CartItem
 import com.example.e_commerce_11.models.Product
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.SetOptions
-import kotlinx.coroutines.tasks.await
 
 class FireStoreClass {
     private val myFireStore = FirebaseFirestore.getInstance()
@@ -34,7 +30,7 @@ class FireStoreClass {
         //create a collection called users if it doesn't already exist
         myFireStore.collection(Constants.USERS)
             //user details will be separated into documents, sorted by user IDs
-            .document(user.id)
+            .document(user.user_id)
             //add the user details to the document
             .set(user, SetOptions.merge())
             //if user is registered successfully, call the userRegisteredSuccessfully() method
@@ -197,7 +193,7 @@ class FireStoreClass {
         //create a collection called users if it doesn't already exist
         myFireStore.collection(Constants.PRODUCTS)
             //user details will be separated into documents, sorted by user IDs
-            .document(product.productName)
+            .document(product.productID)
             //add the user details to the document
             .set(product, SetOptions.merge())
             //if user is registered successfully, call the userRegisteredSuccessfully() method
@@ -218,12 +214,12 @@ class FireStoreClass {
     fun updateProductPicture(
         activity: Activity,
         userHashMap: HashMap<String, Any>,
-        productName: String
+        productID: String
     ) {
 
         //send an update request to update user details
         myFireStore.collection(Constants.PRODUCTS)
-            .document(productName)
+            .document(productID)
             .update(userHashMap)
             //dismiss the progress dialogue and show the user a message if an error occurs
             .addOnFailureListener { e ->
@@ -241,22 +237,20 @@ class FireStoreClass {
     }
 
 
-    fun addProductToCart(product: Product) {
+    fun addProductToCart(cartItem: CartItem) {
 
         val currentUserID = getCurrentUserID()
         val productNameHashMap: HashMap<String, Any> = HashMap()
 
-        productNameHashMap["1"] = product.productName
+//        productNameHashMap["1"] = product.productName
 
         Log.i("Current User ID: ", currentUserID)
-
-        getNumberOfFieldsInDocument(Constants.CART, getCurrentUserID())
 
         //create a collection called users if it doesn't already exist
         myFireStore.collection(Constants.CART)
             //user details will be separated into documents, sorted by user IDs
-            .document(currentUserID)
-            .set(productNameHashMap, SetOptions.merge())
+            .document(cartItem.cartItemID)
+            .set(cartItem, SetOptions.merge())
             //if user is registered successfully, call the userRegisteredSuccessfully() method
             .addOnSuccessListener {
                 Log.i("Success", "Product added to cart")
@@ -271,22 +265,16 @@ class FireStoreClass {
             }
     }
 
-    fun getNumberOfFieldsInDocument(collection: String, document: String)
-            : Int {
-        FirebaseFirestore.getInstance().collection(collection)
-            .document(document)
+    fun getCartItemQuantity(cartItemID: String) : String{
+        var cartItemQuantity = String()
+
+        myFireStore.collection(Constants.CART_ITEMS)
+            .document(cartItemID)
             .get()
             .addOnSuccessListener { document ->
-
+                cartItemQuantity = document.get(Constants.CART_ITEM_QUANTITY).toString()
             }
-
-
-
-
-
-
-
-
-        return 0
+        return cartItemQuantity
     }
+
 }
