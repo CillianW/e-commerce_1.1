@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.items_layout.*
 class ProductsFragment : BaseFragment() {
 
     private lateinit var userDetails: User
+    private lateinit var productDetails: Product
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,13 @@ class ProductsFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
-        inflater.inflate(R.menu.products_menu, menu)
+        if(userDetails.admin != 0) {
+            inflater.inflate(R.menu.add_products_menu, menu)
+        }
+        else{
+            inflater.inflate(R.menu.view_cart_menu, menu)
+        }
+
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -62,6 +69,14 @@ class ProductsFragment : BaseFragment() {
 
             R.id.action_add -> {
                 startActivity(Intent(activity, AddProductActivity::class.java))
+
+                return true
+            }
+
+            R.id.action_view_cart -> {
+                var intent = (Intent(activity, CartActivity::class.java))
+                intent.putExtra(Constants.EXTRA_USER_DETAILS, userDetails)
+                startActivity(intent)
 
                 return true
             }
@@ -99,9 +114,11 @@ class ProductsFragment : BaseFragment() {
                 //create a User object using the details we just retrieved
                 userDetails = document.toObject(User::class.java)!!
 
-                if (userDetails.admin != 0) {
                     setHasOptionsMenu(true)
-                }
+
+//                if (userDetails.admin == 0) {
+//                    action_add
+//                }
             }
             //display a message if an error occurs
             .addOnFailureListener { e ->

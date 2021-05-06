@@ -21,10 +21,10 @@ import kotlin.coroutines.coroutineContext
  *Subject: Project
  */
 
-private lateinit var cartItem: CartItem
+private var cartItem: ArrayList<CartItem> = ArrayList()
 
 class ItemAdapter (val context: Context, val items: ArrayList<Product>) :
-    RecyclerView.Adapter<ItemAdapter.ViewHolder>(), View.OnClickListener {
+    RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view : View = LayoutInflater.from(context).inflate(
@@ -39,24 +39,30 @@ class ItemAdapter (val context: Context, val items: ArrayList<Product>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
 
-        holder.linearLayoutItem.btn_add_to_cart.setOnClickListener(this)
-
         holder.linearLayoutItem.text_item_name.setText(item.productName)
         holder.linearLayoutItem.text_item_description.setText(item.productDescription)
         holder.linearLayoutItem.text_item_price.setText("€" + item.price)
         holder.linearLayoutItem.text_item_quantity.setText("Available: " + item.quantity)
         GlideLoader(context).loadItem(item.productImgURI, holder.linearLayoutItem.img_item)
 
-        holder.linearLayoutItem.setOnClickListener(this)
+        cartItem.add(CartItem())
 
-        cartItem = CartItem()
+        cartItem[position].cartItemID = item.productID
+        cartItem[position].userID = FireStoreClass().getCurrentUserID()
+        cartItem[position].cartItemName = item.productName
+        cartItem[position].cartItemDescription = item.productDescription
+        cartItem[position].cartItemImgURI = item.productImgURI
+        cartItem[position].cartItemPrice = item.price
 
-        cartItem.cartItemID = item.productID
-        cartItem.userID = FireStoreClass().getCurrentUserID()
-        cartItem.cartItemName = item.productName
-        cartItem.cartItemDescription = item.productDescription
-        cartItem.cartItemImgURI = item.productImgURI
-        cartItem.cartItemPrice = item.price
+
+        holder.linearLayoutItem.btn_add_to_cart.setOnClickListener{
+
+
+            cartItem[position].cartItemQuantity = "5"
+
+
+            FireStoreClass().addProductToCart(context, cartItem[position])
+        }
 
     }
 
@@ -71,24 +77,20 @@ class ItemAdapter (val context: Context, val items: ArrayList<Product>) :
 
     }
 
-    override fun onClick(v: View?) {
-        if(v != null){
-
-            when (v.id){
-
-                R.id.btn_add_to_cart -> {
-
-                    if(cartItem.cartItemQuantity == ""){
-                        cartItem.cartItemQuantity = "1"
-                    }
-                    else{
-                        cartItem.cartItemQuantity = (cartItem.cartItemQuantity.toInt() + 1).toString()
-                    }
-                    FireStoreClass().addProductToCart(cartItem)
-
-                }
-            }
-        }
-    }
+//    override fun onClick(v: View?) {
+//        if(v != null){
+//
+//            when (v.id){
+//
+//                R.id.btn_add_to_cart -> {
+//
+//
+//
+//                    FireStoreClass().addProductToCart(context, cartItem)
+//
+//                }
+//            }
+//        }
+//    }
 }
 

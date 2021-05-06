@@ -11,6 +11,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import android.widget.Toast
 import com.example.e_commerce_11.activities.*
 import com.example.e_commerce_11.models.CartItem
 import com.example.e_commerce_11.models.Product
@@ -237,7 +238,7 @@ class FireStoreClass {
     }
 
 
-    fun addProductToCart(cartItem: CartItem) {
+    fun addProductToCart(context: Context ,cartItem: CartItem) {
 
         val currentUserID = getCurrentUserID()
         val productNameHashMap: HashMap<String, Any> = HashMap()
@@ -246,23 +247,27 @@ class FireStoreClass {
 
         Log.i("Current User ID: ", currentUserID)
 
-        //create a collection called users if it doesn't already exist
-        myFireStore.collection(Constants.CART)
-            //user details will be separated into documents, sorted by user IDs
-            .document(cartItem.cartItemID)
-            .set(cartItem, SetOptions.merge())
-            //if user is registered successfully, call the userRegisteredSuccessfully() method
-            .addOnSuccessListener {
-                Log.i("Success", "Product added to cart")
-            }
-            //if an error occurs, log it and display a message
-            .addOnFailureListener { e ->
-                Log.e(
-                    "Error",
-                    "Product registration failed",
-                    e
-                )
-            }
+            //create a collection called users if it doesn't already exist
+            myFireStore.collection(Constants.CART)
+                //user details will be separated into documents, sorted by user IDs
+                .document(currentUserID)
+                .collection(Constants.ITEMS)
+                .document(cartItem.cartItemID)
+                .set(cartItem, SetOptions.merge())
+                //if user is registered successfully, call the userRegisteredSuccessfully() method
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+                }
+                //if an error occurs, log it and display a message
+                .addOnFailureListener { e ->
+                    Log.e(
+                        "Error",
+                        "Product registration failed",
+                        e
+                    )
+                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+
+                }
     }
 
     fun getCartItemQuantity(cartItemID: String) : String{
@@ -275,6 +280,23 @@ class FireStoreClass {
                 cartItemQuantity = document.get(Constants.CART_ITEM_QUANTITY).toString()
             }
         return cartItemQuantity
+    }
+
+    fun getProductForCart(productID: String): Product {
+        var productDetails = Product()
+
+        FirebaseFirestore.getInstance().collection(Constants.PRODUCTS)
+            .document(productID)
+            //get request used to retrieve info
+            .get()
+            .addOnSuccessListener { document ->
+                productDetails = document.toObject(Product::class.java)!!
+            }
+            .addOnFailureListener { e ->
+                Log.e(e.toString(), "Error loading product")
+            }
+
+        return productDetails
     }
 
 }
