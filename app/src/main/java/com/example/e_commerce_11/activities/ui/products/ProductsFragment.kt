@@ -22,7 +22,6 @@ import com.example.e_commerce_11.utilities.ItemAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_products.*
-import kotlinx.android.synthetic.main.items_layout.*
 
 //all products can be viewed in this fragment
 //products are displayed using a recycler view which is set up using the ItemAdapter class

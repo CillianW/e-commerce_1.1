@@ -2,11 +2,20 @@ package com.example.e_commerce_11.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.models.CartItem
 import com.example.e_commerce_11.models.User
+import com.example.e_commerce_11.utilities.CartItemAdapter
 import com.example.e_commerce_11.utilities.Constants
+import com.example.e_commerce_11.utilities.ItemAdapter
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_cart.*
+import kotlinx.android.synthetic.main.fragment_products.*
+import kotlinx.android.synthetic.main.fragment_products.rv_Items_List_products
 
 class CartActivity : BaseActivity() {
     private lateinit var userDetails: User
@@ -14,6 +23,7 @@ class CartActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_cart)
 
         displayProgressDialogue(R.string.please_wait.toString())
 
@@ -59,18 +69,18 @@ class CartActivity : BaseActivity() {
                     items.add(item)
                 }
 
-                    Log.i("CartActivity", "collection processed")
+                Log.i("CartActivity", "collection processed")
 
-                    Log.i("cart items: ", items.toString())
+                Log.i("cart items: ", items.toString())
 
-//                    // Set the LayoutManager that this RecyclerView will use.
-//                    rv_Items_List_products.layoutManager = LinearLayoutManager(context)
-//                    // Adapter class is initialized and list is passed in the param.
-//                    val itemAdapter = context?.let { ItemAdapter(it, products) }
-//                    // adapter instance is set to the recyclerview to inflate the items.
-//                    rv_Items_List_products.adapter = itemAdapter
+                // Set the LayoutManager that this RecyclerView will use.
+                rv_Items_List_cart.layoutManager = LinearLayoutManager(this)
+                // Adapter class is initialized and list is passed in the param.
+                val itemAdapter = this?.let { CartItemAdapter(it, items) }
+                // adapter instance is set to the recyclerview to inflate the items.
+                rv_Items_List_cart.adapter = itemAdapter
 
-                    dismissProgressDialogue()
+                dismissProgressDialogue()
             }
             .addOnFailureListener { e ->
                 Log.e(e.toString(), "Error loading products")

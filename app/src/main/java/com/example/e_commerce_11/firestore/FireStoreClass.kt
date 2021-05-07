@@ -238,66 +238,33 @@ class FireStoreClass {
     }
 
 
-//    fun addProductToCart(context: Context ,cartItem: CartItem) {
-//
-//        val currentUserID = getCurrentUserID()
-//        val productNameHashMap: HashMap<String, Any> = HashMap()
-//
-//            //create a collection called users if it doesn't already exist
-//            myFireStore.collection(Constants.CARTS)
-//                //user details will be separated into documents, sorted by user IDs
-//                .document(currentUserID)
-//                .collection(Constants.ITEMS)
-//                .document(cartItem.cartItemID)
-//                .set(cartItem, SetOptions.merge())
-//                //if user is registered successfully, call the userRegisteredSuccessfully() method
-//                .addOnSuccessListener {
-//                    Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
-//                }
-//                //if an error occurs, log it and display a message
-//                .addOnFailureListener { e ->
-//                    Log.e(
-//                        "Error",
-//                        "Product registration failed",
-//                        e
-//                    )
-//                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-//
-//                }
-//    }
-
-    fun getCartItemQuantity(userID: String ,cartItemID: String) : String{
-        var cartItemQuantity = String()
-
-        myFireStore.collection(Constants.CARTS)
-            .document(userID)
-            .collection(Constants.ITEMS)
-            .document(cartItemID)
-            .get()
-            .addOnSuccessListener { document ->
-                cartItemQuantity = document.get(Constants.CART_ITEM_QUANTITY).toString()
-            }
-        return cartItemQuantity
-    }
-
-    fun getProductForCart(productID: String): Product {
-        var productDetails = Product()
-
-        FirebaseFirestore.getInstance().collection(Constants.PRODUCTS)
-            .document(productID)
-            //get request used to retrieve info
-            .get()
-            .addOnSuccessListener { document ->
-                productDetails = document.toObject(Product::class.java)!!
-            }
-            .addOnFailureListener { e ->
-                Log.e(e.toString(), "Error loading product")
-            }
-
-        return productDetails
-    }
-
     fun addProductToCart(context: Context ,cartItem: CartItem) {
+
+        val currentUserID = getCurrentUserID()
+        val productNameHashMap: HashMap<String, Any> = HashMap()
+
+        //create a collection called users if it doesn't already exist
+        myFireStore.collection(Constants.CARTS)
+            //user details will be separated into documents, sorted by user IDs
+            .document()
+            .set(cartItem, SetOptions.merge())
+            //if user is registered successfully, call the userRegisteredSuccessfully() method
+            .addOnSuccessListener {
+                Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+            }
+            //if an error occurs, log it and display a message
+            .addOnFailureListener { e ->
+                Log.e(
+                    "Error",
+                    "Product registration failed",
+                    e
+                )
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+
+            }
+    }
+
+    fun removeProductFromCart(context: Context ,cartItem: CartItem) {
 
         val currentUserID = getCurrentUserID()
         val productNameHashMap: HashMap<String, Any> = HashMap()

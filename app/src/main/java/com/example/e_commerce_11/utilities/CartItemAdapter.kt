@@ -21,12 +21,12 @@ import kotlinx.android.synthetic.main.items_layout.view.*
 
 private var cartItem: ArrayList<CartItem> = ArrayList()
 
-class ItemAdapter(val context: Context, val items: ArrayList<Product>) :
-    RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
+class CartItemAdapter(val context: Context, val items: ArrayList<CartItem>) :
+    RecyclerView.Adapter<CartItemAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(context).inflate(
-            R.layout.items_layout,
+            R.layout.cart_item_layout,
             parent,
             false
         )
@@ -37,24 +37,15 @@ class ItemAdapter(val context: Context, val items: ArrayList<Product>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
 
-        holder.linearLayoutItem.text_item_name.setText(item.productName)
-        holder.linearLayoutItem.text_item_description.setText(item.productDescription)
-        holder.linearLayoutItem.text_item_price.setText("€" + item.price)
-        holder.linearLayoutItem.text_item_quantity.setText("Available: " + item.quantity)
-        GlideLoader(context).loadItem(item.productImgURI, holder.linearLayoutItem.img_item)
+        holder.linearLayoutItem.text_item_name.setText(item.cartItemName)
+//        holder.linearLayoutItem.text_item_description.setText(item.cartItemDescription)
+        holder.linearLayoutItem.text_item_price.setText("€" + item.cartItemPrice)
+        holder.linearLayoutItem.text_item_quantity.setText("Quantity: " + item.cartItemQuantity)
+        GlideLoader(context).loadItem(item.cartItemImgURI, holder.linearLayoutItem.img_item)
 
         cartItem.add(CartItem())
 
-//        cartItem[position].cartItemQuantity = FireStoreClass().getCartItemQuantity(cartItem[position].userID ,cartItem[position].cartItemID)
-
-        cartItem[position].cartItemID = item.productID
-        cartItem[position].userID = FireStoreClass().getCurrentUserID()
-        cartItem[position].cartItemName = item.productName
-        cartItem[position].cartItemDescription = item.productDescription
-        cartItem[position].cartItemImgURI = item.productImgURI
-        cartItem[position].cartItemPrice = item.price
-
-        Log.i("quantity", cartItem[position].cartItemQuantity)
+        cartItem[position].cartItemID = item.cartItemID
 
         holder.linearLayoutItem.btn_add_to_cart.setOnClickListener {
 
