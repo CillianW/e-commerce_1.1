@@ -1,16 +1,23 @@
 package com.example.e_commerce_11.utilities
 
 import android.content.Context
+import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce_11.R
+import com.example.e_commerce_11.activities.DashboardActivity
+import com.example.e_commerce_11.activities.LoginActivity
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.CartItem
 import com.example.e_commerce_11.models.Product
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.items_layout.view.*
 import kotlin.coroutines.coroutineContext
 
@@ -23,15 +30,15 @@ import kotlin.coroutines.coroutineContext
 
 private var cartItem: ArrayList<CartItem> = ArrayList()
 
-class ItemAdapter (val context: Context, val items: ArrayList<Product>) :
+class ItemAdapter(val context: Context, val items: ArrayList<Product>) :
     RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view : View = LayoutInflater.from(context).inflate(
-                R.layout.items_layout,
-                parent,
-                false
-            )
+        val view: View = LayoutInflater.from(context).inflate(
+            R.layout.items_layout,
+            parent,
+            false
+        )
 
         return ViewHolder(view)
     }
@@ -47,6 +54,8 @@ class ItemAdapter (val context: Context, val items: ArrayList<Product>) :
 
         cartItem.add(CartItem())
 
+//        cartItem[position].cartItemQuantity = FireStoreClass().getCartItemQuantity(cartItem[position].userID ,cartItem[position].cartItemID)
+
         cartItem[position].cartItemID = item.productID
         cartItem[position].userID = FireStoreClass().getCurrentUserID()
         cartItem[position].cartItemName = item.productName
@@ -54,12 +63,9 @@ class ItemAdapter (val context: Context, val items: ArrayList<Product>) :
         cartItem[position].cartItemImgURI = item.productImgURI
         cartItem[position].cartItemPrice = item.price
 
+        Log.i("quantity", cartItem[position].cartItemQuantity)
 
-        holder.linearLayoutItem.btn_add_to_cart.setOnClickListener{
-
-
-            cartItem[position].cartItemQuantity = "5"
-
+        holder.linearLayoutItem.btn_add_to_cart.setOnClickListener {
 
             FireStoreClass().addProductToCart(context, cartItem[position])
         }

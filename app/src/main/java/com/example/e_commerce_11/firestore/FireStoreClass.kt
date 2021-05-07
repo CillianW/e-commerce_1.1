@@ -31,7 +31,7 @@ class FireStoreClass {
         //create a collection called users if it doesn't already exist
         myFireStore.collection(Constants.USERS)
             //user details will be separated into documents, sorted by user IDs
-            .document(user.user_id)
+            .document(user.id)
             //add the user details to the document
             .set(user, SetOptions.merge())
             //if user is registered successfully, call the userRegisteredSuccessfully() method
@@ -238,42 +238,40 @@ class FireStoreClass {
     }
 
 
-    fun addProductToCart(context: Context ,cartItem: CartItem) {
+//    fun addProductToCart(context: Context ,cartItem: CartItem) {
+//
+//        val currentUserID = getCurrentUserID()
+//        val productNameHashMap: HashMap<String, Any> = HashMap()
+//
+//            //create a collection called users if it doesn't already exist
+//            myFireStore.collection(Constants.CARTS)
+//                //user details will be separated into documents, sorted by user IDs
+//                .document(currentUserID)
+//                .collection(Constants.ITEMS)
+//                .document(cartItem.cartItemID)
+//                .set(cartItem, SetOptions.merge())
+//                //if user is registered successfully, call the userRegisteredSuccessfully() method
+//                .addOnSuccessListener {
+//                    Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+//                }
+//                //if an error occurs, log it and display a message
+//                .addOnFailureListener { e ->
+//                    Log.e(
+//                        "Error",
+//                        "Product registration failed",
+//                        e
+//                    )
+//                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+//
+//                }
+//    }
 
-        val currentUserID = getCurrentUserID()
-        val productNameHashMap: HashMap<String, Any> = HashMap()
-
-//        productNameHashMap["1"] = product.productName
-
-        Log.i("Current User ID: ", currentUserID)
-
-            //create a collection called users if it doesn't already exist
-            myFireStore.collection(Constants.CART)
-                //user details will be separated into documents, sorted by user IDs
-                .document(currentUserID)
-                .collection(Constants.ITEMS)
-                .document(cartItem.cartItemID)
-                .set(cartItem, SetOptions.merge())
-                //if user is registered successfully, call the userRegisteredSuccessfully() method
-                .addOnSuccessListener {
-                    Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
-                }
-                //if an error occurs, log it and display a message
-                .addOnFailureListener { e ->
-                    Log.e(
-                        "Error",
-                        "Product registration failed",
-                        e
-                    )
-                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-
-                }
-    }
-
-    fun getCartItemQuantity(cartItemID: String) : String{
+    fun getCartItemQuantity(userID: String ,cartItemID: String) : String{
         var cartItemQuantity = String()
 
-        myFireStore.collection(Constants.CART_ITEMS)
+        myFireStore.collection(Constants.CARTS)
+            .document(userID)
+            .collection(Constants.ITEMS)
             .document(cartItemID)
             .get()
             .addOnSuccessListener { document ->
@@ -297,6 +295,32 @@ class FireStoreClass {
             }
 
         return productDetails
+    }
+
+    fun addProductToCart(context: Context ,cartItem: CartItem) {
+
+        val currentUserID = getCurrentUserID()
+        val productNameHashMap: HashMap<String, Any> = HashMap()
+
+        //create a collection called users if it doesn't already exist
+        myFireStore.collection(Constants.CARTS)
+            //user details will be separated into documents, sorted by user IDs
+            .document()
+            .set(cartItem, SetOptions.merge())
+            //if user is registered successfully, call the userRegisteredSuccessfully() method
+            .addOnSuccessListener {
+                Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+            }
+            //if an error occurs, log it and display a message
+            .addOnFailureListener { e ->
+                Log.e(
+                    "Error",
+                    "Product registration failed",
+                    e
+                )
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+
+            }
     }
 
 }

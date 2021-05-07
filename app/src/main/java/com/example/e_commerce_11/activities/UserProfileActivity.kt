@@ -129,7 +129,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                                 .getExtensionFromMimeType(contentResolver.getType(profilePictureURI!!))
 
                             val fireStoreReference : StorageReference = FirebaseStorage.getInstance()
-                                .reference.child(userDetails.user_id + "profilePic"
+                                .reference.child(userDetails.id + "profilePic"
                                         + System.currentTimeMillis() + "." + fileType)
 
                             fireStoreReference.putFile(profilePictureURI!!)
