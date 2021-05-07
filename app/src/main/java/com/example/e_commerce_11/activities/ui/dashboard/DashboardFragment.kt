@@ -18,14 +18,16 @@ import com.example.e_commerce_11.activities.SettingsActivity
 
 class DashboardFragment : Fragment() {
 
-    //private lateinit var dashboardViewModel: DashboardViewModel
-
+    //create the activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //set up the options menu at top right of screen
+        //this will display the settings icon
         setHasOptionsMenu(true)
     }
 
+    //Inflate the view for the dashboard fragment
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,6 +40,7 @@ class DashboardFragment : Fragment() {
         return root
     }
 
+    //called after the setOptionsMenu() function is called
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
         inflater.inflate(R.menu.dashboard_menu, menu)
@@ -45,11 +48,14 @@ class DashboardFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    //similar to an onClickListener except it applies to options menus.
+    // i.e. the settings icon at the top right of the screen
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
 
         when(id) {
 
+            //run the settings activity when the settings icon is pressed
             R.id.action_settings -> {
                 startActivity(Intent(activity, SettingsActivity::class.java))
 
