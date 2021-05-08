@@ -10,7 +10,13 @@ import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.CartItem
 import com.example.e_commerce_11.models.Product
+import kotlinx.android.synthetic.main.cart_item_layout.view.*
 import kotlinx.android.synthetic.main.items_layout.view.*
+import kotlinx.android.synthetic.main.items_layout.view.btn_add_to_cart
+import kotlinx.android.synthetic.main.items_layout.view.img_item
+import kotlinx.android.synthetic.main.items_layout.view.text_item_name
+import kotlinx.android.synthetic.main.items_layout.view.text_item_price
+import kotlinx.android.synthetic.main.items_layout.view.text_item_quantity
 
 /**
  *Author: Cillian Whelan
@@ -47,9 +53,9 @@ class CartItemAdapter(val context: Context, val items: ArrayList<CartItem>) :
 
         cartItem[position].cartItemID = item.cartItemID
 
-        holder.linearLayoutItem.btn_add_to_cart.setOnClickListener {
+        holder.linearLayoutItem.btn_remove_from_cart.setOnClickListener {
 
-            FireStoreClass().addProductToCart(context, cartItem[position])
+            FireStoreClass().addProductToCart(context, FireStoreClass().getCurrentUserID(), cartItem[position])
         }
 
     }

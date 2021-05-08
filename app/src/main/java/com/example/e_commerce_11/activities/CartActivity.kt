@@ -61,17 +61,15 @@ class CartActivity : BaseActivity() {
                     item.cartItemID = x.getString(Constants.CART_ITEM_ID).toString()
                     item.userID = x.getString(Constants.USER_ID).toString()
                     item.cartItemName = x.getString(Constants.CART_ITEM_NAME).toString()
-                    item.cartItemDescription =
-                        x.getString(Constants.CART_ITEM_DESCRIPTION).toString()
+                    item.cartItemDescription = x.getString(Constants.CART_ITEM_DESCRIPTION).toString()
                     item.cartItemImgURI = x.getString(Constants.CART_ITEM_URI).toString()
                     item.cartItemPrice = x.getString(Constants.CART_ITEM_PRICE).toString()
+                    item.cartItemQuantity = x.getString(Constants.CART_ITEM_QUANTITY).toString()
 
                     items.add(item)
                 }
 
-                Log.i("CartActivity", "collection processed")
-
-                Log.i("cart items: ", items.toString())
+                calculateCartTotal(items)
 
                 // Set the LayoutManager that this RecyclerView will use.
                 rv_Items_List_cart.layoutManager = LinearLayoutManager(this)
@@ -86,5 +84,15 @@ class CartActivity : BaseActivity() {
                 Log.e(e.toString(), "Error loading products")
                 dismissProgressDialogue()
             }
+    }
+
+    private fun calculateCartTotal(items: ArrayList<CartItem>){
+        var cartTotal = 0
+
+        for(i in items){
+            cartTotal = cartTotal + (i.cartItemPrice.toInt() * i.cartItemQuantity.toInt())
+        }
+
+        text_cart_calculated_price.setText(cartTotal.toString())
     }
 }

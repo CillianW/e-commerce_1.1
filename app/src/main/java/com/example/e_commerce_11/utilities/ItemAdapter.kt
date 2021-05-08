@@ -45,8 +45,6 @@ class ItemAdapter(val context: Context, val items: ArrayList<Product>) :
 
         cartItem.add(CartItem())
 
-//        cartItem[position].cartItemQuantity = FireStoreClass().getCartItemQuantity(cartItem[position].userID ,cartItem[position].cartItemID)
-
         cartItem[position].cartItemID = item.productID
         cartItem[position].userID = FireStoreClass().getCurrentUserID()
         cartItem[position].cartItemName = item.productName
@@ -54,11 +52,9 @@ class ItemAdapter(val context: Context, val items: ArrayList<Product>) :
         cartItem[position].cartItemImgURI = item.productImgURI
         cartItem[position].cartItemPrice = item.price
 
-        Log.i("quantity", cartItem[position].cartItemQuantity)
-
         holder.linearLayoutItem.btn_add_to_cart.setOnClickListener {
 
-            FireStoreClass().addProductToCart(context, cartItem[position])
+            FireStoreClass().addProductToCart(context, FireStoreClass().getCurrentUserID(), cartItem[position])
         }
 
     }
