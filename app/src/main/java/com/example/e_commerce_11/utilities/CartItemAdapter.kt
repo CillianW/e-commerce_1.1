@@ -17,6 +17,7 @@ import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.CartItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.cart_item_layout.view.*
 import kotlinx.android.synthetic.main.items_layout.view.*
 import kotlinx.android.synthetic.main.items_layout.view.img_item
@@ -80,7 +81,9 @@ class CartItemAdapter(val context: Context, var items: ArrayList<CartItem>) :
                     FireStoreClass().getCurrentUserID()
                 )
 
+                items.removeAt(position)
                 this.notifyItemRemoved(position)
+                this.notifyItemRangeChanged(0, itemCount)
             }
         }
 

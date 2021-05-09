@@ -86,7 +86,7 @@ class CartActivity : BaseActivity() {
 
     }
 
-    private fun calculateCartTotal(items: ArrayList<CartItem>) {
+    fun calculateCartTotal(items: ArrayList<CartItem>) {
         var cartTotal = 0
 
         for (i in items) {
