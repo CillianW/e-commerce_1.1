@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.activities.CartActivity
@@ -50,7 +51,7 @@ class CartItemAdapter(val context: Context, var items: ArrayList<CartItem>) :
 
         holder.linearLayoutItem.text_item_name.setText(item.cartItemName)
         holder.linearLayoutItem.text_item_price.setText("€" + item.cartItemPrice)
-        holder.linearLayoutItem.text_item_quantity.setText("Quantity: " + item.cartItemQuantity)
+        holder.linearLayoutItem.text_item_quantity.setText(item.cartItemQuantity)
         GlideLoader(context).loadItem(item.cartItemImgURI, holder.linearLayoutItem.img_item)
 
         cartItem.add(CartItem())
@@ -59,12 +60,28 @@ class CartItemAdapter(val context: Context, var items: ArrayList<CartItem>) :
 
         holder.linearLayoutItem.btn_remove_from_cart.setOnClickListener {
 
+            if(holder.linearLayoutItem.text_item_quantity.text.toString().toInt() > 1) {
                 FireStoreClass().removeProductFromCart(
                     context,
                     cartItem[position],
                     FireStoreClass().getCurrentUserID()
                 )
 
+                holder.linearLayoutItem.text_item_quantity
+                    .setText(
+                        (holder.linearLayoutItem.text_item_quantity.text.toString()
+                            .toInt() - 1).toString()
+                    )
+            }
+            else{
+                FireStoreClass().removeProductFromCart(
+                    context,
+                    cartItem[position],
+                    FireStoreClass().getCurrentUserID()
+                )
+
+                this.notifyItemRemoved(position)
+            }
         }
 
     }
