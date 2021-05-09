@@ -1,18 +1,23 @@
 package com.example.e_commerce_11.utilities
 
 import android.content.Context
+import android.content.Intent
+import android.content.Intent.getIntent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce_11.R
+import com.example.e_commerce_11.activities.CartActivity
+import com.example.e_commerce_11.activities.DashboardActivity
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.CartItem
-import com.example.e_commerce_11.models.Product
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.cart_item_layout.view.*
 import kotlinx.android.synthetic.main.items_layout.view.*
-import kotlinx.android.synthetic.main.items_layout.view.btn_add_to_cart
 import kotlinx.android.synthetic.main.items_layout.view.img_item
 import kotlinx.android.synthetic.main.items_layout.view.text_item_name
 import kotlinx.android.synthetic.main.items_layout.view.text_item_price
@@ -27,7 +32,7 @@ import kotlinx.android.synthetic.main.items_layout.view.text_item_quantity
 
 private var cartItem: ArrayList<CartItem> = ArrayList()
 
-class CartItemAdapter(val context: Context, val items: ArrayList<CartItem>) :
+class CartItemAdapter(val context: Context, var items: ArrayList<CartItem>) :
     RecyclerView.Adapter<CartItemAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -54,7 +59,12 @@ class CartItemAdapter(val context: Context, val items: ArrayList<CartItem>) :
 
         holder.linearLayoutItem.btn_remove_from_cart.setOnClickListener {
 
-            FireStoreClass().addProductToCart(context, cartItem[position], FireStoreClass().getCurrentUserID())
+                FireStoreClass().removeProductFromCart(
+                    context,
+                    cartItem[position],
+                    FireStoreClass().getCurrentUserID()
+                )
+
         }
 
     }
@@ -69,5 +79,6 @@ class CartItemAdapter(val context: Context, val items: ArrayList<CartItem>) :
         val linearLayoutItem = view
 
     }
+
 }
 

@@ -292,10 +292,51 @@ class FireStoreClass {
 
     fun updateProductQuantity(quantityHashMap: HashMap<String, Any>, productID: String) {
 
+        Log.i("Firestore", "updateProductQuantity")
         //send an update request to update user details
         myFireStore.collection(Constants.PRODUCTS)
             .document(productID)
             .update(quantityHashMap)
+    }
+
+    fun updateCartQuantity(quantityHashMap: HashMap<String, Any>, cartItemID: String) {
+
+        //send an update request to update user details
+        myFireStore.collection(Constants.CARTS)
+            .document(cartItemID)
+            .update(quantityHashMap)
+    }
+
+    fun removeProductFromCart(context: Context, cartItem: CartItem, userID: String){
+
+        myFireStore.collection(Constants.CARTS)
+            .document(cartItem.cartItemID + userID)
+            .get()
+            .addOnSuccessListener { document ->
+
+                cartItem.cartItemQuantity = document.get(Constants.CART_ITEM_QUANTITY).toString()
+
+                if(cartItem.cartItemQuantity <= "1") {
+                    myFireStore.collection(Constants.CARTS)
+                        //user details will be separated into documents, sorted by user IDs
+                        .document(cartItem.cartItemID + userID)
+                        .delete()
+                }
+                else{
+                    val cartItemQuantity = HashMap<String, Any>()
+
+                    cartItem.cartItemQuantity = (cartItem.cartItemQuantity.toInt() - 1).toString()
+                    cartItemQuantity[Constants.CART_ITEM_QUANTITY] = cartItem.cartItemQuantity
+
+                    updateCartQuantity(cartItemQuantity, cartItem.cartItemID + userID)
+                }
+
+                Toast.makeText(context, "Product removed from cart", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+
     }
 
 }
