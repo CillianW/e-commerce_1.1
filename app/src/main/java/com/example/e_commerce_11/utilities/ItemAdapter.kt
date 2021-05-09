@@ -1,10 +1,10 @@
 package com.example.e_commerce_11.utilities
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
@@ -54,9 +54,25 @@ class ItemAdapter(val context: Context, val items: ArrayList<Product>) :
 
         holder.linearLayoutItem.btn_add_to_cart.setOnClickListener {
 
-            FireStoreClass().addProductToCart(context, FireStoreClass().getCurrentUserID(), cartItem[position])
-        }
+            if (item.quantity.toInt() > 0) {
 
+                var quantityHashMap = HashMap<String, Any>()
+
+                item.quantity = (item.quantity.toInt() - 1).toString()
+                holder.linearLayoutItem.text_item_quantity.setText("Available: " + item.quantity)
+
+                quantityHashMap[Constants.PRODUCT_QUANTITY] = item.quantity
+
+                FireStoreClass().updateProductQuantity(quantityHashMap, item.productID)
+                FireStoreClass().addProductToCart(
+                    context,
+                    cartItem[position],
+                    FireStoreClass().getCurrentUserID()
+                )
+            } else {
+                Toast.makeText(context, "Item not available", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -67,7 +83,6 @@ class ItemAdapter(val context: Context, val items: ArrayList<Product>) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val linearLayoutItem = view
-
     }
 }
 

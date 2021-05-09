@@ -22,8 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.tasks.await
 
-private var cartItemQuantity = String()
-
 class FireStoreClass {
     private val myFireStore = FirebaseFirestore.getInstance()
 
@@ -240,40 +238,7 @@ class FireStoreClass {
             }
     }
 
-
-    fun addProductToCart(context: Context, userID: String, cartItem: CartItem) {
-
-        getCartItemQuantity(cartItem, userID)
-
-        if(cartItem.cartItemQuantity == ""){
-            cartItem.cartItemQuantity = "0"
-        }
-
-        cartItem.cartItemQuantity = (cartItem.cartItemQuantity.toInt() + 1).toString()
-
-        //create a collection called users if it doesn't already exist
-        myFireStore.collection(Constants.CARTS)
-            //user details will be separated into documents, sorted by user IDs
-            .document(cartItem.cartItemID + userID)
-            .set(cartItem, SetOptions.merge())
-            //if user is registered successfully, call the userRegisteredSuccessfully() method
-            .addOnSuccessListener {
-                Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
-            }
-            //if an error occurs, log it and display a message
-            .addOnFailureListener { e ->
-                Log.e(
-                    "Error",
-                    "Product registration failed",
-                    e
-                )
-                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-
-            }
-    }
-
-
-    fun getCartItemQuantity(cartItem: CartItem, userID: String){
+    fun addProductToCart(context: Context, cartItem: CartItem, userID: String){
 
         myFireStore.collection(Constants.CARTS)
             //user details will be separated into documents, sorted by user IDs
@@ -281,9 +246,38 @@ class FireStoreClass {
             .get()
             //if user is registered successfully, call the userRegisteredSuccessfully() method
             .addOnSuccessListener { it ->
-                cartItemQuantity = it.get(Constants.CART_ITEM_QUANTITY).toString()
-                Log.i("Quantity In onSuccess", cartItemQuantity)
-                return@addOnSuccessListener
+
+
+                cartItem.cartItemQuantity = it.get(Constants.CART_ITEM_QUANTITY).toString()
+
+                Log.i("cart item quantity", cartItem.cartItemQuantity)
+
+                if (cartItem.cartItemQuantity == "null" || cartItem.cartItemQuantity == "0") {
+                    cartItem.cartItemQuantity = "1"
+                }
+                else{
+                    cartItem.cartItemQuantity = (cartItem.cartItemQuantity.toInt() + 1).toString()
+                }
+
+                //create a collection called users if it doesn't already exist
+                myFireStore.collection(Constants.CARTS)
+                    //user details will be separated into documents, sorted by user IDs
+                    .document(cartItem.cartItemID + userID)
+                    .set(cartItem, SetOptions.merge())
+                    //if user is registered successfully, call the userRegisteredSuccessfully() method
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+                    }
+                    //if an error occurs, log it and display a message
+                    .addOnFailureListener { e ->
+                        Log.e(
+                            "Error",
+                            "Product registration failed",
+                            e
+                        )
+                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+
+                    }
             }
             //if an error occurs, log it and display a message
             .addOnFailureListener { e ->
@@ -294,6 +288,14 @@ class FireStoreClass {
                 )
             }
 
+    }
+
+    fun updateProductQuantity(quantityHashMap: HashMap<String, Any>, productID: String) {
+
+        //send an update request to update user details
+        myFireStore.collection(Constants.PRODUCTS)
+            .document(productID)
+            .update(quantityHashMap)
     }
 
 }

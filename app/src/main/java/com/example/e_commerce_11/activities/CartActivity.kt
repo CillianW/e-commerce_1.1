@@ -14,6 +14,7 @@ import com.example.e_commerce_11.utilities.Constants
 import com.example.e_commerce_11.utilities.ItemAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_cart.*
+import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.fragment_products.*
 import kotlinx.android.synthetic.main.fragment_products.rv_Items_List_products
 
@@ -24,6 +25,8 @@ class CartActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
+
+        setupActionBar()
 
         displayProgressDialogue(R.string.please_wait.toString())
 
@@ -94,5 +97,21 @@ class CartActivity : BaseActivity() {
         }
 
         text_cart_calculated_price.setText(cartTotal.toString())
+    }
+
+    //this function sets up the back button at the of the screen
+    private fun setupActionBar(){
+        setSupportActionBar(toolbar_cart_activity)
+
+        val actionBar = supportActionBar
+
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_white)
+        }
+
+        toolbar_cart_activity.setNavigationOnClickListener{
+            onBackPressed()
+            finish()}
     }
 }

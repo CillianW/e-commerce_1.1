@@ -44,7 +44,6 @@ class CartItemAdapter(val context: Context, val items: ArrayList<CartItem>) :
         val item = items[position]
 
         holder.linearLayoutItem.text_item_name.setText(item.cartItemName)
-//        holder.linearLayoutItem.text_item_description.setText(item.cartItemDescription)
         holder.linearLayoutItem.text_item_price.setText("€" + item.cartItemPrice)
         holder.linearLayoutItem.text_item_quantity.setText("Quantity: " + item.cartItemQuantity)
         GlideLoader(context).loadItem(item.cartItemImgURI, holder.linearLayoutItem.img_item)
@@ -55,7 +54,7 @@ class CartItemAdapter(val context: Context, val items: ArrayList<CartItem>) :
 
         holder.linearLayoutItem.btn_remove_from_cart.setOnClickListener {
 
-            FireStoreClass().addProductToCart(context, FireStoreClass().getCurrentUserID(), cartItem[position])
+            FireStoreClass().addProductToCart(context, cartItem[position], FireStoreClass().getCurrentUserID())
         }
 
     }
