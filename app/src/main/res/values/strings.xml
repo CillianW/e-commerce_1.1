@@ -127,11 +127,14 @@
     <string name="title_cart">Cart</string>
 
 
-
     <!--    Confirm details-->
     <string name="title_confirm_details">Confirm Details</string>
     <string name="btn_proceed_to_payment">Proceed to Payment</string>
     <string name="btn_chaneg_details">Change Details</string>
 
+
+<!--    Order Activity-->
+    <string name="title_order_activity">Order Confirmation</string>
+    <string name="btn_return_to_dashboard">Return to Dashboard</string>
 
 </resources>

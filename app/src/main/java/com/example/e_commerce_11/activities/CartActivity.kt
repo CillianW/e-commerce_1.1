@@ -45,7 +45,9 @@ class CartActivity : BaseActivity() {
                 Toast.makeText(this, "You have no items in your cart", Toast.LENGTH_SHORT).show()
             }
             else{
-
+                val intent = Intent(this@CartActivity, ConfirmDetailsActivity::class.java)
+                intent.putExtra(Constants.CART_TOTAL, text_cart_calculated_price.text.toString().toInt())
+                startActivity(intent)
             }
         }
 

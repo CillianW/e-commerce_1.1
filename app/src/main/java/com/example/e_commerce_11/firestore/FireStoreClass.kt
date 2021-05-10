@@ -112,6 +112,9 @@ class FireStoreClass {
                             activity.userDetailsSuccess(user)
                         }
                     }
+                    is ConfirmDetailsActivity -> {
+                        activity.userDetailsSuccess(user)
+                    }
                 }
             }
             //display a message if an error occurs

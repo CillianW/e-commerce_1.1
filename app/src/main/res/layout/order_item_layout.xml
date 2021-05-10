@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:id="@+id/ll_order_confirmed"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/white">
+
+    <com.example.e_commerce_11.utilities.BoldTextView
+        android:id="@+id/text_order_item_name"
+        android:layout_width="136dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <com.example.e_commerce_11.utilities.BoldTextView
+        android:id="@+id/text_order_item_quantity"
+        android:layout_width="138dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <com.example.e_commerce_11.utilities.BoldTextView
+        android:id="@+id/text_order_item_price"
+        android:layout_width="136dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+
+</LinearLayout>

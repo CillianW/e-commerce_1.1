@@ -54,8 +54,10 @@ class AddressActivity : BaseActivity(), View.OnClickListener {
 
                     Handler(Looper.getMainLooper()).postDelayed(
                         {
-                            startActivity(Intent(this, SettingsActivity::class.java))
-                            finish()
+//                            startActivity(Intent(this, SettingsActivity::class.java))
+//                            finish()
+                        onBackPressed()
+
                         },
                         500)
                 }

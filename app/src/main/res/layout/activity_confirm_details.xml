@@ -16,7 +16,7 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_user_profile_activity"
+        android:id="@+id/toolbar_confirm_details"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/theme_landscape"
@@ -51,7 +51,7 @@
         android:textColor="@color/themeDarkPurple"
         android:background="@android:color/transparent"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_user_profile_activity"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_confirm_details"/>
 
     <com.example.e_commerce_11.utilities.BoldTextView
         android:id="@+id/text_confirm_email"
@@ -131,7 +131,43 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/text_confirm_address3"/>
 
+    <LinearLayout
+        android:id="@+id/ll_total_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/text_confirm_address4"
+        >
+
+        <com.example.e_commerce_11.utilities.BoldTextView
+            android:id="@+id/text_confirm_euro_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center"
+            android:text="Total Price: €"
+            android:textSize="20dp"
+            android:textColor="@color/themeDarkPurple"
+            android:background="@android:color/transparent"
+            android:textStyle="bold"/>
+
+        <com.example.e_commerce_11.utilities.BoldTextView
+            android:id="@+id/text_confirm_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:textColor="@color/themeDarkPurple"
+            android:background="@android:color/transparent"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
     <com.example.e_commerce_11.utilities.Button
+        android:id="@+id/btn_change_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -140,18 +176,19 @@
         android:background="@drawable/button_background_grey"
         android:text="@string/btn_chaneg_details"
         android:textColor="@color/themeDarkPurple"
-        app:layout_constraintTop_toBottomOf="@+id/text_confirm_address4"
+        app:layout_constraintTop_toBottomOf="@+id/ll_total_price"
         />
 
     <com.example.e_commerce_11.utilities.Button
+        android:id="@+id/btn_proceed_to_payment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:background="@drawable/button_background"
         android:text="@string/btn_proceed_to_payment"
-        app:layout_constraintTop_toBottomOf="@+id/text_confirm_address4"
+        app:layout_constraintTop_toBottomOf="@+id/btn_change_details"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
