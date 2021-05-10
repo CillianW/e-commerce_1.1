@@ -330,8 +330,6 @@ class FireStoreClass {
 
                     updateCartQuantity(cartItemQuantity, cartItem.cartItemID + userID)
                 }
-
-                Toast.makeText(context, "Product removed from cart", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()

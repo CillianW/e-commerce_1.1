@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.models.CartItem
@@ -37,7 +38,15 @@ class CartActivity : BaseActivity() {
             val userID = userDetails.id
 
             getCartItems(userID)
+        }
 
+        btn_purchase.setOnClickListener {
+            if(text_cart_calculated_price.text == "0"){
+                Toast.makeText(this, "You have no items in your cart", Toast.LENGTH_SHORT).show()
+            }
+            else{
+
+            }
         }
 
     }

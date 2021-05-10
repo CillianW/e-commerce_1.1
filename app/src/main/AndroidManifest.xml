@@ -11,11 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.ui.ConfirmDetailsActivity"></activity>
         <activity
             android:name=".activities.CartActivity"
             android:label="@string/title_activity_cart"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.AddressActivity"
             android:screenOrientation="portrait"
