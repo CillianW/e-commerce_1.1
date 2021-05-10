@@ -66,7 +66,10 @@ class ConfirmDetailsActivity : BaseActivity(), View.OnClickListener {
                 }
 
                 R.id.btn_proceed_to_payment -> {
-                    
+                    val intent = Intent(this@ConfirmDetailsActivity, OrderActivity::class.java)
+
+//                    intent.putExtra(Constants.EXTRA_USER_DETAILS, userDetails)
+                    startActivity(intent)
                 }
             }
         }
