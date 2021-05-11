@@ -19,6 +19,8 @@ class OrderActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order)
 
+        displayProgressDialogue("Please Wait")
+
         setupActionBar()
 
         getCartItems(FireStoreClass().getCurrentUserID())
@@ -41,8 +43,7 @@ class OrderActivity : BaseActivity() {
                     item.cartItemID = x.getString(Constants.CART_ITEM_ID).toString()
                     item.userID = x.getString(Constants.USER_ID).toString()
                     item.cartItemName = x.getString(Constants.CART_ITEM_NAME).toString()
-                    item.cartItemDescription =
-                        x.getString(Constants.CART_ITEM_DESCRIPTION).toString()
+                    item.cartItemDescription = x.getString(Constants.CART_ITEM_DESCRIPTION).toString()
                     item.cartItemImgURI = x.getString(Constants.CART_ITEM_URI).toString()
                     item.cartItemPrice = x.getString(Constants.CART_ITEM_PRICE).toString()
                     item.cartItemQuantity = x.getString(Constants.CART_ITEM_QUANTITY).toString()
@@ -50,14 +51,14 @@ class OrderActivity : BaseActivity() {
                     items.add(item)
                 }
 
-                calculateCartTotal(items)
+                calculateOrderTotal(items)
 
                 // Set the LayoutManager that this RecyclerView will use.
                 rv_Items_List_order_confirmation.layoutManager = LinearLayoutManager(this)
                 // Adapter class is initialized and list is passed in the param.
-                val itemAdapter = this?.let { OrderItemAdapter(it, items) }
+                val orderItemAdapter = this?.let { OrderItemAdapter(it, items) }
                 // adapter instance is set to the recyclerview to inflate the items.
-                rv_Items_List_order_confirmation.adapter = itemAdapter
+                rv_Items_List_order_confirmation.adapter = orderItemAdapter
 
                 dismissProgressDialogue()
             }
@@ -68,7 +69,7 @@ class OrderActivity : BaseActivity() {
 
     }
 
-    fun calculateCartTotal(items: ArrayList<CartItem>) {
+    fun calculateOrderTotal(items: ArrayList<CartItem>) {
         var cartTotal = 0
 
         for (i in items) {

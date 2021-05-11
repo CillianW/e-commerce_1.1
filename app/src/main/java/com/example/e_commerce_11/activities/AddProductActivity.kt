@@ -203,7 +203,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
 
         Toast.makeText(
             this@AddProductActivity,
-            resources.getString(R.string.user_registered_successfully),
+            resources.getString(R.string.product_added_successfully),
             Toast.LENGTH_SHORT
         ).show()
     }

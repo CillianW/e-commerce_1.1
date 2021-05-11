@@ -40,11 +40,46 @@
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
+        android:id="@+id/ll_order_confirmation_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_confirm_details"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".activities.DashboardActivity"
+        tools:showIn="@layout/activity_order">
+
+    <com.example.e_commerce_11.utilities.BoldTextView
+        android:id="@+id/text_order_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="25dp"
+        android:text="Order Confirmation Number: "
+        android:textColor="@color/themeDarkPurple"
+        android:gravity="center"
+        android:textStyle="bold"
+        />
+
+    <com.example.e_commerce_11.utilities.BoldTextView
+        android:id="@+id/text_order_number_here"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/themeDarkPurple"
+        android:gravity="right"
+        android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_order_confirmation_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_confirm_details"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/ll_order_confirmation_number"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".activities.DashboardActivity"
         tools:showIn="@layout/activity_order">
@@ -87,7 +122,7 @@
         android:id="@+id/cl_order_confirmation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="150dp"
         android:layout_marginBottom="300dp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_confirm_details"
 
@@ -140,7 +175,7 @@
             android:layout_gravity="right"
             android:gravity="center"
             android:textStyle="bold"
-            />
+            android:textColor="@color/themeDarkPurple"/>
 
     </LinearLayout>
 

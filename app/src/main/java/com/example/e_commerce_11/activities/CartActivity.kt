@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.models.CartItem
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.cart_item_layout.*
 import kotlinx.android.synthetic.main.fragment_products.*
 import kotlinx.android.synthetic.main.fragment_products.rv_Items_List_products
+import kotlinx.android.synthetic.main.items_layout.*
 
 class CartActivity : BaseActivity() {
     private lateinit var userDetails: User

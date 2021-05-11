@@ -59,16 +59,13 @@ class ConfirmDetailsActivity : BaseActivity(), View.OnClickListener {
             when (v.id) {
 
                 R.id.btn_change_details -> {
-                    val intent = Intent(this@ConfirmDetailsActivity, SettingsActivity::class.java)
-
-                    intent.putExtra(Constants.EXTRA_USER_DETAILS, userDetails)
-                    startActivity(intent)
+                    startActivity(Intent(this@ConfirmDetailsActivity, SettingsActivity::class.java))
                 }
 
                 R.id.btn_proceed_to_payment -> {
-                    val intent = Intent(this@ConfirmDetailsActivity, OrderActivity::class.java)
+                    val intent = Intent(this@ConfirmDetailsActivity, ConfirmPaymentActivity::class.java)
 
-//                    intent.putExtra(Constants.EXTRA_USER_DETAILS, userDetails)
+                    intent.putExtra(Constants.CART_TOTAL, cartTotal)
                     startActivity(intent)
                 }
             }

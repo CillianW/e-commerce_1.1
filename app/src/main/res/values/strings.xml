@@ -133,8 +133,14 @@
     <string name="btn_chaneg_details">Change Details</string>
 
 
-<!--    Order Activity-->
+    <!--    Order Activity-->
     <string name="title_order_activity">Order Confirmation</string>
     <string name="btn_return_to_dashboard">Return to Dashboard</string>
+
+    <!--    Confirm Payment-->
+    <string name="title_confirm_payment">Confirm Payment</string>
+    <string name="stripe_payments">Stripe payment should be implemented here</string>
+    <string name="confirm_payment">Confirm Payment</string>
+    <string name="total_order_cost">Total cost of order: €</string>
 
 </resources>

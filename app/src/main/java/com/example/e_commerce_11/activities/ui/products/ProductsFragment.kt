@@ -22,12 +22,13 @@ import com.example.e_commerce_11.utilities.ItemAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_products.*
+import kotlinx.android.synthetic.main.items_layout.*
 
 //all products can be viewed in this fragment
 //products are displayed using a recycler view which is set up using the ItemAdapter class
 class ProductsFragment : BaseFragment() {
 
-    private lateinit var userDetails: User
+    lateinit var userDetails: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,7 @@ class ProductsFragment : BaseFragment() {
         getUserDetails()
         //retrieve the products from the database and display them
         getProducts()
+
     }
 
     //inflate the products fragment view
@@ -123,7 +125,7 @@ class ProductsFragment : BaseFragment() {
                 //create a User object using the details we just retrieved
                 userDetails = document.toObject(User::class.java)!!
 
-                    setHasOptionsMenu(true)
+                setHasOptionsMenu(true)
             }
             //display a message if an error occurs
             .addOnFailureListener { e ->

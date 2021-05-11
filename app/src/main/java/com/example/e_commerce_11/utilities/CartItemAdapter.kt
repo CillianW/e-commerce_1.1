@@ -9,6 +9,7 @@ import com.example.e_commerce_11.R
 import com.example.e_commerce_11.activities.CartActivity
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.CartItem
+import com.example.e_commerce_11.models.User
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.cart_item_layout.view.*
 import kotlinx.android.synthetic.main.items_layout.view.*
