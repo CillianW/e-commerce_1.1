@@ -14,6 +14,7 @@ import android.util.Log
 import android.widget.Toast
 import com.example.e_commerce_11.activities.*
 import com.example.e_commerce_11.models.CartItem
+import com.example.e_commerce_11.models.Order
 import com.example.e_commerce_11.models.Product
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
@@ -241,7 +242,7 @@ class FireStoreClass {
             }
     }
 
-    fun addProductToCart(context: Context, cartItem: CartItem, userID: String){
+    fun addProductToCart(context: Context, cartItem: CartItem, userID: String) {
 
         myFireStore.collection(Constants.CARTS)
             //user details will be separated into documents, sorted by user IDs
@@ -257,8 +258,7 @@ class FireStoreClass {
 
                 if (cartItem.cartItemQuantity == "null" || cartItem.cartItemQuantity == "0") {
                     cartItem.cartItemQuantity = "1"
-                }
-                else{
+                } else {
                     cartItem.cartItemQuantity = (cartItem.cartItemQuantity.toInt() + 1).toString()
                 }
 
@@ -310,7 +310,7 @@ class FireStoreClass {
             .update(quantityHashMap)
     }
 
-    fun removeProductFromCart(context: Context, cartItem: CartItem, userID: String){
+    fun removeProductFromCart(context: Context, cartItem: CartItem, userID: String) {
 
         myFireStore.collection(Constants.CARTS)
             .document(cartItem.cartItemID + userID)
@@ -319,13 +319,11 @@ class FireStoreClass {
 
                 cartItem.cartItemQuantity = document.get(Constants.CART_ITEM_QUANTITY).toString()
 
-                if(cartItem.cartItemQuantity <= "1") {
+                if (cartItem.cartItemQuantity <= "1") {
                     myFireStore.collection(Constants.CARTS)
-                        //user details will be separated into documents, sorted by user IDs
                         .document(cartItem.cartItemID + userID)
                         .delete()
-                }
-                else{
+                } else {
                     val cartItemQuantity = HashMap<String, Any>()
 
                     cartItem.cartItemQuantity = (cartItem.cartItemQuantity.toInt() - 1).toString()
@@ -338,6 +336,32 @@ class FireStoreClass {
                 Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
             }
 
+    }
+
+    fun generateOrder(order: ArrayList<Order>, activity: Activity): String {
+
+        val STRING_LENGTH = 10;
+        val ALPHANUMERIC_REGEX = "[a-zA-Z0-9]+";
+        val orderID = (1..STRING_LENGTH)
+            .map { i -> kotlin.random.Random.nextInt(0, STRING_LENGTH) }
+            .map(ALPHANUMERIC_REGEX::get)
+            .joinToString("")
+
+        for (i in order) {
+
+            i.orderID = orderID
+
+            myFireStore.collection(Constants.ORDERS)
+                .document(i.orderItemID + i.userID)
+                .set(i, SetOptions.merge())
+                .addOnSuccessListener {
+                    myFireStore.collection(Constants.CARTS)
+                        .document(i.orderItemID + i.userID)
+                        .delete()
+                }
+        }
+
+        return orderID
     }
 
 }

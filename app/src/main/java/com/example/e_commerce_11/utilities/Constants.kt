@@ -46,6 +46,8 @@ object Constants {
     const val CART_ITEM_PRICE = "cartItemPrice"
     const val CART_ITEM_QUANTITY = "cartItemQuantity"
     const val CART_TOTAL = "cartTotal"
+    const val ORDERS = "orders"
+    const val ORDER_ID = "orderID"
 
 
     //run the phone's image selector function

@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.items_layout.*
 
 class CartActivity : BaseActivity() {
     private lateinit var userDetails: User
+    private lateinit var items: ArrayList<CartItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +58,7 @@ class CartActivity : BaseActivity() {
 
     private fun getCartItems(userID: String) {
 
-        val items: ArrayList<CartItem> = ArrayList()
+        items = ArrayList()
 
         FirebaseFirestore.getInstance().collection(Constants.CARTS)
             .whereEqualTo("userID", userID)
@@ -67,7 +68,7 @@ class CartActivity : BaseActivity() {
 
                 for (x in result) {
 
-                    val item = CartItem("", "", "", "", "", "")
+                    val item = CartItem()
 
                     item.cartItemID = x.getString(Constants.CART_ITEM_ID).toString()
                     item.userID = x.getString(Constants.USER_ID).toString()

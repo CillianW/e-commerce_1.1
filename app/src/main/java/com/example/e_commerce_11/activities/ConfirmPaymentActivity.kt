@@ -4,15 +4,20 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.e_commerce_11.R
+import com.example.e_commerce_11.firestore.FireStoreClass
+import com.example.e_commerce_11.models.CartItem
+import com.example.e_commerce_11.models.Order
 import com.example.e_commerce_11.utilities.Constants
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.activity_confirm_details.*
 import kotlinx.android.synthetic.main.activity_confirm_details.text_confirm_price
 import kotlinx.android.synthetic.main.activity_confirm_payment.*
 
 private var cartTotal = 0
+private var orderItems = ArrayList<Order>()
 
-class ConfirmPaymentActivity : AppCompatActivity() {
+class ConfirmPaymentActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirm_payment)
@@ -23,19 +28,17 @@ class ConfirmPaymentActivity : AppCompatActivity() {
         }
 
         setupActionBar()
+        getCartItems(FireStoreClass().getCurrentUserID())
 
-        btn_confirm_payment.setOnClickListener{
+        btn_confirm_payment.setOnClickListener {
 
+            val orderID = FireStoreClass().generateOrder(orderItems, this)
 
             val intent = Intent(this@ConfirmPaymentActivity, OrderActivity::class.java)
-
-            intent.putExtra(Constants.CART_TOTAL, cartTotal)
+            intent.putExtra(Constants.ORDER_ID, orderID)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent)
         }
-    }
-
-    private fun generateOrder(){
-
     }
 
     //this function sets up the back button at the of the screen
@@ -53,5 +56,30 @@ class ConfirmPaymentActivity : AppCompatActivity() {
             onBackPressed()
             finish()
         }
+    }
+
+    private fun getCartItems(userID: String) {
+
+        orderItems = ArrayList()
+
+        FirebaseFirestore.getInstance().collection(Constants.CARTS)
+            .whereEqualTo("userID", userID)
+            //get request used to retrieve info
+            .get()
+            .addOnSuccessListener { result ->
+
+                for (x in result) {
+
+                    val order = Order()
+
+                    order.userID = x.getString(Constants.USER_ID).toString()
+                    order.orderItemQuantity = x.getString(Constants.CART_ITEM_QUANTITY).toString()
+                    order.orderItemPrice = x.getString(Constants.CART_ITEM_PRICE).toString()
+                    order.orderItemName = x.getString(Constants.CART_ITEM_NAME).toString()
+                    order.orderItemID = x.getString(Constants.CART_ITEM_ID).toString()
+
+                    orderItems.add(order)
+                }
+            }
     }
 }

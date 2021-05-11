@@ -1,7 +1,9 @@
 package com.example.e_commerce_11.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.service.voice.VoiceInteractionSession
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.e_commerce_11.R
@@ -12,6 +14,7 @@ import com.example.e_commerce_11.utilities.Constants
 import com.example.e_commerce_11.utilities.OrderItemAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_cart.*
+import kotlinx.android.synthetic.main.activity_confirm_payment.*
 import kotlinx.android.synthetic.main.activity_order.*
 
 class OrderActivity : BaseActivity() {
@@ -23,7 +26,18 @@ class OrderActivity : BaseActivity() {
 
         setupActionBar()
 
+        if (intent.hasExtra(Constants.ORDER_ID)) {
+            val orderID = intent.getStringExtra(Constants.ORDER_ID)
+            text_order_number_here.setText(orderID.toString())
+        }
+
         getCartItems(FireStoreClass().getCurrentUserID())
+
+        btn_return_to_dashboard.setOnClickListener{
+            val intent = Intent(this@OrderActivity, DashboardActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+        }
     }
 
     private fun getCartItems(userID: String) {

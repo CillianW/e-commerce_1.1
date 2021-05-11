@@ -7,8 +7,10 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
+import com.example.e_commerce_11.models.CartItem
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
+import com.example.e_commerce_11.utilities.Constants.CART_ITEMS
 import com.example.e_commerce_11.utilities.Constants.CART_TOTAL
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_cart.*
@@ -17,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_settings.*
 
 private lateinit var userDetails: User
 private var cartTotal = 0
+private lateinit var cartItems: ArrayList<CartItem>
 
 class ConfirmDetailsActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
