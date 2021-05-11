@@ -27,6 +27,8 @@ import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.Product
 import com.example.e_commerce_11.utilities.Constants
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_add_product.*
@@ -78,15 +80,24 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
 
                         displayProgressDialogue(resources.getString(R.string.please_wait))
 
-                        val fileType  = MimeTypeMap.getSingleton()
+                        val fileType = MimeTypeMap.getSingleton()
                             .getExtensionFromMimeType(contentResolver.getType(productImgURI!!))
 
-                        val fireStoreReference : StorageReference = FirebaseStorage.getInstance()
+                        val fireStoreReference: StorageReference = FirebaseStorage.getInstance()
                             .reference.child(
                                 et_change_product_name.text.toString() + "productImage"
-                                        + System.currentTimeMillis() + "." + fileType)
+                                        + System.currentTimeMillis() + "." + fileType
+                            )
+
+                        val STRING_LENGTH = 10;
+                        val ALPHANUMERIC_REGEX = "[a-zA-Z0-9]+";
+                        val productID: String = (1..STRING_LENGTH)
+                            .map { i -> kotlin.random.Random.nextInt(0, STRING_LENGTH) }
+                            .map(ALPHANUMERIC_REGEX::get)
+                            .joinToString("")
 
                         productDetails = Product(
+                            productID,
                             et_change_product_name.text.toString(),
                             et_change_product_description.text.toString(),
                             fireStoreReference.toString(),
@@ -101,10 +112,13 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                             .addOnSuccessListener { taskSnapshot ->
                                 taskSnapshot.metadata!!.reference!!.downloadUrl
                                     .addOnSuccessListener { url ->
-                                        createProfilePicKeyValuePair(url.toString(), et_change_product_name.text.toString())
+                                        createProfilePicKeyValuePair(
+                                            url.toString(),
+                                            productID
+                                        )
                                     }
                             }
-                            .addOnFailureListener{ e ->
+                            .addOnFailureListener { e ->
                                 Log.e(
                                     javaClass.simpleName,
                                     "Error uploading photo",
@@ -120,10 +134,14 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                         )
                     }
 
-                }
+                    val intent = Intent(this@AddProductActivity, DashboardActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
                 }
             }
         }
+    }
 
 
     //process the result of the permission request
@@ -179,31 +197,33 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
     }
 
     //displays a success message to the user upon successful registration
-    fun productRegisteredSuccessfully(){
+    fun productRegisteredSuccessfully() {
 
         dismissProgressDialogue()
 
-        Toast.makeText(this@AddProductActivity,
-            resources.getString(R.string.user_registered_successfully),
-            Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this@AddProductActivity,
+            resources.getString(R.string.product_added_successfully),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
 
-    private fun verifyProductDetails() : Boolean{
-        return when{
-            TextUtils.isEmpty(et_change_product_name.text.toString().trim{it <= ' '}) -> {
+    private fun verifyProductDetails(): Boolean {
+        return when {
+            TextUtils.isEmpty(et_change_product_name.text.toString().trim { it <= ' ' }) -> {
                 displaySnackBar(resources.getString(R.string.enter_product_name), true)
                 false
             }
-            TextUtils.isEmpty(et_change_product_description.text.toString().trim{it <= ' '}) -> {
+            TextUtils.isEmpty(et_change_product_description.text.toString().trim { it <= ' ' }) -> {
                 displaySnackBar(resources.getString(R.string.enter_product_description), true)
                 false
             }
-            TextUtils.isEmpty(et_price.text.toString().trim{it <= ' '}) -> {
+            TextUtils.isEmpty(et_price.text.toString().trim { it <= ' ' }) -> {
                 displaySnackBar(resources.getString(R.string.enter_price), true)
                 false
             }
-            TextUtils.isEmpty(et_change_quantity.text.toString().trim{it <= ' '}) -> {
+            TextUtils.isEmpty(et_change_quantity.text.toString().trim { it <= ' ' }) -> {
                 displaySnackBar(resources.getString(R.string.enter_quantity), true)
                 false
             }
@@ -217,30 +237,31 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    private fun createProfilePicKeyValuePair(url : String, productName: String){
+    private fun createProfilePicKeyValuePair(url: String, productID: String) {
         var userHashMap = HashMap<String, Any>()
         userHashMap[Constants.PRODUCT_IMG_URI] = url
 
         Log.i("Image URL", url)
-        Log.i("productName", et_change_product_name.toString())
+        Log.i("product ID", et_change_product_name.toString())
 
-        FireStoreClass().updateProductPicture(this, userHashMap, productName)
+        FireStoreClass().updateProductPicture(this, userHashMap, productID)
     }
 
     //this function sets up the back button at the of the screen
-    private fun setupActionBar(){
+    private fun setupActionBar() {
         setSupportActionBar(toolbar_add_product_activity)
 
         val actionBar = supportActionBar
 
-        if(actionBar != null){
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_white)
         }
 
-        toolbar_add_product_activity.setNavigationOnClickListener{
+        toolbar_add_product_activity.setNavigationOnClickListener {
             onBackPressed()
-            finish()}
+            finish()
+        }
     }
 
 

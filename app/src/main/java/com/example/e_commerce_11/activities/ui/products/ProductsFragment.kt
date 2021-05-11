@@ -22,36 +22,55 @@ import com.example.e_commerce_11.utilities.ItemAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_products.*
+import kotlinx.android.synthetic.main.items_layout.*
 
+//all products can be viewed in this fragment
+//products are displayed using a recycler view which is set up using the ItemAdapter class
 class ProductsFragment : BaseFragment() {
 
-    private lateinit var userDetails: User
+    lateinit var userDetails: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //display a "please wait" message while the fragment is set up
         displayProgressDialogue(R.string.please_wait.toString())
 
+        //retrieve user details which will be used to determine what functionality the options menu will provide
         getUserDetails()
+        //retrieve the products from the database and display them
         getProducts()
 
     }
 
+    //inflate the products fragment view
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_products, container, false)
+        val view = inflater.inflate(R.layout.fragment_products, container, false)
+
+        return view
     }
 
+    //set up the options menu
+    //if the current user is an admin they will see an "add" icon at the top right of the screen
+    //if the current user is not an admin they will see a "cart" icon at the top right of the screen
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
-        inflater.inflate(R.menu.products_menu, menu)
+        if(userDetails.admin != 0) {
+            inflater.inflate(R.menu.add_products_menu, menu)
+        }
+        else{
+            inflater.inflate(R.menu.view_cart_menu, menu)
+        }
 
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    //if an admin presses the add button it will launch the ProductActivity
+    //if a user presses the cart button it will launch the CartActivity
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -61,11 +80,21 @@ class ProductsFragment : BaseFragment() {
 
                 return true
             }
+
+            R.id.action_view_cart -> {
+                var intent = (Intent(activity, CartActivity::class.java))
+                intent.putExtra(Constants.EXTRA_USER_DETAILS, userDetails)
+                startActivity(intent)
+
+                return true
+            }
         }
 
         return super.onOptionsItemSelected(item)
     }
 
+    //get current user id from firebase
+    //the user id is used to get the user details
     private fun getCurrentUserID(): String {
 
         //get user details from Firebase
@@ -82,6 +111,7 @@ class ProductsFragment : BaseFragment() {
         return currentUserID
     }
 
+    //retrieve user details from the database
     private fun getUserDetails() {
 
         FirebaseFirestore.getInstance().collection(Constants.USERS)
@@ -95,9 +125,7 @@ class ProductsFragment : BaseFragment() {
                 //create a User object using the details we just retrieved
                 userDetails = document.toObject(User::class.java)!!
 
-                if (userDetails.admin != 0) {
-                    setHasOptionsMenu(true)
-                }
+                setHasOptionsMenu(true)
             }
             //display a message if an error occurs
             .addOnFailureListener { e ->
@@ -109,18 +137,22 @@ class ProductsFragment : BaseFragment() {
             }
     }
 
+    //retrieve the products from the database and pass them to the item adapter to be displayed in the recycler view
     private fun getProducts() {
 
         val products: ArrayList<Product> = ArrayList()
 
+        //query the products collection for all products
         FirebaseFirestore.getInstance().collection(Constants.PRODUCTS)
             //get request used to retrieve info
             .get()
+            //extract the information from the result of the query and pass it to the item adapter to be displayed
             .addOnSuccessListener { result ->
 
                 for (x in result) {
-                    val item = Product("", "", "", "", "")
+                    val item = Product("", "", "", "", "", "")
 
+                    item.productID = x.getString(Constants.PRODUCT_ID).toString()
                     item.productName = x.getString(Constants.PRODUCT_NAME).toString()
                     item.productDescription = x.getString(Constants.PRODUCT_DESCRIPTION).toString()
                     item.price = x.getString(Constants.PRODUCT_PRICE).toString()
@@ -139,11 +171,11 @@ class ProductsFragment : BaseFragment() {
                     dismissProgressDialogue()
                 }
             }
+            //log any errors that may occur
             .addOnFailureListener { e ->
                 Log.e(e.toString(), "Error loading products")
                 dismissProgressDialogue()
             }
-//        return products
     }
 
 }

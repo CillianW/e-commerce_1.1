@@ -26,6 +26,7 @@ object Constants {
     const val IMAGE_URL : String = "imageURL"
     const val PROFILE_COMPLETE = "profileComplete"
     const val PRODUCTS = "products"
+    const val PRODUCT_ID = "productID"
     const val PRODUCT_NAME = "productName"
     const val PRODUCT_DESCRIPTION = "productDescription"
     const val PRODUCT_PRICE = "price"
@@ -35,6 +36,16 @@ object Constants {
     const val ADDRESS_2 = "address2"
     const val ADDRESS_3 = "address3"
     const val ADDRESS_4 = "address4"
+    const val CART_ITEMS = "cart_items"
+    const val CARTS = "carts"
+    const val CART_ITEM_ID = "cartItemID"
+    const val USER_ID = "userID"
+    const val CART_ITEM_NAME = "cartItemName"
+    const val CART_ITEM_DESCRIPTION = "cartItemDescription"
+    const val CART_ITEM_URI = "cartItemImgURI"
+    const val CART_ITEM_PRICE = "cartItemPrice"
+    const val CART_ITEM_QUANTITY = "cartItemQuantity"
+    const val CART_TOTAL = "cartTotal"
 
 
     //run the phone's image selector function

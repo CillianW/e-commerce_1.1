@@ -11,10 +11,10 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 class Product (
-    //var id: String = "",
+    var productID: String = "",
     var productName: String = "",
     var productDescription: String = "",
     var productImgURI: String = "",
-    var price: String,
-    var quantity: String
+    var price: String = "",
+    var quantity: String = ""
 ) : Parcelable

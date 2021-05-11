@@ -9,18 +9,16 @@ package com.example.e_commerce_11.firestore
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import com.example.e_commerce_11.activities.*
-import com.example.e_commerce_11.activities.ui.dashboard.DashboardFragment
+import com.example.e_commerce_11.models.CartItem
 import com.example.e_commerce_11.models.Product
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.tasks.await
 
@@ -98,7 +96,7 @@ class FireStoreClass {
                 val editor: SharedPreferences.Editor = sharedPreferences.edit()
                 editor.putString(
                     Constants.LOGGED_IN_USERNAME,
-                    "${user!!.firstName} ${user!!.surname}"
+                    "${user!!.firstName} ${user.surname}"
                 )
                 editor.apply()
 
@@ -113,6 +111,9 @@ class FireStoreClass {
                         if (user != null) {
                             activity.userDetailsSuccess(user)
                         }
+                    }
+                    is ConfirmDetailsActivity -> {
+                        activity.userDetailsSuccess(user)
                     }
                 }
             }
@@ -197,7 +198,7 @@ class FireStoreClass {
         //create a collection called users if it doesn't already exist
         myFireStore.collection(Constants.PRODUCTS)
             //user details will be separated into documents, sorted by user IDs
-            .document(product.productName)
+            .document(product.productID)
             //add the user details to the document
             .set(product, SetOptions.merge())
             //if user is registered successfully, call the userRegisteredSuccessfully() method
@@ -215,11 +216,15 @@ class FireStoreClass {
             }
     }
 
-    fun updateProductPicture(activity: Activity, userHashMap: HashMap<String, Any>, productName: String) {
+    fun updateProductPicture(
+        activity: Activity,
+        userHashMap: HashMap<String, Any>,
+        productID: String
+    ) {
 
         //send an update request to update user details
         myFireStore.collection(Constants.PRODUCTS)
-            .document(productName)
+            .document(productID)
             .update(userHashMap)
             //dismiss the progress dialogue and show the user a message if an error occurs
             .addOnFailureListener { e ->
@@ -236,34 +241,103 @@ class FireStoreClass {
             }
     }
 
-    suspend fun getDataFromFireStore(products : String)
-            : QuerySnapshot?{
-        return try{
-            val data = FirebaseFirestore.getInstance().collection(Constants.PRODUCTS)
-                .get()
-                .await()
-            data
-        }catch (e : Exception){
-            null
-        }
+    fun addProductToCart(context: Context, cartItem: CartItem, userID: String){
+
+        myFireStore.collection(Constants.CARTS)
+            //user details will be separated into documents, sorted by user IDs
+            .document(cartItem.cartItemID + userID)
+            .get()
+            //if user is registered successfully, call the userRegisteredSuccessfully() method
+            .addOnSuccessListener { it ->
+
+
+                cartItem.cartItemQuantity = it.get(Constants.CART_ITEM_QUANTITY).toString()
+
+                Log.i("cart item quantity", cartItem.cartItemQuantity)
+
+                if (cartItem.cartItemQuantity == "null" || cartItem.cartItemQuantity == "0") {
+                    cartItem.cartItemQuantity = "1"
+                }
+                else{
+                    cartItem.cartItemQuantity = (cartItem.cartItemQuantity.toInt() + 1).toString()
+                }
+
+                //create a collection called users if it doesn't already exist
+                myFireStore.collection(Constants.CARTS)
+                    //user details will be separated into documents, sorted by user IDs
+                    .document(cartItem.cartItemID + userID)
+                    .set(cartItem, SetOptions.merge())
+                    //if user is registered successfully, call the userRegisteredSuccessfully() method
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+                    }
+                    //if an error occurs, log it and display a message
+                    .addOnFailureListener { e ->
+                        Log.e(
+                            "Error",
+                            "Product registration failed",
+                            e
+                        )
+                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+
+                    }
+            }
+            //if an error occurs, log it and display a message
+            .addOnFailureListener { e ->
+                Log.e(
+                    "Error",
+                    "Product registration failed",
+                    e
+                )
+            }
+
     }
 
-    fun createProductArray(querySnapshot: QuerySnapshot) : ArrayList<Product>{
+    fun updateProductQuantity(quantityHashMap: HashMap<String, Any>, productID: String) {
 
-        var products: ArrayList<Product> = ArrayList()
-
-        for (x in querySnapshot) {
-            val item = Product("", "", "", "", "")
-
-            item.productName = x.getString(Constants.PRODUCT_NAME).toString()
-            item.productDescription = x.getString(Constants.PRODUCT_DESCRIPTION).toString()
-            item.price = x.getString(Constants.PRODUCT_PRICE).toString()
-            item.quantity = x.getString(Constants.PRODUCT_QUANTITY).toString()
-            item.productImgURI = x.getString(Constants.PRODUCT_IMG_URI).toString()
-
-            products.add(item)
-        }
-
-        return products
+        Log.i("Firestore", "updateProductQuantity")
+        //send an update request to update user details
+        myFireStore.collection(Constants.PRODUCTS)
+            .document(productID)
+            .update(quantityHashMap)
     }
+
+    fun updateCartQuantity(quantityHashMap: HashMap<String, Any>, cartItemID: String) {
+
+        //send an update request to update user details
+        myFireStore.collection(Constants.CARTS)
+            .document(cartItemID)
+            .update(quantityHashMap)
+    }
+
+    fun removeProductFromCart(context: Context, cartItem: CartItem, userID: String){
+
+        myFireStore.collection(Constants.CARTS)
+            .document(cartItem.cartItemID + userID)
+            .get()
+            .addOnSuccessListener { document ->
+
+                cartItem.cartItemQuantity = document.get(Constants.CART_ITEM_QUANTITY).toString()
+
+                if(cartItem.cartItemQuantity <= "1") {
+                    myFireStore.collection(Constants.CARTS)
+                        //user details will be separated into documents, sorted by user IDs
+                        .document(cartItem.cartItemID + userID)
+                        .delete()
+                }
+                else{
+                    val cartItemQuantity = HashMap<String, Any>()
+
+                    cartItem.cartItemQuantity = (cartItem.cartItemQuantity.toInt() - 1).toString()
+                    cartItemQuantity[Constants.CART_ITEM_QUANTITY] = cartItem.cartItemQuantity
+
+                    updateCartQuantity(cartItemQuantity, cartItem.cartItemID + userID)
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+
+    }
+
 }

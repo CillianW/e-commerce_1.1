@@ -22,6 +22,7 @@ import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.User
 
+
 class DashboardActivity : BaseActivity() {
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -52,5 +53,6 @@ class DashboardActivity : BaseActivity() {
     override fun onBackPressed() {
         doubleBackPressToExit()
     }
+
 
 }

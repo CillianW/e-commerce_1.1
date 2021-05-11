@@ -21,7 +21,7 @@ class User (
     val imageURL: String = "",
     val phoneNumber: Long = 0,
     val profileComplete: Int = 0,
-    val admin : Int = 0,
+    var admin : Int = 0,
     val address1: String? = null,
     val address2: String? = null,
     val address3: String? = null,

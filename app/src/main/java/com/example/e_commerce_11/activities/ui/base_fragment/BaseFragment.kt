@@ -1,5 +1,11 @@
 package com.example.e_commerce_11.activities.ui.base_fragment
 
+/**
+ *Author: Cillian Whelan
+ *Student Number: L00162026
+ *Course: BSc (Hons) Contemporary Software Development
+ *Subject: Project
+ */
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,14 +17,17 @@ import com.example.e_commerce_11.R
 import kotlinx.android.synthetic.main.fragment_products.*
 
 
+//other fragments will inherit from this Base Fragment
 open class BaseFragment : Fragment() {
 
     private lateinit var progressDialog: Dialog
 
+    //this method runs when the fragment is created
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
+    //used to create views. for example, a recycler view
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
