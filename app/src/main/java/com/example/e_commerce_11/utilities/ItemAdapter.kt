@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.activities.DashboardActivity
@@ -43,12 +44,13 @@ class ItemAdapter(val context: Context, val items: ArrayList<Product>) :
             false
         )
 
-//        getUserAdminStatus()
-
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        getUserAdminStatus(holder.linearLayoutItem)
+
         val item = items[position]
 
         holder.linearLayoutItem.text_item_name.setText(item.productName)
@@ -66,8 +68,6 @@ class ItemAdapter(val context: Context, val items: ArrayList<Product>) :
         cartItem[position].cartItemImgURI = item.productImgURI
         cartItem[position].cartItemPrice = item.price
 
-
-//        if(userDetails.admin == 0) {
 
             holder.linearLayoutItem.btn_add_to_cart.setOnClickListener {
 
@@ -91,10 +91,6 @@ class ItemAdapter(val context: Context, val items: ArrayList<Product>) :
                 }
             }
         }
-//        else{
-//            holder.linearLayoutItem.btn_add_to_cart.visibility = View.INVISIBLE
-//        }
-//    }
 
     override fun getItemCount(): Int {
         return items.size
@@ -102,18 +98,21 @@ class ItemAdapter(val context: Context, val items: ArrayList<Product>) :
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val linearLayoutItem = view
     }
-//
-//    private fun getUserAdminStatus(){
-//        FirebaseFirestore.getInstance()
-//            .collection(Constants.USERS)
-//            .document(FireStoreClass().getCurrentUserID())
-//            .get()
-//            .addOnSuccessListener { document ->
-//                userDetails.admin = document.get("admin").toString().toInt()
-//            }
-//    }
+
+    private fun getUserAdminStatus(view: View){
+        FirebaseFirestore.getInstance()
+            .collection(Constants.USERS)
+            .document(FireStoreClass().getCurrentUserID())
+            .get()
+            .addOnSuccessListener { document ->
+                userDetails.admin = document.get("admin").toString().toInt()
+
+                if(userDetails.admin == 1){
+                    view.btn_add_to_cart.visibility = View.GONE
+                }
+            }
+    }
 }
 

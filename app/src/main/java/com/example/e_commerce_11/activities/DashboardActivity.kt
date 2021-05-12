@@ -53,6 +53,4 @@ class DashboardActivity : BaseActivity() {
     override fun onBackPressed() {
         doubleBackPressToExit()
     }
-
-
 }

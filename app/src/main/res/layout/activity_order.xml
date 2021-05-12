@@ -188,7 +188,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:background="@drawable/button_background"
-        android:text="@string/btn_return_to_dashboard"
+        android:text="@string/btn_browse_products"
 
         />
 
