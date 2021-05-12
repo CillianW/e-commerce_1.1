@@ -5,26 +5,22 @@
 <!--Course: BSc (Hons) Contemporary Software Development-->
 <!--Subject: Project-->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ui.orders.OrdersFragment">
+    tools:context=".activities.ui.products.ProductsFragment">
 
-    <TextView
-        android:id="@+id/text_orders"
+    <ExpandableListView
+        android:id="@+id/exp_list_view_orders"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:gravity="center_horizontal"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".activities.DashboardActivity"
+        tools:showIn="@layout/fragment_products">
+
+    </ExpandableListView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

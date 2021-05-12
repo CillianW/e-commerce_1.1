@@ -14,10 +14,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.e_commerce_11.R
+import com.example.e_commerce_11.activities.ui.base_fragment.BaseFragment
 
-class OrdersFragment : Fragment() {
+class OrdersFragment : BaseFragment() {
 
-    private lateinit var ordersViewModel: OrdersViewModel
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,10 +29,8 @@ class OrdersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         //notificationsViewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_orders, container, false)
-        val textView: TextView = root.findViewById(R.id.text_orders)
+        val view = inflater.inflate(R.layout.fragment_orders, container, false)
 
-        textView.text = resources.getString(R.string.title_orders)
-        return root
+        return view
     }
 }
