@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.CartItem
+import com.example.e_commerce_11.models.Order
 import com.example.e_commerce_11.utilities.CartItemAdapter
 import com.example.e_commerce_11.utilities.Constants
 import com.example.e_commerce_11.utilities.OrderItemAdapter
@@ -17,6 +18,8 @@ import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.activity_confirm_payment.*
 import kotlinx.android.synthetic.main.activity_order.*
 
+private var orderID = String()
+
 class OrderActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,43 +27,41 @@ class OrderActivity : BaseActivity() {
 
         displayProgressDialogue("Please Wait")
 
-        setupActionBar()
-
         if (intent.hasExtra(Constants.ORDER_ID)) {
-            val orderID = intent.getStringExtra(Constants.ORDER_ID)
-            text_order_number_here.setText(orderID.toString())
+            orderID = intent.getStringExtra(Constants.ORDER_ID).toString()
+            text_order_number_here.setText(orderID)
         }
 
-        getCartItems(FireStoreClass().getCurrentUserID())
+        getOrderItems(FireStoreClass().getCurrentUserID())
 
         btn_return_to_dashboard.setOnClickListener{
             val intent = Intent(this@OrderActivity, DashboardActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
+            finish()
         }
     }
 
-    private fun getCartItems(userID: String) {
+    private fun getOrderItems(userID: String) {
 
-        val items: ArrayList<CartItem> = ArrayList()
+        val items: ArrayList<Order> = ArrayList()
 
-        FirebaseFirestore.getInstance().collection(Constants.CARTS)
+        FirebaseFirestore.getInstance().collection(Constants.ORDERS)
             .whereEqualTo("userID", userID)
+            .whereEqualTo("orderID", orderID)
             //get request used to retrieve info
             .get()
             .addOnSuccessListener { result ->
 
                 for (x in result) {
 
-                    val item = CartItem("", "", "", "", "", "")
+                    val item = Order()
 
-                    item.cartItemID = x.getString(Constants.CART_ITEM_ID).toString()
+                    item.orderItemID = x.getString(Constants.ORDER_ITEM_ID).toString()
                     item.userID = x.getString(Constants.USER_ID).toString()
-                    item.cartItemName = x.getString(Constants.CART_ITEM_NAME).toString()
-                    item.cartItemDescription = x.getString(Constants.CART_ITEM_DESCRIPTION).toString()
-                    item.cartItemImgURI = x.getString(Constants.CART_ITEM_URI).toString()
-                    item.cartItemPrice = x.getString(Constants.CART_ITEM_PRICE).toString()
-                    item.cartItemQuantity = x.getString(Constants.CART_ITEM_QUANTITY).toString()
+                    item.orderItemName = x.getString(Constants.ORDER_ITEM_NAME).toString()
+                    item.orderItemID = x.getString(Constants.ORDER_ITEM_NAME).toString()
+                    item.orderItemPrice = x.getString(Constants.ORDER_ITEM_PRICE).toString()
+                    item.orderItemQuantity = x.getString(Constants.ORDER_ITEM_QUANTITY).toString()
 
                     items.add(item)
                 }
@@ -70,7 +71,7 @@ class OrderActivity : BaseActivity() {
                 // Set the LayoutManager that this RecyclerView will use.
                 rv_Items_List_order_confirmation.layoutManager = LinearLayoutManager(this)
                 // Adapter class is initialized and list is passed in the param.
-                val orderItemAdapter = this?.let { OrderItemAdapter(it, items) }
+                val orderItemAdapter = OrderItemAdapter(this, items)
                 // adapter instance is set to the recyclerview to inflate the items.
                 rv_Items_List_order_confirmation.adapter = orderItemAdapter
 
@@ -83,30 +84,17 @@ class OrderActivity : BaseActivity() {
 
     }
 
-    fun calculateOrderTotal(items: ArrayList<CartItem>) {
+    fun calculateOrderTotal(items: ArrayList<Order>) {
         var cartTotal = 0
 
         for (i in items) {
-            cartTotal = cartTotal + (i.cartItemPrice.toInt() * i.cartItemQuantity.toInt())
+            cartTotal = cartTotal + (i.orderItemPrice.toInt() * i.orderItemQuantity.toInt())
         }
 
         text_order_total_calculated.setText(cartTotal.toString())
     }
 
-    //this function sets up the back button at the of the screen
-    private fun setupActionBar() {
-        setSupportActionBar(toolbar_confirm_details)
-
-        val actionBar = supportActionBar
-
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow_white)
-        }
-
-        toolbar_confirm_details.setNavigationOnClickListener {
-            onBackPressed()
-            finish()
-        }
+    override fun onBackPressed() {
+        doubleBackPressToExit()
     }
 }

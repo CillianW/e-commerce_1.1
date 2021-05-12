@@ -1,18 +1,18 @@
 package com.example.e_commerce_11.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.os.Bundle
+import androidx.core.content.IntentCompat
 import com.example.e_commerce_11.R
 import com.example.e_commerce_11.firestore.FireStoreClass
-import com.example.e_commerce_11.models.CartItem
 import com.example.e_commerce_11.models.Order
 import com.example.e_commerce_11.utilities.Constants
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.activity_confirm_details.*
-import kotlinx.android.synthetic.main.activity_confirm_details.text_confirm_price
 import kotlinx.android.synthetic.main.activity_confirm_payment.*
+
 
 private var cartTotal = 0
 private var orderItems = ArrayList<Order>()
@@ -36,12 +36,12 @@ class ConfirmPaymentActivity : BaseActivity() {
 
             val intent = Intent(this@ConfirmPaymentActivity, OrderActivity::class.java)
             intent.putExtra(Constants.ORDER_ID, orderID)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
     }
 
-    //this function sets up the back button at the of the screen
+    //this function sets up the back button at the top of the screen
     private fun setupActionBar() {
         setSupportActionBar(toolbar_confirm_Payment)
 

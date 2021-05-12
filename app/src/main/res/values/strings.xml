@@ -135,7 +135,7 @@
 
     <!--    Order Activity-->
     <string name="title_order_activity">Order Confirmation</string>
-    <string name="btn_return_to_dashboard">Return to Dashboard</string>
+    <string name="btn_browse_products">Browse Products</string>
 
     <!--    Confirm Payment-->
     <string name="title_confirm_payment">Confirm Payment</string>

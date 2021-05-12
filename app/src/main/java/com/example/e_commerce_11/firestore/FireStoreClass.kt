@@ -352,7 +352,7 @@ class FireStoreClass {
             i.orderID = orderID
 
             myFireStore.collection(Constants.ORDERS)
-                .document(i.orderItemID + i.userID)
+                .document(i.orderID + i.orderItemID + i.userID)
                 .set(i, SetOptions.merge())
                 .addOnSuccessListener {
                     myFireStore.collection(Constants.CARTS)
