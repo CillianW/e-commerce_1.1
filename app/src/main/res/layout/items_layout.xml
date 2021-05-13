@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_item"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -63,7 +63,8 @@
             android:paddingBottom="@dimen/btn_padding"
             android:text="Add to Cart"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/btn_textSize"/>
+            android:textSize="@dimen/btn_textSize"
+            tools:visibility="visible" />
     </LinearLayout>
 
 
