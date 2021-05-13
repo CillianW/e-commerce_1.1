@@ -118,11 +118,7 @@ class FireStoreClass {
                             activity.userDetailsSuccess(user)
                         }
                     }
-                    is OrderDetailsActivity -> {
-                        if (user != null) {
-                            activity.userDetailsSuccess(user)
-                        }
-                    }
+
                 }
             }
             //display a message if an error occurs
