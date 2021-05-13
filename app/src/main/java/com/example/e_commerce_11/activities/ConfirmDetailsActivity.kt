@@ -10,7 +10,6 @@ import com.example.e_commerce_11.firestore.FireStoreClass
 import com.example.e_commerce_11.models.CartItem
 import com.example.e_commerce_11.models.User
 import com.example.e_commerce_11.utilities.Constants
-import com.example.e_commerce_11.utilities.Constants.CART_ITEMS
 import com.example.e_commerce_11.utilities.Constants.CART_TOTAL
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_cart.*

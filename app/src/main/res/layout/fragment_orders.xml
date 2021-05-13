@@ -11,16 +11,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ui.products.ProductsFragment">
+    tools:context=".activities.ui.orders.OrdersFragment">
 
-    <ExpandableListView
-        android:id="@+id/exp_list_view_orders"
+    <LinearLayout
+        android:id="@+id/ll_recycler_view_orders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".activities.DashboardActivity"
-        tools:showIn="@layout/fragment_products">
+        tools:showIn="@layout/fragment_orders">
 
-    </ExpandableListView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_Items_List_orders"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
