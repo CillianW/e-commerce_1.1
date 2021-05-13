@@ -144,4 +144,7 @@
     <string name="confirm_payment">Confirm Payment</string>
     <string name="total_order_cost">Total cost of order: €</string>
 
+    <!--    Order Details-->
+    <string name="title_order_details">Order Details</string>
+
 </resources>
