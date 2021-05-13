@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.activity_settings.toolbar_settings_activity
 
 private lateinit var orderID: String
+private lateinit var userID: String
 
 class OrderDetailsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,8 +36,6 @@ class OrderDetailsActivity : BaseActivity() {
             text_order_number.setText(orderID)
         }
 
-        FireStoreClass().getUserDetails(this)
-
         getOrder(orderID)
 
     }
@@ -49,7 +48,6 @@ class OrderDetailsActivity : BaseActivity() {
 
         text_customer_name.text = "${user.firstName} ${user.surname}"
         text_customer_email.text = "${user.email}"
-        text_customer_phone.text = "${user.phoneNumber}"
         text_customer_address1.text = "${user.address1}"
         text_customer_address2.text = "${user.address2}"
         text_customer_address3.text = "${user.address3}"
@@ -90,9 +88,13 @@ class OrderDetailsActivity : BaseActivity() {
                     orderItem.orderItemName = x.getString(Constants.ORDER_ITEM_NAME).toString()
                     orderItem.orderItemQuantity = x.getString(Constants.ORDER_ITEM_QUANTITY).toString()
                     orderItem.orderItemPrice = x.getString(Constants.ORDER_ITEM_PRICE).toString()
+                    userID = x.getString(Constants.USER_ID).toString()
 
                     orderItems.add(orderItem)
                 }
+
+
+                getOrderUserDetails(userID)
 
                 calculateOrderTotal(orderItems)
 
@@ -116,5 +118,27 @@ class OrderDetailsActivity : BaseActivity() {
         }
 
         text_order_details_total_calculated.setText(orderTotal.toString())
+    }
+
+    fun getOrderUserDetails(userID: String){
+
+        FirebaseFirestore.getInstance().collection(Constants.USERS)
+            .whereEqualTo("id", userID)
+            .get()
+            .addOnSuccessListener { result ->
+                val user = User()
+
+                for(x in result) {
+                    user.firstName = x.getString("firstName").toString()
+                    user.surname = x.getString("surname").toString()
+                    user.email = x.getString("email").toString()
+                    user.address1 = x.getString(Constants.ADDRESS_1).toString()
+                    user.address2 = x.getString(Constants.ADDRESS_2).toString()
+                    user.address3 = x.getString(Constants.ADDRESS_3).toString()
+                    user.address4 = x.getString(Constants.ADDRESS_4).toString()
+
+                    userDetailsSuccess(user)
+                }
+            }
     }
 }
