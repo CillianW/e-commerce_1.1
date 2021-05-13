@@ -12,20 +12,32 @@
         android:orientation="horizontal">
 
         <com.example.e_commerce_11.utilities.BoldTextView
+            android:id="@+id/text_order"
+            android:layout_width="136dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:text="Order #:"/>
+
+        <com.example.e_commerce_11.utilities.BoldTextView
             android:id="@+id/text_order_number"
-            android:layout_width="205dp"
+            android:layout_width="136dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_gravity="left"
             android:text="Order Number"/>
 
-        <com.example.e_commerce_11.utilities.BoldTextView
-            android:id="@+id/text_order_cost"
-            android:layout_width="205dp"
+        <com.example.e_commerce_11.utilities.Button
+            android:id="@+id/btn_view_order"
+            android:layout_width="95dp"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_gravity="right"
-            android:text="Order Cost"/>
+            android:background="@drawable/button_background"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/btn_view_order"
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
