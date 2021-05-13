@@ -36,7 +36,6 @@ object Constants {
     const val ADDRESS_2 = "address2"
     const val ADDRESS_3 = "address3"
     const val ADDRESS_4 = "address4"
-    const val CART_ITEMS = "cart_items"
     const val CARTS = "carts"
     const val CART_ITEM_ID = "cartItemID"
     const val USER_ID = "userID"
@@ -48,6 +47,11 @@ object Constants {
     const val CART_TOTAL = "cartTotal"
     const val ORDERS = "orders"
     const val ORDER_ID = "orderID"
+    const val ORDER_ITEM_ID = "orderItemID"
+    const val ORDER_ITEM_NAME = "orderItemName"
+    const val ORDER_USER_ID = "userID"
+    const val ORDER_ITEM_PRICE = "orderItemPrice"
+    const val ORDER_ITEM_QUANTITY = "orderItemQuantity"
 
 
     //run the phone's image selector function
