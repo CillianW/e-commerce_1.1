@@ -114,7 +114,14 @@ class FireStoreClass {
                         }
                     }
                     is ConfirmDetailsActivity -> {
-                        activity.userDetailsSuccess(user)
+                        if (user != null) {
+                            activity.userDetailsSuccess(user)
+                        }
+                    }
+                    is OrderDetailsActivity -> {
+                        if (user != null) {
+                            activity.userDetailsSuccess(user)
+                        }
                     }
                 }
             }
@@ -126,6 +133,9 @@ class FireStoreClass {
                         activity.dismissProgressDialogue()
                     }
                     is SettingsActivity -> {
+                        activity.dismissProgressDialogue()
+                    }
+                    is ConfirmDetailsActivity -> {
                         activity.dismissProgressDialogue()
                     }
                 }
